@@ -219,7 +219,9 @@ nmap <leader>md :lcd %:p:h<CR>:echo getcwd()<cr>
 
 "allow deleting selection without updating the clipboard (yank buffer)
 "via http://www.pixelbeat.org/settings/.vimrc
-vnoremap x "_x "Underscore register = blackhole
+"Underscore register = blackhole
+"TODO: Fix this... vnoremp?
+vnoremap x "_x 
 vnoremap X "_X
 
 "----------------------------------

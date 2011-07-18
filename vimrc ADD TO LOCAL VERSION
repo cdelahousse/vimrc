@@ -1,0 +1,2 @@
+set rtp+=D:/Dropbox/My\ Dropbox/!config/vim/,D:/Dropbox/My\ Dropbox/!config/vim/vimfiles
+source D:/Dropbox/My\ Dropbox/!config/vim/_vimrc
