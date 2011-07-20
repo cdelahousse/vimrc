@@ -149,10 +149,10 @@ nnoremap É ,
 
 "Flipping these motions around because I use 't' more than 'f' but can reach
 "the f key with more ease.
-noremap t f
-noremap f t
-noremap T F
-noremap F T
+"noremap t f
+"noremap f t
+"noremap T F
+"noremap F T
 
 " Make vim act like a browser
 map <space> <c-d>
@@ -216,6 +216,9 @@ nmap <leader>sel :e D:\Dropbox\My Dropbox\!config\vim\_vimrc<CR>
 
 "Change working directory to file and echo it
 nmap <leader>md :lcd %:p:h<CR>:echo getcwd()<cr>
+
+"insert hypen at beginning of line
+nmap <leader>- I-<tab>
 
 "allow deleting selection without updating the clipboard (yank buffer)
 "via http://www.pixelbeat.org/settings/.vimrc
