@@ -139,6 +139,7 @@ autocmd FileType php set fo=tcqawb
 "/ MAPPINGS
 "-----------------
 
+
 " Switches : to ;. Saves alot of keystrokes
 nnoremap ; :
 "Switches é and É to : and , basically allowing ; to be "pressed"
