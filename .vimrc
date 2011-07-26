@@ -1,3 +1,4 @@
+set nocompatible "called again in case local vimrc didn't
 "-----------------------
 " Vundle Settings
 "-----------------------
@@ -127,6 +128,16 @@ endif
 set fileformats=unix,dos
 "set fileformat=unix   "force unix
 	
+"Sets Unicode. See http://vim.wikia.com/wiki/Working_with_Unicode
+if has("multi_byte")
+  if &termencoding == ""
+		let &termencoding = &encoding
+  endif
+  set encoding=utf-8
+  setglobal fileencoding=utf-8 bomb
+  set fileencodings=ucs-bom,utf-8,latin1
+endif
+
 "-----------------
 "/ GUI SETTINGS
 "-----------------
@@ -191,10 +202,10 @@ if has('gui_running')
 
 	set spell " spell checking on. Looks fugly in terminal
 "Settings for Terminal
-elseif &term=~'xterm' || &term=~'rxvt-cygwin-native' || &term=~'xterm-256color'
+elseif &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 	
-	colorscheme desert
-	
+	"colorscheme desert
+
 	"highlight bg color of current line and remove default underlinehlight cursor
 	hi CursorLine cterm=none ctermbg=237
 
@@ -306,6 +317,8 @@ nnoremap Y y$
 "TODO FIND APPROPRIATE KEY
 "noremap L $ 
 
+"also remap 0  end of line
+
 "Quick shortcuts 
 nnoremap <leader>b :bd!<cr> 
 nnoremap <leader>q :q!<cr>
@@ -381,6 +394,16 @@ cnoremap <C-E> <End>
 cnoremap <C-K> <C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
+
+"Move lines up and down using ALT-J or A-K
+"http://vim.wikia.com/wiki/Moving_lines_up_or_down_in_a_file
+"Does not work in terminal... GRRRR!
+nnoremap <M-j> :m+<CR>==
+nnoremap <M-k> :m-2<CR>==
+inoremap <M-j> <Esc>:m+<CR>==gi
+inoremap <M-k> <Esc>:m-2<CR>==gi
+vnoremap <M-j> :m'>+<CR>gv=gv
+vnoremap <M-k> :m-2<CR>gv=gv
 
 "---------------------------------------------------
 "/ -------------- WINDOW MAPPINGS ------------------
@@ -512,14 +535,4 @@ set undodir=$TEMP//
 "---------------------------------------
 "/ Random Scripts
 "---------------------------------------
-
-"Sets Unicode. See http://vim.wikia.com/wiki/Working_with_Unicode
-if has("multi_byte")
-  if &termencoding == ""
-		let &termencoding = &encoding
-  endif
-  set encoding=utf-8
-  setglobal fileencoding=utf-8 bomb
-  set fileencodings=ucs-bom,utf-8,latin1
-endif
 
