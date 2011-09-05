@@ -125,8 +125,8 @@ endif
 "endings. I really don't like CRLF even though I work on windows. Git complains if
 "there are a mixture of CRLF and LF. This fixes that by only saving as LF.
 "http://vim.wikia.com/wiki/Change_end-of-line_format_for_dos-mac-unix
-set fileformats=unix,dos
-"set fileformat=unix   "force unix
+"set fileformats=unix,dos
+set fileformat=unix   "force unix
 	
 "Sets Unicode. See http://vim.wikia.com/wiki/Working_with_Unicode
 if has("multi_byte")
@@ -201,6 +201,10 @@ if has('gui_running')
 	set cursorline 
 
 	set spell " spell checking on. Looks fugly in terminal
+" spelling
+  " Enable spell check for text files
+  autocmd BufNewFile,BufRead *.txt setlocal spell spelllang=en
+
 "Settings for Terminal
 elseif &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 	
@@ -289,8 +293,8 @@ map <F1> <ESC>
 
 "In insertmode, escape when jj or kk is pressed. It's a common
 "sequence in normal mode but never in insert more.
-inoremap jj <ESC>j
-inoremap kk <ESC>k
+inoremap jj <ESC>gj
+inoremap kk <ESC>gk
 inoremap hh <ESC>h
 
 "For long line. Cursor goes down at line wrap instead of line end
@@ -435,13 +439,16 @@ map <leader>t <Plug>TaskList
 
 "<leader>ff uses JSBeautifier
 
-
+" NerdCommenter
+"[count]<leader>cy- Same as cc except that the commented line(s) are yanked first.
+"<leader>c$ - Comments the current line from the cursor to the end of line.
 "-----------------
 "/ PLUGINS
 "-----------------
 
 "Default completion type -- Omnicomplete
-let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+"let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
+let g:SuperTabDefaultCompletionType = "context" "TODO Figure this out 
 
 " Remember the awesomeness of ragtag CX-<Slash> 
 let g:ragtag_global_maps = 1 "For Ragtag 
@@ -456,8 +463,7 @@ let g:ragtag_global_maps = 1 "For Ragtag
 "let g:miniBufExplorerMoreThanOne = 0
 
 "Add extra terms for TaskList
-let g:tlTokenList = ["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:", "note", "NOTE", "NB"]
-
+let g:tlTokenList = ["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:",  "NOTE:", "note:", "note", "NOTE", "NB"]
 
 "-----------------
 "  FILETYPE STUFF
@@ -519,7 +525,11 @@ autocmd FileType php let php_parent_error_close = 1
 "---------------------------------------
 
 set backup " backups are nice ...
-set undofile "persistent undo
+
+if v:version >= 700
+	set undofile "persistent undo
+endif
+
 "Setting swap and backup dir to system temp
 set backupdir=$TEMP//
 set directory=$TEMP// 
