@@ -193,26 +193,24 @@ if has('gui_running')
 	colorscheme solarized
 	
 	set lines=48 columns=92 "set initial windows size 
-	set guioptions-=m "menu
+	set guioptions-=m
 	set guioptions-=a
 	set guioptions-=t
 	set guioptions-=T
 	
+	
 	" Set up the gui cursor to look nice
 	"http://www.derekwyatt.org/vim/the-vimrc-file/my-vimrc-file/
 	"Only works with gVim
+
 	set guicursor=n-v-c:block-Cursor-blinkon0
 	set guicursor+=ve:ver35-Cursor
 	set guicursor+=o:hor50-Cursor
 	set guicursor+=i-ci:ver25-Cursor
 	set guicursor+=r-cr:hor20-Cursor
 	set guicursor+=sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
-
-	"Set font
 	if has("win32")
 		set guifont=Consolas:h11:cANSI "setting the GuiFont
-	elseif has("unix")
-		set guifont=Monospace\ 10 
 	endif
 
 	"highlight current line
@@ -263,6 +261,15 @@ endif
 if has('mouse')
 	  set mouse=a
 endif
+
+
+"Text formatting options. Defaul is (for php) set fo=qrowcb
+"and set fo=tcq for the rest. 
+"***Note*** if text and comment starts fucking up check out the trouble
+"shooting part of format options in HELP.
+"TODO: fix 'next line is commented when newline from commented line'
+autocmd FileType php set fo=tcqawb
+
 "TODO SEE User guide section 30.6 for MORE ON FORMATTING COMMENTS
 
 "---------------------------------------------------
@@ -284,6 +291,7 @@ set noexpandtab	"Keep tabs as tabs, do not convert to spces
 set tabstop=2     " tab width (<tab>)
 set softtabstop=2 "Generally a good idea to keep this the same as shiftwidth
 set shiftwidth=2  " amount of columns for indentation
+
 
 "---------------------------------------------------
 "/ -------------- CUSTOM MAPPINGS ------------------
@@ -447,11 +455,9 @@ map <leader>t <Plug>TaskList
 " NerdCommenter
 "[count]<leader>cy- Same as cc except that the commented line(s) are yanked first.
 "<leader>c$ - Comments the current line from the cursor to the end of line.
-
 "-----------------
-"/ PLUGIN Settings
+"/ PLUGINS
 "-----------------
-
 "Nerdtree quits after I select and open a file
 let NERDTreeQuitOnOpen=1
 
@@ -477,6 +483,11 @@ autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
+"---------------------------------------
+"/ Processing
+"---------------------------------------
+
+let processing_doc_path="/home/christian/MyApplications/processing-1.5.1/modes/java/reference/"
 
 "-----------------
 "/ PHP Stuff
@@ -491,12 +502,6 @@ autocmd FileType php noremap <leader>mc :w !C:\XAMPP\xampp\php\php.exe -f "%:p"<
 " PHP parser check (CTRL-L) (syntax check!)
 autocmd FileType php noremap <leader>ms :w !C:\XAMPP\xampp\php\php.exe -l "%:p"<CR>
 
-"Text formatting options. Defaul is (for php) set fo=qrowcb
-"and set fo=tcq for the rest. 
-"***Note*** if text and comment starts fucking up check out the trouble
-"shooting part of format options in HELP.
-"TODO: fix 'next line is commented when newline from commented line'
-autocmd FileType php set fo=tcqawb
 
 "From http://phpslacker.com/2009/02/05/vim-tips-for-php-programmers/
 
@@ -550,6 +555,19 @@ set backupdir=$TEMP//
 set directory=$TEMP// 
 set undodir=$TEMP//
 
+"Delete recent swapfiles
+"if has('win32')
+	"silent execute '!del "'.$TEMP.'\*~"'
+"elseif has('unix')
+	"silent execute '!rm "'.$TEMP.'/*~"'
+"endif
+
+
+
+
+
+
 "---------------------------------------
 "/ Random Scripts
 "---------------------------------------
+
