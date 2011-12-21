@@ -16,11 +16,7 @@ execute "source " . g:my_vim_path . "/.vimrc"
 "/cygdrive/d/Dropbox/My\ Dropbox/-config/vim/.vimrc 
 "
 
-
-
-
 "OR FOR LINUX
-
 set nocompatible
 filetype off "for vundle
 
@@ -32,4 +28,4 @@ execute "set rtp+=" . g:my_vim_path . '/bundle/vundle/'
 execute "call vundle#rc('" . g:my_vim_path . "/bundle/')"
 
 "Source my custom vimrc
-execute "source " . g:my_vim_path . "/.vimrc"
+execute "source " . g:my_vim_path . "/vimrc"

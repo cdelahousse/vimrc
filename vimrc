@@ -1,10 +1,12 @@
 set nocompatible "called again in case local vimrc didn't. For Vundle
 "-----------------------
-" Vundle Settings
+"/ VUNDLE SETTINGS
+"  Keep these settings near the top
 "-----------------------
+
 Bundle 'gmarik/vundle'
 Bundle 'Solarized'
-"Desert for Minnty
+"Desert for Minnty and console
 Bundle 'desert.vim'
 Bundle 'The-NERD-tree' 
 Bundle 'The-NERD-Commenter'
@@ -16,12 +18,12 @@ Bundle 'IndexedSearch'
 Bundle 'superjudge/tasklist-pathogen'
 "TODO FIGURE SUPERTAB OUT
 Bundle 'ervandew/supertab' 
-Bundle 'ZenCoding.vim'
-Bundle 'jshint.vim'
-Bundle 'mikewest/vimroom'
+"Bundle 'ZenCoding.vim'
+"Bundle 'jshint.vim'
+"Bundle 'mikewest/vimroom'
 "TODO Figure if htis is worth installing
 "Bundle 'Command-T'
-Bundle 'sophacles/vim-processing'
+"Bundle 'sophacles/vim-processing'
 
 "-----------------
 "/ GENERAL CONFIG SETTINGS
@@ -41,31 +43,21 @@ set modelines=0
 
 set ttyfast "fast terminal connection, more characters sent to screen, faster in term
 
-set shellslash " Set the forward slash to be the slash of note.  Backslashes
-"suck, This is really only applicable to Windows but I like to have a vimrc
-"that works no matter what OS I'm currently on
+set shellslash " Set the forward slash to be the slash of note. 
 
 set hidden "switch buffer without saving
 						
 "Case smart searching - see http://items.sjbach.com/319/configuring-vim-right
 set ignorecase 
-set smartcase
-"Hightlight and incremental search
-set hlsearch
+set smartcase "Case sensitive search for important boundary cases
+set hlsearch "Hightlight and incremental search
 set incsearch
-
 set wrapscan " set the search scan to wrap lines 
-
-"set virtualedit=onemore         " allow for cursor beyond last character
-
+set virtualedit=onemore         " allow for cursor beyond last character
 
 " Use the same symbols as TextMate for tabstops and EOLs. Useful for 
 " :set list! See Mapping below
 set listchars=tab:»\ ,eol:¬
-"Invisible character colors -- Tabs and EOL
-
-"highlight NonText guifg=#4a4a59
-"highlight SpecialKey guifg=#4a4a59
 
 set gdefault " the /g flag on :s substitutions by default
 
@@ -80,10 +72,45 @@ set history=1000	"sets :command history
 
 set autochdir "Change cwd to current file whenever a window change happens
 
-"---
-"Gvim on windows with Cygwin Shell stuff
-"---
-if has('win32') 
+
+"---------------------------------------------------
+"/ -------------- TEXT EDITING  --------------------
+"---------------------------------------------------
+
+"TODO SEE User guide section 30.6 for MORE ON FORMATTING COMMENTS
+
+set wrap "wrap text
+set textwidth=85 "hard line breaks at this number
+set colorcolumn=+1 " highlight column after 'textwidth'
+"set formatoptions=qn1tca "see fo-table. TODO: REVIEW
+
+" Following settings inspire from http://nvie.com/posts/how-i-boosted-my-vim/
+set smarttab      " insert tabs on the start of a line according to shiftwidth, not tabstop
+set autoindent    " always set autoindenting on
+set copyindent    " copy the previous indentation on autoindenting
+set backspace=indent,eol,start " allow backspacing over everything in insert mode
+set shiftround	"use multiple of shiftwidth when indenting with '<' and '>'
+
+set noexpandtab	"Keep tabs as tabs, do not convert to spces
+set tabstop=2     " tab width (<tab>)
+set softtabstop=2 "Generally a good idea to keep this the same as shiftwidth
+set shiftwidth=2  " amount of columns for indentation
+
+"-------------------------------------------------
+" ------ UNIX and LINUX Specific settings --------
+"-------------------------------------------------
+if has('unix')
+	"Make :! (ie. the bash command) work like the bash terminal
+	"This makes bash aliases load, because .bashrc is only 
+	"loaded when the shell is run in interative mode.
+	set shellcmdflag=-ic
+
+"-------------------------------------------------
+"/ ------ VIM ON WINDOWS WITH CYGWIN -----------
+"-------------------------------------------------
+
+elseif has('win32') 
+	"Stuff to keep in mind in case I switch to Cygwin
 	"http://vim.wikia.com/wiki/Use_cygwin_shell
 	"http://vim.wikia.com/wiki/Running_the_win32-version_of_Vim_from_cygwin
 	"http://vim.wikia.com/wiki/Get_a_shell_command_for_changing_to_the_current_directory
@@ -99,8 +126,8 @@ if has('win32')
 	"http://stackoverflow.com/questions/3164181/getting-gvim-to-automatically-translate-a-cygwin-path
 	"http://superuser.com/questions/298792/how-to-use-cyg-wrapper-to-fork-a-new-tab-in-win32-gvim/
 	"http://www.google.com/search?sourceid=chrome&ie=UTF-8&q=win32+gvim+cygwin#q=win32+gvim+cygwin&hl=en&prmd=ivns&ei=uI4uTuj3IcXRrQfipJymAw&start=10&sa=N&bav=on.2,or.r_gc.r_pw.&fp=4314f23e9084643a&biw=1440&bih=785
-"http://alecthegeek.wordpress.com/2008/10/09/handy-hack-run-vim-for-windows-under-cygwin/
-"
+	"http://alecthegeek.wordpress.com/2008/10/09/handy-hack-run-vim-for-windows-under-cygwin/
+	"
 
 	"TODO Look in to vim shell http://www.wana.at/vimshell/
 	"TODO Figure out how to switch to CWD of file
@@ -111,49 +138,20 @@ if has('win32')
 	"set shell=C:/cygwin/bin/mintty
 	"set shell=C:/cygwin/bin/bash
 	"set shellcmdflag=--login\ -c
-	
+
 	"remap ! to got to CWD. XXX Doesn't work with aliases
 	"http://vim.1045645.n5.nabble.com/running-shell-command-in-the-directory-of-the-file-td1185993.html
 	"cnoremap !cwd !cd '%:p:h'; 
 
 	"may be of interest later
 	"echo shellescape(expand("%:p:h"))
-
-elseif has('unix')
-	"Make :! (ie. the bash command) work like the bash terminal
-	"This makes bash aliases load, because .bashrc is only 
-	"loaded when the shell is run in interative mode.
-	set shellcmdflag=-ic
 endif
 
+"---------------------------------------------
+"/ -------- GENERAL GUI SETTINGS -------------
+"---------------------------------------------
 
-
-"-----------------
-"/ ENCODINGS AND FILE FORMATS SETTINGS
-"-----------------
-
-"Sets all files to unix filetype. Changes EOL's to LF and strips CRLF (dos) line
-"endings. I really don't like CRLF even though I work on windows. Git complains if
-"there are a mixture of CRLF and LF. This fixes that by only saving as LF.
-"http://vim.wikia.com/wiki/Change_end-of-line_format_for_dos-mac-unix
-"set fileformats=unix,dos
-set fileformat=unix   "force unix
-	
-"Sets Unicode. See http://vim.wikia.com/wiki/Working_with_Unicode
-if has("multi_byte")
-  if &termencoding == ""
-		let &termencoding = &encoding
-  endif
-  set encoding=utf-8
-  setglobal fileencoding=utf-8 bomb
-  set fileencodings=ucs-bom,utf-8,latin1
-endif
-
-"-----------------
-"/ GUI SETTINGS
-"-----------------
-
-syntax enable
+syntax enable "Syntax highlighting
 
 set ruler "Shows colums, rows, percentage of location in file. Like g-Ctrl-G
 set showcmd " Show the current command in the lower right corner. Display the current mode (vim default: ON)
@@ -168,7 +166,7 @@ set number
 set scrolloff=12 "Viewport scroll X lines before cursor hits a side 
 set scroll=9 "Scroll up and down by how many lines using CTRL-D and CTRL-U
 set helpheight=29
-set winminheight=0				" windows can be 0 line high
+set winminheight=0 " windows can be 0 line high
 
 set cmdheight=1 "The command-line bar height (default = 1)
 set laststatus=2 "Always display status line
@@ -179,15 +177,18 @@ set statusline=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
 set wildmenu			"autocompletion menu when  <tab> is pressed
 set wildmode=list:longest,full	" comand <Tab> completion, list matches, then longest common part, then all.
 
+" These commands open folds
+set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
+
 " ignores extensions on expansion/completion
 set wildignore+=.git
 
 "Resize splits when the window is resized
 au VimResized * exe "normal! \<c-w>="
 
-"---
-"Settings for gVim running a gui
-"---
+"-------------------------------------------------
+"/ ------- FOR GVIM AND WHILE GUI is RUNNING -----
+"-------------------------------------------------
 
 if has('gui_running')
 	colorscheme solarized
@@ -215,18 +216,21 @@ if has('gui_running')
 		set guifont=Monospace\ 10 
 	endif
 
+	"Invisible character colors -- Tabs and EOL
+	highlight NonText guifg=#5a5a65
+	highlight SpecialKey guifg=#5a5a65
+
 	"highlight current line
 	set cursorline 
 
 	set spell " spell checking on. Looks fugly in terminal
-" spelling
   " Enable spell check for text files
   autocmd BufNewFile,BufRead *.txt setlocal spell spelllang=en
 
+"--------------------------------------------
+"/ --------- FOR TERMINAL EMULATORS ---------
+"--------------------------------------------
 
-"---
-"Settings for terminal emulators
-"---
 elseif &term=~"^xterm" || &term=~'rxvt-cygwin-native' 
 	
 	colorscheme desert
@@ -263,34 +267,10 @@ endif
 if has('mouse')
 	  set mouse=a
 endif
-"TODO SEE User guide section 30.6 for MORE ON FORMATTING COMMENTS
 
 "---------------------------------------------------
-"/ -------------- TEXT EDITING  --------------------
+"/ ------- MODIFIED DEFAULT MAPPINGS --------------
 "---------------------------------------------------
-set wrap "wrap text
-set textwidth=85 "hard line breaks at this number
-set colorcolumn=+1 " highlight column after 'textwidth'
-"set formatoptions=qn1tca "see fo-table. TODO: REVIEW
-
-" Following settings inspire from http://nvie.com/posts/how-i-boosted-my-vim/
-set smarttab      " insert tabs on the start of a line according to shiftwidth, not tabstop
-set autoindent    " always set autoindenting on
-set copyindent    " copy the previous indentation on autoindenting
-set backspace=indent,eol,start " allow backspacing over everything in insert mode
-set shiftround	"use multiple of shiftwidth when indenting with '<' and '>'
-
-set noexpandtab	"Keep tabs as tabs, do not convert to spces
-set tabstop=2     " tab width (<tab>)
-set softtabstop=2 "Generally a good idea to keep this the same as shiftwidth
-set shiftwidth=2  " amount of columns for indentation
-
-"---------------------------------------------------
-"/ -------------- CUSTOM MAPPINGS ------------------
-"---------------------------------------------------
-
-" These commands open folds
-set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
 " Switches : to ;. Saves alot of keystrokes
 " Normal mode only
@@ -302,15 +282,9 @@ nnoremap É ,
 "commands and plugins. é eliminates this problem and inserts a single ;  
 
 "F1 always gets in the way of ESC 
-map <F1> <ESC>
+map <F1> <NOP>
 
-"In insertmode, escape when jj or kk is pressed. It's a common
-"sequence in normal mode but never in insert more.
-inoremap jj <ESC>gj
-inoremap kk <ESC>gk
-inoremap hh <ESC>h
-
-"For long line. Cursor goes down at line wrap instead of line end
+"For long lines. Cursor goes down at line wrap instead of line end
 nnoremap j gj
 nnoremap k gk
 
@@ -320,60 +294,18 @@ map <C-K> <C-W>k
 map <C-L> <C-W>l
 map <C-H> <C-W>h
  
-" Change buffer and the clear the command line (for buftab) using <silent> 
-"Conflicts with default mapping of moving cursor to top and bottom of the
+" Change buffer and the clear the command line (for buftab plugin) using <silent> 
+" This mapping conflicts with default mapping of moving cursor to top and bottom of the
 " screen... But that's OK...
 map <silent> <S-H> :bp<cr>
 map <silent> <S-L> :bn<cr>
 
-" Yank from the cursor to the end of the line, to be consistent with C and D.
-" (default: Y synonym for yy)
-nnoremap Y y$
-
-" L is easier to type, and I never use the default behavior.
-"TODO FIND APPROPRIATE KEY
-"noremap L $ 
-
-"also remap 0  end of line
-
-"Quick shortcuts 
-nnoremap <leader>b :bd!<cr> 
-nnoremap <leader>q :q!<cr>
-nnoremap <leader>w :w!<cr>
-
-"---------------------------------------------------
-"/ MAPPINGS FOR INTERESTING FUNCTIONALITY
-"---------------------------------------------------
-
-"Quick Return https://bitbucket.org/sjl/dotfiles/src/ef5962b5abed/vim/.vimrc
-inoremap <c-cr> <esc>A<cr>
-
-"Creates nicely spaced and completed brackets. See autoclose.vim plugin for
-"other bracket and " closing combinations.
-inoremap {<CR>  {<CR>}<Esc>ko
-inoremap (<CR>  (<CR>)<Esc>ko
-
-" Shortcut to rapidly toggle `set list`: Displays EOL and Tabs
-map <Leader>l :set list!<CR>
-
-"New line without insertmode
-"Mintty doesn't support shit enter
-nmap <S-Enter> ko<Esc>j
-
-"Carriage return without exiting normal mode
-nnoremap <CR> o<Esc>k
-
 "<SPACE> now turns off highlighting along with it's current functionality.
 nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
 
-"Source _vimrc
-nmap <leader>s :source $MYVIMRC<CR>
-
-"Edit vimrc 
-execute "nmap <leader>se :e " . g:my_vim_path . "/.vimrc<CR>"
-
-" When vimrc is edited, reload it
-execute "autocmd! bufwritepost .vimrc source " . g:my_vim_path . "/.vimrc"
+" Yank from the cursor to the end of the line, to be consistent with C and D.
+" (default: Y synonym for yy)
+nnoremap Y y$
 
 "allow deleting selection without updating the clipboard (yank buffer) via
 "http://www.pixelbeat.org/settings/.vimrc Underscore register = blackhole added h to
@@ -388,19 +320,67 @@ nnoremap # #zzzv
 nnoremap n nzzzv
 nnoremap N Nzzzv
 
+" L is easier to type, and I never use the default behavior.
+"TODO FIND APPROPRIATE KEY
+"noremap L $ 
+
+"TODO: also remap 0  end of line
+
+"---------------------------------------------------------------
+"/ ---------- MAPPINGS FOR INTERESTING FUNCTIONALITY -----------
+"---------------------------------------------------------------
+
+"Quick shortcuts :
+"delete buffer
+nnoremap <leader>b :bd!<cr>
+"quit all
+nnoremap <leader>q :q!<cr> "
+"write to file
+nnoremap <leader>w :w!<cr>
+
+"In insertmode, escape when jj or kk is pressed. It's a common
+"sequence in normal mode but never in insert more.
+inoremap jj <ESC>gj
+inoremap kk <ESC>gk
+inoremap hh <ESC>h
+
+"kj is Faster than ESC
+inoremap kj <ESC>
+
+"Write to new line without exiting insertmode
+"https://bitbucket.org/sjl/dotfiles/src/ef5962b5abed/vim/.vimrc
+inoremap <c-cr> <esc>A<cr>
+
+"Creates nicely spaced and completed brackets. See autoclose.vim plugin for
+"other bracket and " closing combinations.
+inoremap {<CR>  {<CR>}<Esc>ko
+inoremap (<CR>  (<CR>)<Esc>ko
+
+" Shortcut to rapidly toggle `set list`: Displays EOL and Tabs
+map <Leader>l :set list!<CR>
+
+"New line without entering insertmode
+nnoremap <CR> o<Esc>k
+"note: Mintty doesn't support shift enter
+nmap <S-Enter> ko<Esc>j
+
+"Source _vimrc
+nmap <leader>s :source $MYVIMRC<CR>
+
+"Edit vimrc 
+execute "nmap <leader>se :e " . g:my_vim_path . "/.vimrc<CR>"
+
+" When vimrc is edited, reload it
+"execute "autocmd! bufwritepost .vimrc source " . g:my_vim_path . "/.vimrc"
+
+
 "Select previously pasted text
 "TODO: Lookup backtick and bracket. How does this work?
-nnoremap <leader>v V`]
+"nnoremap <leader>v V`]
+"note: gv does the same thing.  This is redundant
 
 "Reformat a paragraph of text
 nnoremap <leader>fp gqip
-
-"Current date
-iabbrev xdate <c-r>=strftime("%d/%m/%y %H:%M:%S")<cr>
-
-iabbrev cd@ christian@delahousse.ca
-iabbrev gh/ http://github.com/cdelahousse
-iabbrev cd/ http://delahousse.ca
 
 "Most Recently Used Files (replaces :MRU)
 map <leader>mf :browse oldfile<CR>
@@ -416,13 +396,31 @@ cnoremap <C-N> <Down>
 
 "Move lines up and down using ALT-J or A-K
 "http://vim.wikia.com/wiki/Moving_lines_up_or_down_in_a_file
-"Does not work in terminal... GRRRR!
+"NOTE: Does not work in terminal... GRRRR!
 nnoremap <M-j> :m+<CR>==
 nnoremap <M-k> :m-2<CR>==
 inoremap <M-j> <Esc>:m+<CR>==gi
 inoremap <M-k> <Esc>:m-2<CR>==gi
 vnoremap <M-j> :m'>+<CR>gv=gv
 vnoremap <M-k> :m-2<CR>gv=gv
+
+
+"Gnome-Terminal emulator style copy and paste
+"vnoremap <S-C-c> "+y
+"inoremap <S-C-v>  <C-r>+
+"nnoremap <S-C-v>  "+p
+
+"---------------------------------------------------
+"/ --------------- TEXT EXPANSION ------------------
+"---------------------------------------------------
+
+"Current date yyyy/mm/dd
+iabbrev xdate <c-r>=strftime("%y/%m/%d %H:%M:%S")<cr>
+
+"Text Expansion
+iabbrev cd@ christian@delahousse.ca
+iabbrev gh/ http://github.com/cdelahousse
+iabbrev cd/ http://delahousse.ca
 
 "---------------------------------------------------
 "/ -------------- WINDOW MAPPINGS ------------------
@@ -439,8 +437,8 @@ endif
 "NERDTree
 map <F2> :NERDTreeToggle<CR>
 
+"for Tasklist (Todos, etc)
 map <leader>t <Plug>TaskList
-" <leader>t is for Tasklist (Todos, etc)
 
 "<leader>ff uses JSBeautifier
 
@@ -448,9 +446,9 @@ map <leader>t <Plug>TaskList
 "[count]<leader>cy- Same as cc except that the commented line(s) are yanked first.
 "<leader>c$ - Comments the current line from the cursor to the end of line.
 
-"-----------------
-"/ PLUGIN Settings
-"-----------------
+"---------------------------------------------------
+"/ -------------- PLUGIN SETTINGS ------------------
+"---------------------------------------------------
 
 "Nerdtree quits after I select and open a file
 let NERDTreeQuitOnOpen=1
@@ -476,6 +474,29 @@ autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+
+
+"---------------------------------------------------
+"/ ------ ENCODINGS AND FILE FORMATS SETTINGS -------
+"---------------------------------------------------
+
+"Sets all files to unix filetype. Changes EOL's to LF and strips CRLF (dos) line
+"endings. I really don't like CRLF even though I work on windows. Git complains if
+"there are a mixture of CRLF and LF. This fixes that by only saving as LF.
+"http://vim.wikia.com/wiki/Change_end-of-line_format_for_dos-mac-unix
+"set fileformats=unix,dos
+set fileformat=unix   
+	
+"Sets Unicode. 
+"http://vim.wikia.com/wiki/Working_with_Unicode
+if has("multi_byte")
+  if &termencoding == ""
+		let &termencoding = &encoding
+  endif
+  set encoding=utf-8
+  setglobal fileencoding=utf-8 bomb
+  set fileencodings=ucs-bom,utf-8,latin1
+endif
 
 
 "-----------------
@@ -516,19 +537,6 @@ autocmd FileType php let php_htmlInStrings = 1
 autocmd FileType php let php_parent_error_close = 1
 
 
-"See http://www.slideshare.net/ZendCon/vim-for-php-programmers-presentation
-"slide 52 about Linting and syntax stuff. NEED TO LOOK INTO THIs! Andrei
-"Zmiskksfdjdfjsfds slides
-" :set makeprg=php\ -l\ %
-" :set errorformat=%m\ in\ %f\ on\ lin\ %l
-
-
-" set make command when editing php files
-"set makeprg=C:\XAMPP\xampp\php\php.exe\ -l\ %
-"set errorformat=%m\ in\ %f\ on\ line\ %l
-"http://phpslacker.com/2009/02/05/vim-tips-for-php-programmers/
-"To use, simply issue “:make %” command inside of VIM to check the syntax of 
-"your php against the interpreter. Syntax highlighting can only do so much
 
 "---------------------------------------
 "/ KEEP FOLLOWING NEAR BOTTOM OF VIMRC 
@@ -539,6 +547,7 @@ set backup " backups are nice ...
 if v:version >= 700
 	set undofile "persistent undo
 endif
+
 
 if has("unix")
 	"In windows, $TEMP is already defined, but in linux/unix, we need to define it
