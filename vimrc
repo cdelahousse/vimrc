@@ -1,6 +1,7 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse 
+" Last updated: 2012/01/22 
 
 "--------------------------------------------
 "/ ------------ VUNDLE SETTINGS -------------
@@ -357,7 +358,7 @@ nnoremap <S-CR> o<Esc>k
 "note: Mintty doesn't support shift enter
 nnoremap <CR> ko<Esc>j
 
-"Source _vimrc
+"Source _vimrc.
 nmap <leader>s :source $MYVIMRC<CR>
 
 "Edit vimrc 
