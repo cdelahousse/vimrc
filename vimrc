@@ -1,8 +1,13 @@
+" Christian Delahousse's vimrc
+" http://christian.delahousse.ca
+" http://github.com/cdelahousse 
+
+"--------------------------------------------
+"/ ------------ VUNDLE SETTINGS -------------
+"--------------------------------------------
+"- Keep these settings at the top of vimrc --
+"--------------------------------------------
 set nocompatible "called again in case local vimrc didn't. For Vundle
-"-----------------------
-"/ VUNDLE SETTINGS
-"  Keep these settings near the top
-"-----------------------
 
 Bundle 'gmarik/vundle'
 Bundle 'Solarized'
@@ -17,17 +22,12 @@ Bundle 'buftabs'
 Bundle 'IndexedSearch'
 Bundle 'superjudge/tasklist-pathogen'
 "TODO FIGURE SUPERTAB OUT
-Bundle 'ervandew/supertab' 
-"Bundle 'ZenCoding.vim'
-"Bundle 'jshint.vim'
-"Bundle 'mikewest/vimroom'
-"TODO Figure if htis is worth installing
-"Bundle 'Command-T'
-"Bundle 'sophacles/vim-processing'
+Bundle 'ervandew/supertab'
+"Bundle 'Command-T' "TODO Figure if htis is worth installing
 
-"-----------------
-"/ GENERAL CONFIG SETTINGS
-"----------------
+"----------------------------------------
+"/------- GENERAL CONFIG SETTINGS -------
+"----------------------------------------
 
 "setting personal modifying key to , 
 let mapleader = ","
@@ -35,24 +35,13 @@ let mapleader = ","
 "filetype settings
 "filetype on "VUNDLE needs this off, see system vimrc
 filetype plugin on "If problem with vundle, turn off
-filetype indent on
-
-"Prevent exploit 
-"http://lists.alioth.debian.org/pipermail/pkg-vim-maintainers/2007-June/004020.html
-set modelines=0 
 
 set ttyfast "fast terminal connection, more characters sent to screen, faster in term
 
 set shellslash " Set the forward slash to be the slash of note. 
 
-set hidden "switch buffer without saving
+set hidden "Buffers can live in background
 						
-"Case smart searching - see http://items.sjbach.com/319/configuring-vim-right
-set ignorecase 
-set smartcase "Case sensitive search for important boundary cases
-set hlsearch "Hightlight and incremental search
-set incsearch
-set wrapscan " set the search scan to wrap lines 
 set virtualedit=onemore         " allow for cursor beyond last character
 
 " Use the same symbols as TextMate for tabstops and EOLs. Useful for 
@@ -64,7 +53,6 @@ set gdefault " the /g flag on :s substitutions by default
 set showmatch	" set show matching parenthesis
 set matchtime=2	"Sets time the other parenthesis is highlighted when showmatch is enable
 
-"set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 
 set viminfo+='1000,f1,:1000,/1000  "Sets bigger viminfo file. Saves registers, command history, etc.
 
@@ -72,29 +60,74 @@ set history=1000	"sets :command history
 
 set autochdir "Change cwd to current file whenever a window change happens
 
+"Prevent exploit 
+"http://lists.alioth.debian.org/pipermail/pkg-vim-maintainers/2007-June/004020.html
+set modelines=0 
 
 "---------------------------------------------------
 "/ -------------- TEXT EDITING  --------------------
 "---------------------------------------------------
 
+"set autoread  "Reload files changed outside vim
+
 "TODO SEE User guide section 30.6 for MORE ON FORMATTING COMMENTS
+"set formatoptions=qn1tca "see fo-table. TODO: REVIEW
 
 set wrap "wrap text
+set linebreak "wrap lines at convenient points
 set textwidth=85 "hard line breaks at this number
 set colorcolumn=+1 " highlight column after 'textwidth'
-"set formatoptions=qn1tca "see fo-table. TODO: REVIEW
+
+filetype indent on
 
 " Following settings inspire from http://nvie.com/posts/how-i-boosted-my-vim/
 set smarttab      " insert tabs on the start of a line according to shiftwidth, not tabstop
 set autoindent    " always set autoindenting on
+set smartindent		"Indents smartly for c-like languages
 set copyindent    " copy the previous indentation on autoindenting
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set shiftround	"use multiple of shiftwidth when indenting with '<' and '>'
+
+"set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 
 set noexpandtab	"Keep tabs as tabs, do not convert to spces
 set tabstop=2     " tab width (<tab>)
 set softtabstop=2 "Generally a good idea to keep this the same as shiftwidth
 set shiftwidth=2  " amount of columns for indentation
+
+
+"-----------------------------
+"/ -------- SEARCHING --------
+"-----------------------------
+
+"Case smart searching - see http://items.sjbach.com/319/configuring-vim-right
+set ignorecase 
+set smartcase "Case sensitive search for important boundary cases
+set hlsearch "Hightlight and incremental search
+set incsearch
+set wrapscan " set the search scan to wrap lines 
+
+
+"--------------------------------
+"/ ------ BACKUP AND SWAP -------
+"--------------------------------
+
+set backup " backups are nice ...
+
+if v:version >= 700
+	set undofile "persistent undo
+endif
+
+
+if has("unix")
+	"In windows, $TEMP is already defined, but not in linux/unix
+	let $TEMP = '/tmp/'
+endif
+
+"Setting swap and backup dir to system temp
+set backupdir=$TEMP//
+set directory=$TEMP// 
+set undodir=$TEMP//
 
 "-------------------------------------------------
 " ------ UNIX and LINUX Specific settings --------
@@ -104,48 +137,8 @@ if has('unix')
 	"This makes bash aliases load, because .bashrc is only 
 	"loaded when the shell is run in interative mode.
 	set shellcmdflag=-ic
-
-"-------------------------------------------------
-"/ ------ VIM ON WINDOWS WITH CYGWIN -----------
-"-------------------------------------------------
-
-elseif has('win32') 
-	"Stuff to keep in mind in case I switch to Cygwin
-	"http://vim.wikia.com/wiki/Use_cygwin_shell
-	"http://vim.wikia.com/wiki/Running_the_win32-version_of_Vim_from_cygwin
-	"http://vim.wikia.com/wiki/Get_a_shell_command_for_changing_to_the_current_directory
-	"http://vim.wikia.com/wiki/Execute_a_shell_command_in_the_directory_shown_in_file_explorer
-	"KEYWORDS: cygwin, native gvim, win32 gvim
-	"http://vim.1045645.n5.nabble.com/solution-of-gvim-cygwin-td1147217.html
-	"http://www.manuel-strehl.de/tips_and_tricks/vim_and_win.en.html
-	"http://www.manuel-strehl.de/tips_and_tricks/vim_and_win_revised.en.html
-	"http://vim.wikia.com/wiki/Running_the_win32-version_of_Vim_from_cygwin
-	"http://vim.wikia.com/wiki/Run_native-Windows_Vim_from_cygwin_without_a_wrapper
-	"http://tech.groups.yahoo.com/group/vim/message/79093
-	"http://vim.1045645.n5.nabble.com/gvim-shell-td1142359.html
-	"http://stackoverflow.com/questions/3164181/getting-gvim-to-automatically-translate-a-cygwin-path
-	"http://superuser.com/questions/298792/how-to-use-cyg-wrapper-to-fork-a-new-tab-in-win32-gvim/
-	"http://www.google.com/search?sourceid=chrome&ie=UTF-8&q=win32+gvim+cygwin#q=win32+gvim+cygwin&hl=en&prmd=ivns&ei=uI4uTuj3IcXRrQfipJymAw&start=10&sa=N&bav=on.2,or.r_gc.r_pw.&fp=4314f23e9084643a&biw=1440&bih=785
-	"http://alecthegeek.wordpress.com/2008/10/09/handy-hack-run-vim-for-windows-under-cygwin/
-	"
-
-	"TODO Look in to vim shell http://www.wana.at/vimshell/
-	"TODO Figure out how to switch to CWD of file
-	"TODO Get this working with Mintty and not CMD.exe
-	"set shell=C:/cygwin/bin/bash
-	"set shellcmdflag=--login\ -c
-	"set shellxquote=\"	
-	"set shell=C:/cygwin/bin/mintty
-	"set shell=C:/cygwin/bin/bash
-	"set shellcmdflag=--login\ -c
-
-	"remap ! to got to CWD. XXX Doesn't work with aliases
-	"http://vim.1045645.n5.nabble.com/running-shell-command-in-the-directory-of-the-file-td1185993.html
-	"cnoremap !cwd !cd '%:p:h'; 
-
-	"may be of interest later
-	"echo shellescape(expand("%:p:h"))
 endif
+
 
 "---------------------------------------------
 "/ -------- GENERAL GUI SETTINGS -------------
@@ -174,7 +167,7 @@ set laststatus=2 "Always display status line
 "Format Status Line
 set statusline=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
 
-set wildmenu			"autocompletion menu when  <tab> is pressed
+set wildmenu "autocompletion menu when  <tab> is pressed
 set wildmode=list:longest,full	" comand <Tab> completion, list matches, then longest common part, then all.
 
 " These commands open folds
@@ -213,7 +206,7 @@ if has('gui_running')
 	if has("win32")
 		set guifont=Consolas:h11:cANSI "setting the GuiFont
 	elseif has("unix")
-		set guifont=Monospace\ 10 
+		set guifont=Monospace\ 11 
 	endif
 
 	"Invisible character colors -- Tabs and EOL
@@ -360,15 +353,15 @@ inoremap (<CR>  (<CR>)<Esc>ko
 map <Leader>l :set list!<CR>
 
 "New line without entering insertmode
-nnoremap <CR> o<Esc>k
+nnoremap <S-CR> o<Esc>k
 "note: Mintty doesn't support shift enter
-nmap <S-Enter> ko<Esc>j
+nnoremap <CR> ko<Esc>j
 
 "Source _vimrc
 nmap <leader>s :source $MYVIMRC<CR>
 
 "Edit vimrc 
-execute "nmap <leader>se :e " . g:my_vim_path . "/.vimrc<CR>"
+execute "nmap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
 
 " When vimrc is edited, reload it
 "execute "autocmd! bufwritepost .vimrc source " . g:my_vim_path . "/.vimrc"
@@ -382,11 +375,7 @@ execute "nmap <leader>se :e " . g:my_vim_path . "/.vimrc<CR>"
 "Reformat a paragraph of text
 nnoremap <leader>fp gqip
 
-"Most Recently Used Files (replaces :MRU)
-map <leader>mf :browse oldfile<CR>
-"%:p:h:8 gets the current file's directory and :8 is what puts it
-"into dos short form
-"
+
 " Bash like keys for the command line"
 cnoremap <C-A> <Home>
 cnoremap <C-E> <End>
@@ -404,9 +393,8 @@ inoremap <M-k> <Esc>:m-2<CR>==gi
 vnoremap <M-j> :m'>+<CR>gv=gv
 vnoremap <M-k> :m-2<CR>gv=gv
 
-
-"Gnome-Terminal emulator style copy and paste
-"vnoremap <S-C-c> "+y
+"Copy Paste this shit
+vnoremap <C-c> "+y
 "inoremap <S-C-v>  <C-r>+
 "nnoremap <S-C-v>  "+p
 
@@ -414,16 +402,17 @@ vnoremap <M-k> :m-2<CR>gv=gv
 "/ --------------- TEXT EXPANSION ------------------
 "---------------------------------------------------
 
-"Current date yyyy/mm/dd
-iabbrev xdate <c-r>=strftime("%y/%m/%d %H:%M:%S")<cr>
+"Current date yyyy/mm/dd HH:MM:SS
+iabbrev ydate <c-r>=strftime("%Y/%m/%d %H:%M:%S")<cr>
+"Current date yyyy/mm/dd 
+iabbrev xdate <c-r>=strftime("%Y/%m/%d")<cr>
 
 "Text Expansion
-iabbrev cd@ christian@delahousse.ca
 iabbrev gh/ http://github.com/cdelahousse
 iabbrev cd/ http://delahousse.ca
 
 "---------------------------------------------------
-"/ -------------- WINDOW MAPPINGS ------------------
+"/ -------------- WINDOWS MAPPINGS -----------------
 "---------------------------------------------------
 
 if has('Win32')
@@ -455,7 +444,7 @@ let NERDTreeQuitOnOpen=1
 
 "Default completion type -- Omnicomplete
 "let g:SuperTabDefaultCompletionType = "<C-X><C-O>"
-let g:SuperTabDefaultCompletionType = "context" "TODO Figure this out 
+"let g:SuperTabDefaultCompletionType = "context" "TODO Figure this out 
 
 " Remember the awesomeness of ragtag CX-<Slash> 
 let g:ragtag_global_maps = 1 "For Ragtag 
@@ -466,9 +455,9 @@ let g:ragtag_global_maps = 1 "For Ragtag
 "Add extra terms for TaskList
 let g:tlTokenList = ["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:",  "NOTE:", "note:", "note", "NOTE", "NB", "xxx:", "XXX:"]
 
-"-----------------
-"  FILETYPE STUFF
-"-----------------
+"---------------------------------------------------
+"/ ------ FILETYPE SPECIFIC STUFF -----------------
+"---------------------------------------------------
 "see here for example http://amix.dk/blog/post/19021
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
@@ -477,7 +466,7 @@ autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
 
 "---------------------------------------------------
-"/ ------ ENCODINGS AND FILE FORMATS SETTINGS -------
+"/ ------ ENCODINGS AND FILE FORMATS SETTINGS ------
 "---------------------------------------------------
 
 "Sets all files to unix filetype. Changes EOL's to LF and strips CRLF (dos) line
@@ -499,9 +488,9 @@ if has("multi_byte")
 endif
 
 
-"-----------------
-"/ PHP Stuff
-"-----------------
+"--------------------------
+"/ ------ PHP STUFF -------
+"--------------------------
 
 " .. becomes ->
 autocmd FileType php :iabbrev .. ->
@@ -537,28 +526,44 @@ autocmd FileType php let php_htmlInStrings = 1
 autocmd FileType php let php_parent_error_close = 1
 
 
+"-------------------------------------------------
+"/ ------ VIM ON WINDOWS WITH CYGWIN -----------
+"-------------------------------------------------
 
-"---------------------------------------
-"/ KEEP FOLLOWING NEAR BOTTOM OF VIMRC 
-"---------------------------------------
+if has('win32') 
+	"Stuff to keep in mind in case I switch to Cygwin
+	"http://vim.wikia.com/wiki/Use_cygwin_shell
+	"http://vim.wikia.com/wiki/Running_the_win32-version_of_Vim_from_cygwin
+	"http://vim.wikia.com/wiki/Get_a_shell_command_for_changing_to_the_current_directory
+	"http://vim.wikia.com/wiki/Execute_a_shell_command_in_the_directory_shown_in_file_explorer
+	"KEYWORDS: cygwin, native gvim, win32 gvim
+	"http://vim.1045645.n5.nabble.com/solution-of-gvim-cygwin-td1147217.html
+	"http://www.manuel-strehl.de/tips_and_tricks/vim_and_win.en.html
+	"http://www.manuel-strehl.de/tips_and_tricks/vim_and_win_revised.en.html
+	"http://vim.wikia.com/wiki/Running_the_win32-version_of_Vim_from_cygwin
+	"http://vim.wikia.com/wiki/Run_native-Windows_Vim_from_cygwin_without_a_wrapper
+	"http://tech.groups.yahoo.com/group/vim/message/79093
+	"http://vim.1045645.n5.nabble.com/gvim-shell-td1142359.html
+	"http://stackoverflow.com/questions/3164181/getting-gvim-to-automatically-translate-a-cygwin-path
+	"http://superuser.com/questions/298792/how-to-use-cyg-wrapper-to-fork-a-new-tab-in-win32-gvim/
+	"http://www.google.com/search?sourceid=chrome&ie=UTF-8&q=win32+gvim+cygwin#q=win32+gvim+cygwin&hl=en&prmd=ivns&ei=uI4uTuj3IcXRrQfipJymAw&start=10&sa=N&bav=on.2,or.r_gc.r_pw.&fp=4314f23e9084643a&biw=1440&bih=785
+	"http://alecthegeek.wordpress.com/2008/10/09/handy-hack-run-vim-for-windows-under-cygwin/
+	"
 
-set backup " backups are nice ...
+	"TODO Look in to vim shell http://www.wana.at/vimshell/
+	"TODO Figure out how to switch to CWD of file
+	"TODO Get this working with Mintty and not CMD.exe
+	"set shell=C:/cygwin/bin/bash
+	"set shellcmdflag=--login\ -c
+	"set shellxquote=\"	
+	"set shell=C:/cygwin/bin/mintty
+	"set shell=C:/cygwin/bin/bash
+	"set shellcmdflag=--login\ -c
 
-if v:version >= 700
-	set undofile "persistent undo
+	"remap ! to got to CWD. XXX Doesn't work with aliases
+	"http://vim.1045645.n5.nabble.com/running-shell-command-in-the-directory-of-the-file-td1185993.html
+	"cnoremap !cwd !cd '%:p:h'; 
+
+	"may be of interest later
+	"echo shellescape(expand("%:p:h"))
 endif
-
-
-if has("unix")
-	"In windows, $TEMP is already defined, but in linux/unix, we need to define it
-	let $TEMP = '/tmp/'
-endif
-
-"Setting swap and backup dir to system temp
-set backupdir=$TEMP//
-set directory=$TEMP// 
-set undodir=$TEMP//
-
-"---------------------------------------
-"/ Random Scripts
-"---------------------------------------
