@@ -24,7 +24,8 @@ Bundle 'IndexedSearch'
 Bundle 'superjudge/tasklist-pathogen'
 "TODO FIGURE SUPERTAB OUT
 Bundle 'ervandew/supertab'
-"Bundle 'Command-T' "TODO Figure if htis is worth installing
+"TODO Figure if htis is worth installing
+"Bundle 'Command-T'
 
 "----------------------------------------
 "/------- GENERAL CONFIG SETTINGS -------
@@ -38,21 +39,11 @@ let mapleader = ","
 filetype plugin on "If problem with vundle, turn off
 
 set ttyfast "fast terminal connection, more characters sent to screen, faster in term
-
 set shellslash " Set the forward slash to be the slash of note. 
 
 set hidden "Buffers can live in background
-						
 set virtualedit=onemore         " allow for cursor beyond last character
-
-" Use the same symbols as TextMate for tabstops and EOLs. Useful for 
-" :set list! See Mapping below
-set listchars=tab:»\ ,eol:¬
-
 set gdefault " the /g flag on :s substitutions by default
-
-set showmatch	" set show matching parenthesis
-set matchtime=2	"Sets time the other parenthesis is highlighted when showmatch is enable
 
 
 set viminfo+='1000,f1,:1000,/1000  "Sets bigger viminfo file. Saves registers, command history, etc.
@@ -176,6 +167,13 @@ set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
 " ignores extensions on expansion/completion
 set wildignore+=.git
+
+set showmatch	" set show matching parenthesis
+set matchtime=2	"Sets time the other parenthesis is highlighted when showmatch is enable
+
+" Use the same symbols as TextMate for tabstops and EOLs. Useful for 
+" :set list! See Mapping below
+set listchars=tab:»\ ,eol:¬
 
 "Resize splits when the window is resized
 au VimResized * exe "normal! \<c-w>="
