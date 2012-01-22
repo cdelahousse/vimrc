@@ -371,9 +371,6 @@ execute "nmap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
 "nnoremap <leader>v V`]
 "note: gv does the same thing.  This is redundant
 
-"Reformat a paragraph of text
-nnoremap <leader>fp gqip
-
 
 " Bash like keys for the command line"
 cnoremap <C-A> <Home>
@@ -381,6 +378,9 @@ cnoremap <C-E> <End>
 cnoremap <C-K> <C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
+
+"Reformat a paragraph of text
+nnoremap <leader>fp gqip
 
 "Move lines up and down using ALT-J or A-K
 "http://vim.wikia.com/wiki/Moving_lines_up_or_down_in_a_file
@@ -392,10 +392,11 @@ inoremap <M-k> <Esc>:m-2<CR>==gi
 vnoremap <M-j> :m'>+<CR>gv=gv
 vnoremap <M-k> :m-2<CR>gv=gv
 
-"Copy Paste this shit
+"Enable windows style copy pasting
 vnoremap <C-c> "+y
-"inoremap <S-C-v>  <C-r>+
-"nnoremap <S-C-v>  "+p
+inoremap <C-v>  <C-r>+
+"Prevents collision with normal mode ctrl-v (Blockwise selection mode)
+nnoremap <leader>p  "+p
 
 "---------------------------------------------------
 "/ --------------- TEXT EXPANSION ------------------
@@ -408,7 +409,7 @@ iabbrev xdate <c-r>=strftime("%Y/%m/%d")<cr>
 
 "Text Expansion
 iabbrev gh/ http://github.com/cdelahousse
-iabbrev cd/ http://delahousse.ca
+iabbrev cd/ http://christian.delahousse.ca
 
 "---------------------------------------------------
 "/ -------------- WINDOWS MAPPINGS -----------------
@@ -488,17 +489,31 @@ endif
 
 
 "--------------------------
+"/ ------ JAVA STUFF -------
+"--------------------------
+"TODO Turn this into function and get rid of autocmd 
+"TODO Change mappings
+
+"http://stackoverflow.com/questions/6411979/compiling-java-code-in-vim-more-efficiently 
+autocmd Filetype java set makeprg=javac\ %
+autocmd Filetype java set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
+autocmd Filetype java map <F9> :make<Return>:copen<Return>
+autocmd Filetype java map <F10> :cprevious<Return>
+autocmd Filetype java map <F11> :cnext<Return>
+
+"--------------------------
 "/ ------ PHP STUFF -------
 "--------------------------
+"TODO Figure out if I should get rid of this section
 
 " .. becomes ->
-autocmd FileType php :iabbrev .. ->
+"autocmd FileType php :iabbrev .. ->
 
 " run file with PHP CLI 
-autocmd FileType php noremap <leader>mc :w !C:\XAMPP\xampp\php\php.exe -f "%:p"<CR>
+"autocmd FileType php noremap <leader>mc :w !C:\XAMPP\xampp\php\php.exe -f "%:p"<CR>
 
 " PHP parser check (CTRL-L) (syntax check!)
-autocmd FileType php noremap <leader>ms :w !C:\XAMPP\xampp\php\php.exe -l "%:p"<CR>
+"autocmd FileType php noremap <leader>ms :w !C:\XAMPP\xampp\php\php.exe -l "%:p"<CR>
 
 "Text formatting options. Defaul is (for php) set fo=qrowcb
 "and set fo=tcq for the rest. 
@@ -550,8 +565,6 @@ if has('win32')
 	"
 
 	"TODO Look in to vim shell http://www.wana.at/vimshell/
-	"TODO Figure out how to switch to CWD of file
-	"TODO Get this working with Mintty and not CMD.exe
 	"set shell=C:/cygwin/bin/bash
 	"set shellcmdflag=--login\ -c
 	"set shellxquote=\"	
