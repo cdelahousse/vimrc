@@ -27,6 +27,11 @@ Bundle 'ervandew/supertab'
 "TODO Figure if htis is worth installing
 "Bundle 'Command-T'
 
+"Move along the camel case
+"Use the new motions ',w', ',b' and ',e' in normal mode, operator-pending 
+"mode (cp. :help operator), and visual mode.
+Bundle 'bkad/CamelCaseMotion'
+
 "----------------------------------------
 "/------- GENERAL CONFIG SETTINGS -------
 "----------------------------------------
@@ -132,6 +137,16 @@ if has('unix')
 endif
 
 
+"-------------------------------------------------
+" ------------- M$ Windows settings --------------
+"-------------------------------------------------
+
+" using gVIM with Cygwin on a Windows PC
+if has('win32')
+	source $VIMRUNTIME/mswin.vim
+	behave mswin
+	set shell=c:\\cygwin\\bin\\bash.exe shellcmdflag=-c shellxquote=\"
+endif
 "---------------------------------------------
 "/ -------- GENERAL GUI SETTINGS -------------
 "---------------------------------------------
@@ -281,10 +296,10 @@ nnoremap j gj
 nnoremap k gk
 
 " Easier moving in splits and windows
-map <C-J> <C-W>j
-map <C-K> <C-W>k
-map <C-L> <C-W>l
-map <C-H> <C-W>h
+"map <C-J> <C-W>j
+"map <C-K> <C-W>k
+"map <C-L> <C-W>l
+"map <C-H> <C-W>h
  
 " Change buffer and the clear the command line (for buftab plugin) using <silent> 
 " This mapping conflicts with default mapping of moving cursor to top and bottom of the
@@ -326,7 +341,7 @@ nnoremap N Nzzzv
 "delete buffer
 nnoremap <leader>b :bd!<cr>
 "quit all
-nnoremap <leader>q :q!<cr> "
+nnoremap <leader>q :q!<cr> 
 "write to file
 nnoremap <leader>w :w!<cr>
 
@@ -385,12 +400,12 @@ nnoremap <leader>fp gqip
 "Move lines up and down using ALT-J or A-K
 "http://vim.wikia.com/wiki/Moving_lines_up_or_down_in_a_file
 "NOTE: Does not work in terminal... GRRRR!
-nnoremap <M-j> :m+<CR>==
-nnoremap <M-k> :m-2<CR>==
-inoremap <M-j> <Esc>:m+<CR>==gi
-inoremap <M-k> <Esc>:m-2<CR>==gi
-vnoremap <M-j> :m'>+<CR>gv=gv
-vnoremap <M-k> :m-2<CR>gv=gv
+nnoremap <C-j> :m+<CR>==
+nnoremap <C-k> :m-2<CR>==
+inoremap <C-j> <Esc>:m+<CR>==gi
+inoremap <C-k> <Esc>:m-2<CR>==gi
+vnoremap <C-j> :m'>+<CR>gv=gv
+vnoremap <C-k> :m-2<CR>gv=gv
 
 "Enable windows style copy pasting
 vnoremap <C-c> "+y
@@ -493,6 +508,7 @@ endif
 "--------------------------
 "TODO Turn this into function and get rid of autocmd 
 "TODO Change mappings
+"TODO see http://vim.wikia.com/wiki/Compile_Java_with_Sun_JDK_javac
 
 "http://stackoverflow.com/questions/6411979/compiling-java-code-in-vim-more-efficiently 
 autocmd Filetype java set makeprg=javac\ %
