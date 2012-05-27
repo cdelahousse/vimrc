@@ -10,7 +10,9 @@
 "--------------------------------------------
 set nocompatible "called again in case local vimrc didn't. For Vundle
 
+"Package Management. Essential
 Bundle 'gmarik/vundle'
+
 Bundle 'Solarized'
 "Desert for Minnty and console
 Bundle 'desert.vim'
@@ -19,6 +21,7 @@ Bundle 'The-NERD-Commenter'
 Bundle 'surround.vim'
 Bundle 'matchit.zip'
 Bundle 'ragtag.vim'
+"buftabs is WAY better than minibufexp
 Bundle 'buftabs'
 Bundle 'IndexedSearch'
 Bundle 'superjudge/tasklist-pathogen'
