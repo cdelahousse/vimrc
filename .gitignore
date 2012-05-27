@@ -1,5 +1,5 @@
 
 #gitignore
 #
-bundles/
-bundles/*
+bundle/
+bundle/*
