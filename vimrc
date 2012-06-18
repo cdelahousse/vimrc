@@ -1,7 +1,7 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse 
-" Last updated: 2012/01/22 
+" Last updated: 2012/06/18
 
 "--------------------------------------------
 "/ ------------ VUNDLE SETTINGS -------------
@@ -13,9 +13,11 @@ set nocompatible "called again in case local vimrc didn't. For Vundle
 "Package Management. Essential
 Bundle 'gmarik/vundle'
 
+"Gui colorscheme
 Bundle 'Solarized'
-"Desert for Minnty and console
-Bundle 'desert.vim'
+"ColorScheme for terminal
+Bundle 'jnurmine/Zenburn'
+
 Bundle 'The-NERD-tree' 
 Bundle 'The-NERD-Commenter'
 Bundle 'surround.vim'
@@ -27,13 +29,11 @@ Bundle 'IndexedSearch'
 Bundle 'superjudge/tasklist-pathogen'
 "TODO FIGURE SUPERTAB OUT
 Bundle 'ervandew/supertab'
+"Figure out
+Bundle 'neocomplcache'
+
 "TODO Figure if htis is worth installing
 "Bundle 'Command-T'
-
-"Move along the camel case
-"Use the new motions ',w', ',b' and ',e' in normal mode, operator-pending 
-"mode (cp. :help operator), and visual mode.
-Bundle 'bkad/CamelCaseMotion'
 
 "----------------------------------------
 "/------- GENERAL CONFIG SETTINGS -------
@@ -47,12 +47,10 @@ let mapleader = ","
 filetype plugin on "If problem with vundle, turn off
 
 set ttyfast "fast terminal connection, more characters sent to screen, faster in term
-set shellslash " Set the forward slash to be the slash of note. 
-
+set shellslash " Set the forward slash to be the shell slash
 set hidden "Buffers can live in background
 set virtualedit=onemore         " allow for cursor beyond last character
 set gdefault " the /g flag on :s substitutions by default
-
 
 set viminfo+='1000,f1,:1000,/1000  "Sets bigger viminfo file. Saves registers, command history, etc.
 
@@ -137,6 +135,7 @@ if has('unix')
 	"This makes bash aliases load, because .bashrc is only 
 	"loaded when the shell is run in interative mode.
 	set shellcmdflag=-ic
+
 endif
 
 
@@ -148,6 +147,8 @@ endif
 if has('win32')
 	source $VIMRUNTIME/mswin.vim
 	behave mswin
+
+	"Cygin as shell
 	set shell=c:\\cygwin\\bin\\bash.exe shellcmdflag=-c shellxquote=\"
 endif
 "---------------------------------------------
@@ -179,6 +180,9 @@ set statusline=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
 
 set wildmenu "autocompletion menu when  <tab> is pressed
 set wildmode=list:longest,full	" comand <Tab> completion, list matches, then longest common part, then all.
+
+" When completing by tag, show the whole tag, not just the function name
+set showfulltag
 
 " These commands open folds
 set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
@@ -243,33 +247,26 @@ if has('gui_running')
 
 elseif &term=~"^xterm" || &term=~'rxvt-cygwin-native' 
 	
-	colorscheme desert
+	
+	"Set terminal to 256 colors
+	"Keep this on top of colorscheme
+	set t_Co=256
+
+	"colorscheme desert
+	"colorscheme solarized
+	colorscheme zenburn
 
 	"highlight bg color of current line and remove default underlinehlight cursor
 	hi CursorLine cterm=none ctermbg=237 
 
 
-	"So that insert mode is more obvious in terminals 
-	"Note: This doesn't work in gnome terminal
+	"Highlight line in insert mode
 	set nocursorline
 	autocmd InsertLeave * set nocursorline
 	autocmd InsertEnter * set cursorline
 	
-
-	"TODO CHANGE THIS CODE SO THAT IT's MINNTY ONLY!
-	"For Mintty -Avoiding escape timeout issues
+	"For Mintty
 	"http://code.google.com/p/mintty/wiki/Tips
-	"let &t_ti.="\e[?7727h"
-	"let &t_te.="\e[?7727l"
-	"noremap <Esc>O[ <Esc>
-	"noremap! <Esc>O[ <Esc>
-
-	"For Mintty - Mode-dependent cursor
-	"http://code.google.com/p/mintty/wiki/Tips
-	"let &t_ti.="\e[1 q"
-	"let &t_SI.="\e[5 q"
-	"let &t_EI.="\e[1 q"
-	"let &t_te.="\e[0 q"
 
 endif
 
@@ -332,9 +329,10 @@ nnoremap N Nzzzv
 
 " L is easier to type, and I never use the default behavior.
 "TODO FIND APPROPRIATE KEY
+"Remaps beg of line
 "noremap L $ 
 
-"TODO: also remap 0  end of line
+"TODO also remap 0  end of line to somethingbetter
 
 "---------------------------------------------------------------
 "/ ---------- MAPPINGS FOR INTERESTING FUNCTIONALITY -----------
@@ -425,9 +423,15 @@ iabbrev ydate <c-r>=strftime("%Y/%m/%d %H:%M:%S")<cr>
 "Current date yyyy/mm/dd 
 iabbrev xdate <c-r>=strftime("%Y/%m/%d")<cr>
 
+"Filename
+inoremap fn/  <c-r>=expand('%:t:r')<cr>
+
 "Text Expansion
 iabbrev gh/ http://github.com/cdelahousse
 iabbrev cd/ http://christian.delahousse.ca
+
+"Write date in CMDline (for filename)
+cmap <F9> <C-R>=strftime("%Y-%m-%d")<CR>
 
 "---------------------------------------------------
 "/ -------------- WINDOWS MAPPINGS -----------------
@@ -457,6 +461,8 @@ map <leader>t <Plug>TaskList
 "/ -------------- PLUGIN SETTINGS ------------------
 "---------------------------------------------------
 
+let g:neocomplcache_enable_at_startup = 1
+
 "Nerdtree quits after I select and open a file
 let NERDTreeQuitOnOpen=1
 
@@ -471,16 +477,7 @@ let g:ragtag_global_maps = 1 "For Ragtag
 :let g:buftabs_only_basename=1
 
 "Add extra terms for TaskList
-let g:tlTokenList = ["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:",  "NOTE:", "note:", "note", "NOTE", "NB", "xxx:", "XXX:"]
-
-"---------------------------------------------------
-"/ ------ FILETYPE SPECIFIC STUFF -----------------
-"---------------------------------------------------
-"see here for example http://amix.dk/blog/post/19021
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+let g:tlTokenList = ["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:",  "NOTE:", "note:", "note", "NOTE", "NB", "xxx:", "XXX:", "todo:"]
 
 
 "---------------------------------------------------
@@ -505,6 +502,14 @@ if has("multi_byte")
   set fileencodings=ucs-bom,utf-8,latin1
 endif
 
+"---------------------------------------------------
+"/ ------ FILETYPE SPECIFIC STUFF -----------------
+"---------------------------------------------------
+"see here for example http://amix.dk/blog/post/19021
+autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
+autocmd FileType css set omnifunc=csscomplete#CompleteCSS
+autocmd FileType php set omnifunc=phpcomplete#CompletePHP
 
 "--------------------------
 "/ ------ JAVA STUFF -------
@@ -598,3 +603,24 @@ if has('win32')
 	"may be of interest later
 	"echo shellescape(expand("%:p:h"))
 endif
+
+"------------------------------------------
+"/ ------ SETTINGS FOR MACHINE -----------
+"------------------------------------------
+if filereadable(glob("~/.vimrc.local")) 
+	"Keep settings you only want stored on this machine
+	source ~/.vimrc.local
+endif
+
+
+"http://news.ycombinator.com/item?id=1464623
+"http://peter-hoffmann.com/2010/refresh-browser-on-save-with-inotify-and-xdotool.html
+"Install XDOTOOL == fake linux input mouse and keyboard
+"Refresshes browse
+"autocmd BufWriteCmd *.html,*.css,*.haml :call Refresh_browser()
+    "function()! Refresh_browser()
+        "if &modified
+            "write
+            "silent !xdotool search --class google-chrome key ctrl+r
+        "endif
+    "endfunction
