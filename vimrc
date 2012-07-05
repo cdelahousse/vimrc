@@ -1,7 +1,7 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse 
-" Last updated: 2012/06/18
+" Last updated: 2012/07/05
 
 "--------------------------------------------
 "/ ------------ VUNDLE SETTINGS -------------
@@ -31,6 +31,7 @@ Bundle 'superjudge/tasklist-pathogen'
 Bundle 'ervandew/supertab'
 "Figure out
 Bundle 'neocomplcache'
+Bundle 'Lokaltog/vim-easymotion'
 
 "TODO Figure if htis is worth installing
 "Bundle 'Command-T'
@@ -398,6 +399,11 @@ cnoremap <C-N> <Down>
 "Reformat a paragraph of text
 nnoremap <leader>fp gqip
 
+
+"TODO Make this into something that I can preview inbrowser
+"Markdown
+nnoremap <leader>mm :%!markdown <cr>
+
 "Move lines up and down using ALT-J or A-K
 "http://vim.wikia.com/wiki/Moving_lines_up_or_down_in_a_file
 "NOTE: Does not work in terminal... GRRRR!
@@ -461,7 +467,17 @@ map <leader>t <Plug>TaskList
 "/ -------------- PLUGIN SETTINGS ------------------
 "---------------------------------------------------
 
+
+"Defaul easymotion keybinding: <leader><leader>
+let g:EasyMotion_leader_key = '<leader><leader>'
+
+"Enable neocomplcache
 let g:neocomplcache_enable_at_startup = 1
+
+" Set minimum syntax keyword length.
+let g:neocomplcache_min_syntax_length = 3
+
+
 
 "Nerdtree quits after I select and open a file
 let NERDTreeQuitOnOpen=1
@@ -506,10 +522,18 @@ endif
 "/ ------ FILETYPE SPECIFIC STUFF -----------------
 "---------------------------------------------------
 "see here for example http://amix.dk/blog/post/19021
+"" Enable omni completion.
 autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType html set omnifunc=htmlcomplete#CompleteTags
 autocmd FileType css set omnifunc=csscomplete#CompleteCSS
 autocmd FileType php set omnifunc=phpcomplete#CompletePHP
+autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
+autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
+autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
+autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
+autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
+
+"Recognize markdown files
+autocmd BufRead,BufNewFile   *.md set filetype=markdown
 
 "--------------------------
 "/ ------ JAVA STUFF -------
