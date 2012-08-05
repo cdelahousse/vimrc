@@ -2,7 +2,11 @@
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse 
 " Last updated: 2012/07/05
-
+"
+"
+" Note: g:my_vim_path references the folder 
+" where this file and other my other vim settings are located
+"
 "--------------------------------------------
 "/ ------------ VUNDLE SETTINGS -------------
 "--------------------------------------------
@@ -360,6 +364,9 @@ nnoremap <leader>q :q!<cr>
 "write to file
 nnoremap <leader>w :w!<cr>
 
+
+
+
 "In insertmode, escape when jj or kk is pressed. It's a common
 "sequence in normal mode but never in insert more.
 inoremap jj <ESC>gj
@@ -383,7 +390,6 @@ map <Leader>l :set list!<CR>
 
 "New line without entering insertmode
 nnoremap <S-CR> o<Esc>k
-"note: Mintty doesn't support shift enter
 nnoremap <CR> ko<Esc>j
 
 "Source _vimrc.
@@ -395,11 +401,8 @@ execute "nmap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
 " When vimrc is edited, reload it
 "execute "autocmd! bufwritepost .vimrc source " . g:my_vim_path . "/.vimrc"
 
-
-"Select previously pasted text
-"TODO: Lookup backtick and bracket. How does this work?
-"nnoremap <leader>v V`]
-"note: gv does the same thing.  This is redundant
+"redraw screen
+nnoremap <leader>sr :redraw!<cr>
 
 
 " Bash like keys for the command line"
