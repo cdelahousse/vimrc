@@ -33,6 +33,11 @@ Bundle 'ervandew/supertab'
 Bundle 'neocomplcache'
 Bundle 'Lokaltog/vim-easymotion'
 
+Bundle 'scrooloose/syntastic'
+
+"For ctags
+Bundle 'majutsushi/tagbar'
+
 "TODO Figure if htis is worth installing
 "Bundle 'Command-T'
 
@@ -94,6 +99,8 @@ set tabstop=2     " tab width (<tab>)
 set softtabstop=2 "Generally a good idea to keep this the same as shiftwidth
 set shiftwidth=2  " amount of columns for indentation
 
+"Allow cursor to move freely in block visual mode
+set virtualedit=block
 
 "-----------------------------
 "/ -------- SEARCHING --------
@@ -290,7 +297,13 @@ nnoremap É ,
 "commands and plugins. é eliminates this problem and inserts a single ;  
 
 "F1 always gets in the way of ESC 
-map <F1> <NOP>
+nnoremap <F1> <NOP>
+
+"Q is ex mode, which I never use but always accidentally entre
+nnoremap Q <NOP>
+
+"Fuck man pages
+nnoremap K <NOP>
 
 "For long lines. Cursor goes down at line wrap instead of line end
 nnoremap j gj
@@ -456,6 +469,10 @@ map <F2> :NERDTreeToggle<CR>
 
 "for Tasklist (Todos, etc)
 map <leader>t <Plug>TaskList
+
+"Tagbar --> cTags
+nmap <F8> :TagbarToggle<CR>
+
 
 "<leader>ff uses JSBeautifier
 
@@ -648,3 +665,9 @@ endif
             "silent !xdotool search --class google-chrome key ctrl+r
         "endif
     "endfunction
+    "
+
+"Strips trailing whitespace
+function! StripWhitespace ()
+    exec ':%s/ \+$//gc'
+endfunction
