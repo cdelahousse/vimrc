@@ -32,7 +32,7 @@ Bundle 'buftabs'
 Bundle 'IndexedSearch'
 Bundle 'superjudge/tasklist-pathogen'
 "TODO FIGURE SUPERTAB OUT
-Bundle 'ervandew/supertab'
+"Bundle 'ervandew/supertab'
 "Figure out
 Bundle 'neocomplcache'
 Bundle 'Lokaltog/vim-easymotion'
@@ -257,15 +257,18 @@ if has('gui_running')
 "/ --------- FOR TERMINAL EMULATORS ---------
 "--------------------------------------------
 
-elseif &term=~"^xterm" || &term=~'rxvt-cygwin-native' 
-	
+else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native' 
 	
 	"Set terminal to 256 colors
 	"Keep this on top of colorscheme
 	set t_Co=256
 
+	"for tmux
+	"set term=screen-256color
+
 	"colorscheme desert
 	"colorscheme solarized
+	"let g:solarized_termcolors=256
 	colorscheme zenburn
 
 	"highlight bg color of current line and remove default underlinehlight cursor
@@ -338,12 +341,18 @@ nnoremap Y y$
 noremap x "_xh 
 noremap X "_X
 
-" Keep search matches in the middle of the window.
+"Keep jump in middle of window
 "https://bitbucket.org/sjl/dotfiles/src/ef5962b5abed/vim/.vimrcw
 nnoremap * *zzzv
 nnoremap # #zzzv
 nnoremap n nzzzv
 nnoremap N Nzzzv
+nnoremap g; g;zz
+nnoremap g, g,zz
+
+" Keep the cursor in place while joining lines
+" (from github/sjl)
+nnoremap J mzJ`z
 
 " L is easier to type, and I never use the default behavior.
 "TODO FIND APPROPRIATE KEY
@@ -363,6 +372,7 @@ nnoremap <leader>b :bd!<cr>
 nnoremap <leader>q :q!<cr> 
 "write to file
 nnoremap <leader>w :w!<cr>
+
 
 
 
@@ -436,6 +446,12 @@ inoremap <C-v>  <C-r>+
 "Prevents collision with normal mode ctrl-v (Blockwise selection mode)
 nnoremap <leader>p  "+p
 
+" Split line (sister to [J]oin lines)
+" The normal use of S is covered by cc, so don't worry about shadowing it.
+" from github/sjl
+nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
+
+
 "---------------------------------------------------
 "/ --------------- TEXT EXPANSION ------------------
 "---------------------------------------------------
@@ -454,6 +470,9 @@ iabbrev cd/ http://christian.delahousse.ca
 
 "Write date in CMDline (for filename)
 cmap <F9> <C-R>=strftime("%Y-%m-%d")<CR>
+
+"Close open tags with </w
+iabbrev </ </<C-X><C-O>
 
 "---------------------------------------------------
 "/ -------------- WINDOWS MAPPINGS -----------------
