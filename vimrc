@@ -1,11 +1,13 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse 
-" Last updated: 2012/07/05
+" Last updated: 2012/09/30   
 "
 "
 " Note: g:my_vim_path references the folder 
 " where this file and other my other vim settings are located
+" This was to be able to contain everything in one directory to ease deploying my
+" vimrc to multiple machines
 "
 "--------------------------------------------
 "/ ------------ VUNDLE SETTINGS -------------
@@ -264,7 +266,7 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 	set t_Co=256
 
 	"for tmux
-	"set term=screen-256color
+	set term=screen-256color
 
 	"colorscheme desert
 	"colorscheme solarized
@@ -373,10 +375,6 @@ nnoremap <leader>q :q!<cr>
 "write to file
 nnoremap <leader>w :w!<cr>
 
-
-
-
-
 "In insertmode, escape when jj or kk is pressed. It's a common
 "sequence in normal mode but never in insert more.
 inoremap jj <ESC>gj
@@ -411,7 +409,7 @@ execute "nmap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
 " When vimrc is edited, reload it
 "execute "autocmd! bufwritepost .vimrc source " . g:my_vim_path . "/.vimrc"
 
-"redraw screen
+"redraw screen because tmux/gnu screen sometimes screws up
 nnoremap <leader>sr :redraw!<cr>
 
 
@@ -424,7 +422,6 @@ cnoremap <C-N> <Down>
 
 "Reformat a paragraph of text
 nnoremap <leader>fp gqip
-
 
 "TODO Make this into something that I can preview inbrowser
 "Markdown
@@ -443,6 +440,10 @@ vnoremap <C-k> :m-2<CR>gv=gv
 "Enable windows style copy pasting
 vnoremap <C-c> "+y
 inoremap <C-v>  <C-r>+
+
+"NOTE: Maybe I should switch to <leader>c, <leader>v to get out of ol'
+"windows habits
+
 "Prevents collision with normal mode ctrl-v (Blockwise selection mode)
 nnoremap <leader>p  "+p
 
@@ -451,6 +452,8 @@ nnoremap <leader>p  "+p
 " from github/sjl
 nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 
+" sudo write
+ca w!! w !sudo tee >/dev/null "%"
 
 "---------------------------------------------------
 "/ --------------- TEXT EXPANSION ------------------
