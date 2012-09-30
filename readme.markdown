@@ -5,18 +5,17 @@ references where necessary.
 
 #Install
 
-1. Clone this repo into some folder. Copy it to your home folder
+1. Clone this repo into some folder. Copy it to your home folder, renaming it .vim
 
 
 		$> git clone https://github.com/cdelahousse/vimrc.git
 
-		$> mv vimrc ~/.vim/
+		$> mv vimrc ~/.vim
 
-		$> cd ~/vim/
+		$> cd ~/.vim/
 
 
-1. Edit the g:my_vim_path variable within vimrcLOCAL to reflect the cloned directory
-above.
+1. Edit the g:my_vim_path variable within vimrcLOCAL to reflect the directory.
 
 
 		let g:my_vim_path	= '~/.vim'
