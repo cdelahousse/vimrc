@@ -24,11 +24,13 @@ Bundle 'Solarized'
 "ColorScheme for terminal
 Bundle 'jnurmine/Zenburn'
 
-Bundle 'The-NERD-tree' 
-Bundle 'The-NERD-Commenter'
-Bundle 'surround.vim'
+Bundle 'scrooloose/nerdcommenter'
+Bundle 'scrooloose/nerdtree'
+Bundle 'scrooloose/syntastic'
+
+Bundle 'tpope/vim-surround'
+Bundle 'tpope/vim-ragtag'
 Bundle 'matchit.zip'
-Bundle 'ragtag.vim'
 "buftabs is WAY better than minibufexp
 Bundle 'buftabs'
 Bundle 'IndexedSearch'
@@ -36,10 +38,9 @@ Bundle 'superjudge/tasklist-pathogen'
 "TODO FIGURE SUPERTAB OUT
 "Bundle 'ervandew/supertab'
 "Figure out
-Bundle 'neocomplcache'
+Bundle 'Shougo/neocomplcache'
 Bundle 'Lokaltog/vim-easymotion'
 
-Bundle 'scrooloose/syntastic'
 
 "For ctags
 Bundle 'majutsushi/tagbar'
