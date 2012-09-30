@@ -29,6 +29,12 @@ section.
 
 		$> mv vimrcLOCAL ~/.vimrc
 
+1. Clone the vundle vim plugin manager into the bundle directory
+
+		$> cd bundle
+
+		$> git clone git://github.com/gmarik/vundle.git
+
 1. Open vim to get Vundle to download all the extensions into ~/.vim/bundle
 
 		:BundleInstall!
