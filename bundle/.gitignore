@@ -1,0 +1,8 @@
+
+#.gitignore
+
+# Everything
+*
+
+# except vunndle and this file
+!.gitignore
