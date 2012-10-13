@@ -1,7 +1,7 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse 
-" Last updated: 2012/09/30   
+" Last updated: 2012/10/11   
 "
 "
 " Note: g:my_vim_path references the folder 
@@ -19,43 +19,44 @@ set nocompatible "called again in case local vimrc didn't. For Vundle
 "Package Management. Essential
 Bundle 'gmarik/vundle'
 
-"Gui colorscheme
+"Colour schemes
 Bundle 'Solarized'
-"ColorScheme for terminal
 Bundle 'jnurmine/Zenburn'
 
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/nerdtree'
-Bundle 'scrooloose/syntastic'
+"Bundle 'scrooloose/syntastic'
 
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-ragtag'
 Bundle 'matchit.zip'
-"buftabs is WAY better than minibufexp
+
 Bundle 'buftabs'
 Bundle 'IndexedSearch'
 Bundle 'superjudge/tasklist-pathogen'
 "TODO FIGURE SUPERTAB OUT
 "Bundle 'ervandew/supertab'
 "Figure out
-Bundle 'Shougo/neocomplcache'
+"Bundle 'Shougo/neocomplcache'
 Bundle 'Lokaltog/vim-easymotion'
 
+"align shit
+"http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
+Bundle 'godlygeek/tabular'
 
 "For ctags
 Bundle 'majutsushi/tagbar'
 
 "TODO Figure if htis is worth installing
-"Bundle 'Command-T'
+"Bundle 'Command-T' ----> apperently ctrlp is better
 
 "----------------------------------------
 "/------- GENERAL CONFIG SETTINGS -------
 "----------------------------------------
-
 "setting personal modifying key to , 
+
 let mapleader = ","
 
-"filetype settings
 "filetype on "VUNDLE needs this off, see system vimrc
 filetype plugin on "If problem with vundle, turn off
 
@@ -67,7 +68,7 @@ set gdefault " the /g flag on :s substitutions by default
 
 set viminfo+='1000,f1,:1000,/1000  "Sets bigger viminfo file. Saves registers, command history, etc.
 
-set history=1000	"sets :command history 
+set history=100	"sets :command history 
 
 set autochdir "Change cwd to current file whenever a window change happens
 
@@ -153,7 +154,6 @@ if has('unix')
 
 endif
 
-
 "-------------------------------------------------
 " ------------- M$ Windows settings --------------
 "-------------------------------------------------
@@ -220,7 +220,7 @@ au VimResized * exe "normal! \<c-w>="
 "-------------------------------------------------
 
 if has('gui_running')
-	colorscheme solarized
+  colorscheme solarized
 	
 	set lines=48 columns=92 "set initial windows size 
 	set guioptions-=m "menu
@@ -267,10 +267,10 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 	set t_Co=256
 
 	"for tmux
-	set term=screen-256color
+	"TODO: Adds weird block character when not in tmux. Fix this. Put this within an if
+	"statment or something
+	"set term=screen-256color
 
-	"colorscheme desert
-	"colorscheme solarized
 	"let g:solarized_termcolors=256
 	colorscheme zenburn
 
@@ -289,9 +289,9 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 endif
 
 " In many terminal emulators the mouse works just fine, thus enable it.
-if has('mouse')
-	  set mouse=a
-endif
+"if has('mouse')
+		"set mouse=a
+"endif
 
 "---------------------------------------------------
 "/ ------- MODIFIED DEFAULT MAPPINGS --------------
@@ -319,21 +319,6 @@ nnoremap K <NOP>
 nnoremap j gj
 nnoremap k gk
 
-" Easier moving in splits and windows
-"map <C-J> <C-W>j
-"map <C-K> <C-W>k
-"map <C-L> <C-W>l
-"map <C-H> <C-W>h
- 
-" Change buffer and the clear the command line (for buftab plugin) using <silent> 
-" This mapping conflicts with default mapping of moving cursor to top and bottom of the
-" screen... But that's OK...
-map <silent> <S-H> :bp<cr>
-map <silent> <S-L> :bn<cr>
-
-"<SPACE> now turns off highlighting along with it's current functionality.
-nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
-
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 " (default: Y synonym for yy)
 nnoremap Y y$
@@ -344,7 +329,7 @@ nnoremap Y y$
 noremap x "_xh 
 noremap X "_X
 
-"Keep jump in middle of window
+"Keep jump in middle of window on search
 "https://bitbucket.org/sjl/dotfiles/src/ef5962b5abed/vim/.vimrcw
 nnoremap * *zzzv
 nnoremap # #zzzv
@@ -456,6 +441,15 @@ nnoremap S i<cr><esc>^mwgk:silent! s/\v +$//<cr>:noh<cr>`w
 " sudo write
 ca w!! w !sudo tee >/dev/null "%"
 
+" Change buffer and the clear the command line (for buftab plugin) using <silent> 
+" This mapping conflicts with default mapping of moving cursor to top and bottom of the
+" screen... But that's OK...
+map <silent> <S-H> :bp<cr>
+map <silent> <S-L> :bn<cr>
+
+"<SPACE> now turns off highlighting along with it's current functionality.
+nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
+
 "---------------------------------------------------
 "/ --------------- TEXT EXPANSION ------------------
 "---------------------------------------------------
@@ -478,17 +472,10 @@ cmap <F9> <C-R>=strftime("%Y-%m-%d")<CR>
 "Close open tags with </w
 iabbrev </ </<C-X><C-O>
 
+
 "---------------------------------------------------
-"/ -------------- WINDOWS MAPPINGS -----------------
+"/ ------------ MAPPINGS FOR PLUGINS ---------------
 "---------------------------------------------------
-
-if has('Win32')
-
-endif
-
-"----------------------------------
-"/ MAPPINGS FOR PLUGINS
-"----------------------------------
 
 "NERDTree
 map <F2> :NERDTreeToggle<CR>
@@ -499,10 +486,10 @@ map <leader>t <Plug>TaskList
 "Tagbar --> cTags
 nmap <F8> :TagbarToggle<CR>
 
+"Defaul easymotion keybinding: <leader><leader>
+let g:EasyMotion_leader_key = '<leader><leader>'
 
-"<leader>ff uses JSBeautifier
-
-" NerdCommenter
+" NerdCommenter (NOTES)
 "[count]<leader>cy- Same as cc except that the commented line(s) are yanked first.
 "<leader>c$ - Comments the current line from the cursor to the end of line.
 
@@ -511,16 +498,11 @@ nmap <F8> :TagbarToggle<CR>
 "---------------------------------------------------
 
 
-"Defaul easymotion keybinding: <leader><leader>
-let g:EasyMotion_leader_key = '<leader><leader>'
-
 "Enable neocomplcache
 let g:neocomplcache_enable_at_startup = 1
 
 " Set minimum syntax keyword length.
 let g:neocomplcache_min_syntax_length = 3
-
-
 
 "Nerdtree quits after I select and open a file
 let NERDTreeQuitOnOpen=1
@@ -552,14 +534,14 @@ set fileformat=unix
 	
 "Sets Unicode. 
 "http://vim.wikia.com/wiki/Working_with_Unicode
-if has("multi_byte")
-  if &termencoding == ""
-		let &termencoding = &encoding
-  endif
-  set encoding=utf-8
-  setglobal fileencoding=utf-8 bomb
-  set fileencodings=ucs-bom,utf-8,latin1
-endif
+"if has("multi_byte")
+  "if &termencoding == ""
+		"let &termencoding = &encoding
+  "endif
+  "set encoding=utf-8
+  "setglobal fileencoding=utf-8 bomb
+  "set fileencodings=ucs-bom,utf-8,latin1
+"endif
 
 "---------------------------------------------------
 "/ ------ FILETYPE SPECIFIC STUFF -----------------
@@ -575,8 +557,29 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
+"--------------------------
+"/ ------ TEXT FILES ----- 
+"--------------------------
+
 "Recognize markdown files
 autocmd BufRead,BufNewFile   *.md set filetype=markdown
+
+autocmd Filetype text set spell
+autocmd Filetype text set expandtab
+
+
+
+"--------------------------
+"/ ------ SCHEME --------- 
+"--------------------------
+
+"http://docs.racket-lang.org/guide/Vim.html
+au BufReadPost *.rkt,*.rktl,*.scm set filetype=scheme
+au filetype scheme set lisp
+au filetype scheme set autoindent
+au filetype scheme set expandtab
+au filetype scheme set lispwords+=public-method,override-method,private-method,syntax-case,syntax-rules
+au filetype scheme set lispwords+=..more..
 
 "--------------------------
 "/ ------ JAVA STUFF -------
@@ -591,45 +594,6 @@ autocmd Filetype java set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
 autocmd Filetype java map <F9> :make<Return>:copen<Return>
 autocmd Filetype java map <F10> :cprevious<Return>
 autocmd Filetype java map <F11> :cnext<Return>
-
-"--------------------------
-"/ ------ PHP STUFF -------
-"--------------------------
-"TODO Figure out if I should get rid of this section
-
-" .. becomes ->
-"autocmd FileType php :iabbrev .. ->
-
-" run file with PHP CLI 
-"autocmd FileType php noremap <leader>mc :w !C:\XAMPP\xampp\php\php.exe -f "%:p"<CR>
-
-" PHP parser check (CTRL-L) (syntax check!)
-"autocmd FileType php noremap <leader>ms :w !C:\XAMPP\xampp\php\php.exe -l "%:p"<CR>
-
-"Text formatting options. Defaul is (for php) set fo=qrowcb
-"and set fo=tcq for the rest. 
-"***Note*** if text and comment starts fucking up check out the trouble
-"shooting part of format options in HELP.
-"TODO: fix 'next line is commented when newline from commented line'
-autocmd FileType php set fo=tcqawb
-
-"From http://phpslacker.com/2009/02/05/vim-tips-for-php-programmers/
-
-"highlights interpolated variables in sql strings and does sql-syntax 
-"highlighting. yay "If you like SQL syntax highlighting inside Strings: 
-autocmd FileType php let php_sql_query=1
-" does exactly that. highlights html inside of php strings
-autocmd FileType php let php_htmlInStrings=1
-" discourages use oh short tags. c'mon its deprecated remember
-autocmd FileType php let php_noShortTags=1
-
-
-"Enable HTML syntax highlighting inside strings:  
-autocmd FileType php let php_htmlInStrings = 1
-
-"Forhighlighting parent error ] or ): 
-autocmd FileType php let php_parent_error_close = 1
-
 
 "-------------------------------------------------
 "/ ------ VIM ON WINDOWS WITH CYGWIN -----------
@@ -679,7 +643,6 @@ if filereadable(glob("~/.vimrc.local"))
 	source ~/.vimrc.local
 endif
 
-
 "http://news.ycombinator.com/item?id=1464623
 "http://peter-hoffmann.com/2010/refresh-browser-on-save-with-inotify-and-xdotool.html
 "Install XDOTOOL == fake linux input mouse and keyboard
@@ -697,3 +660,5 @@ endif
 function! StripWhitespace ()
     exec ':%s/ \+$//gc'
 endfunction
+
+
