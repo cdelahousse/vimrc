@@ -1,7 +1,7 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse 
-" Last updated: 2012/10/11   
+" Last updated: 2012/11/18  
 "
 "
 " Note: g:my_vim_path references the folder 
@@ -76,9 +76,9 @@ set autochdir "Change cwd to current file whenever a window change happens
 "http://lists.alioth.debian.org/pipermail/pkg-vim-maintainers/2007-June/004020.html
 set modelines=0 
 
-"---------------------------------------------------
-"/ -------------- TEXT EDITING  --------------------
-"---------------------------------------------------
+"----------------------------------------------
+"/ -------------- EDITING  --------------------
+"----------------------------------------------
 
 "set autoread  "Reload files changed outside vim
 
@@ -87,7 +87,7 @@ set modelines=0
 
 set wrap "wrap text
 set linebreak "wrap lines at convenient points
-set textwidth=85 "hard line breaks at this number
+set textwidth=80 "hard line breaks at this number
 set colorcolumn=+1 " highlight column after 'textwidth'
 
 filetype indent on
@@ -288,10 +288,6 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 
 endif
 
-" In many terminal emulators the mouse works just fine, thus enable it.
-"if has('mouse')
-		"set mouse=a
-"endif
 
 "---------------------------------------------------
 "/ ------- MODIFIED DEFAULT MAPPINGS --------------
@@ -300,7 +296,7 @@ endif
 " Switches : to ;. Saves alot of keystrokes
 " Normal mode only
 nnoremap ; :
-"Switches é and É to : and , basically allowing ; to be 'pressed'
+"I sometimes type with a french keyboard
 nnoremap é ;
 nnoremap É ,
 "NOTE: Instead of switch : to ; as one would expect, this breaks alot of
@@ -450,6 +446,16 @@ map <silent> <S-L> :bn<cr>
 "<SPACE> now turns off highlighting along with it's current functionality.
 nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
 
+
+"Open vim in current directory
+"http://vimcasts.org/episodes/the-edit-command/
+"cnoremap %% <C-R>=expand('%:h').'/'<cr>
+"nnoremap <leader>ew :e %%
+"nnoremap <leader>es :sp %%
+"nnoremap <leader>ev :vsp %%
+"nnoremap <leader>et :tabe %%
+
+
 "---------------------------------------------------
 "/ --------------- TEXT EXPANSION ------------------
 "---------------------------------------------------
@@ -457,7 +463,8 @@ nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
 "Current date yyyy/mm/dd HH:MM:SS
 iabbrev ydate <c-r>=strftime("%Y/%m/%d %H:%M:%S")<cr>
 "Current date yyyy/mm/dd 
-iabbrev xdate <c-r>=strftime("%Y/%m/%d")<cr>
+iabbrev xdate/ <c-r>=strftime("%Y/%m/%d")<cr>
+iabbrev xdate- <c-r>=strftime("%Y-%m-%d")<cr>
 
 "Filename
 inoremap fn/  <c-r>=expand('%:t:r')<cr>
@@ -557,16 +564,27 @@ autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
 autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
+
+"Prolog
+autocmd BufRead,BufNewFile   *.pl set filetype=prolog
+
 "--------------------------
 "/ ------ TEXT FILES ----- 
 "--------------------------
 
 "Recognize markdown files
-autocmd BufRead,BufNewFile   *.md set filetype=markdown
+autocmd BufRead,BufNewFile   *.md setlocal filetype=markdown
+autocmd BufRead,BufNewFile   *.txt setlocal filetype=text
 
-autocmd Filetype text set spell
-autocmd Filetype text set expandtab
+"Set options
+function! SetTextOptions()
+	setlocal spell	 "Spelling errors
+	setlocal textwidth=0 
+	setlocal expandtab "spaces, not tabs
+endfunction
 
+"Register options
+autocmd Filetype text,markdown call SetTextOptions()
 
 
 "--------------------------
@@ -575,11 +593,18 @@ autocmd Filetype text set expandtab
 
 "http://docs.racket-lang.org/guide/Vim.html
 au BufReadPost *.rkt,*.rktl,*.scm set filetype=scheme
-au filetype scheme set lisp
-au filetype scheme set autoindent
-au filetype scheme set expandtab
-au filetype scheme set lispwords+=public-method,override-method,private-method,syntax-case,syntax-rules
-au filetype scheme set lispwords+=..more..
+
+function! SetLispySettings()
+	setlocal lisp
+	setlocal autoindent
+	setlocal expandtab
+	setlocal lispwords+=public-method,override-method,private-method,syntax-case,syntax-rules
+	setlocal lispwords+=..more..
+endfunction
+
+autocmd Filetype scheme call SetLispySettings() 
+
+
 
 "--------------------------
 "/ ------ JAVA STUFF -------
