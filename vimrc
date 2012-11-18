@@ -299,13 +299,11 @@ nnoremap ; :
 "I sometimes type with a french keyboard
 nnoremap é ;
 nnoremap É ,
-"NOTE: Instead of switch : to ; as one would expect, this breaks alot of
-"commands and plugins. é eliminates this problem and inserts a single ;  
 
 "F1 always gets in the way of ESC 
 nnoremap <F1> <NOP>
 
-"Q is ex mode, which I never use but always accidentally entre
+"Q is ex mode, which I never use but always accidentally enter
 nnoremap Q <NOP>
 
 "Fuck man pages
@@ -614,11 +612,11 @@ autocmd Filetype scheme call SetLispySettings()
 "TODO see http://vim.wikia.com/wiki/Compile_Java_with_Sun_JDK_javac
 
 "http://stackoverflow.com/questions/6411979/compiling-java-code-in-vim-more-efficiently 
-autocmd Filetype java set makeprg=javac\ %
-autocmd Filetype java set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
-autocmd Filetype java map <F9> :make<Return>:copen<Return>
-autocmd Filetype java map <F10> :cprevious<Return>
-autocmd Filetype java map <F11> :cnext<Return>
+"autocmd Filetype java set makeprg=javac\ %
+"autocmd Filetype java set errorformat=%A%f:%l:\ %m,%-Z%p^,%-C%.%#
+"autocmd Filetype java map <F9> :make<Return>:copen<Return>
+"autocmd Filetype java map <F10> :cprevious<Return>
+"autocmd Filetype java map <F11> :cnext<Return>
 
 "-------------------------------------------------
 "/ ------ VIM ON WINDOWS WITH CYGWIN -----------
