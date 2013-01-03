@@ -1,7 +1,9 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse 
-" Last updated: 2012/11/18  
+" Last updated: 2013/01/03 
+"
+" See changelog
 "
 "
 " Note: g:my_vim_path references the folder 
@@ -24,7 +26,7 @@ Bundle 'Solarized'
 Bundle 'jnurmine/Zenburn'
 
 Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/nerdtree'
+"Bundle 'scrooloose/nerdtree' 
 "Bundle 'scrooloose/syntastic'
 
 Bundle 'tpope/vim-surround'
@@ -38,14 +40,14 @@ Bundle 'superjudge/tasklist-pathogen'
 "Bundle 'ervandew/supertab'
 "Figure out
 "Bundle 'Shougo/neocomplcache'
-Bundle 'Lokaltog/vim-easymotion'
+"Bundle 'Lokaltog/vim-easymotion'
 
 "align shit
 "http://vimcasts.org/episodes/aligning-text-with-tabular-vim/
-Bundle 'godlygeek/tabular'
+"Bundle 'godlygeek/tabular'
 
 "For ctags
-Bundle 'majutsushi/tagbar'
+"Bundle 'majutsushi/tagbar'
 
 "TODO Figure if htis is worth installing
 "Bundle 'Command-T' ----> apperently ctrlp is better
@@ -269,7 +271,7 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 	"for tmux
 	"TODO: Adds weird block character when not in tmux. Fix this. Put this within an if
 	"statment or something
-	"set term=screen-256color
+	set term=screen-256color
 
 	"let g:solarized_termcolors=256
 	colorscheme zenburn
@@ -355,14 +357,15 @@ nnoremap <leader>q :q!<cr>
 "write to file
 nnoremap <leader>w :w!<cr>
 
-"In insertmode, escape when jj or kk is pressed. It's a common
-"sequence in normal mode but never in insert more.
-inoremap jj <ESC>gj
-inoremap kk <ESC>gk
-inoremap hh <ESC>h
+"XXX TESTING SPEED OF VIM WITHOUT THESE inoremaps. VIM IS SLOWING DOWN
+""In insertmode, escape when jj or kk is pressed. It's a common
+""sequence in normal mode but never in insert more.
+"inoremap jj <ESC>gj
+"inoremap kk <ESC>gk
+"inoremap hh <ESC>h
 
-"kj is Faster than ESC
-inoremap kj <ESC>
+""kj is Faster than ESC
+"inoremap kj <ESC>
 
 "Write to new line without exiting insertmode
 "https://bitbucket.org/sjl/dotfiles/src/ef5962b5abed/vim/.vimrc
@@ -530,23 +533,9 @@ let g:tlTokenList = ["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:",  "NOTE:", "
 "/ ------ ENCODINGS AND FILE FORMATS SETTINGS ------
 "---------------------------------------------------
 
-"Sets all files to unix filetype. Changes EOL's to LF and strips CRLF (dos) line
-"endings. I really don't like CRLF even though I work on windows. Git complains if
-"there are a mixture of CRLF and LF. This fixes that by only saving as LF.
-"http://vim.wikia.com/wiki/Change_end-of-line_format_for_dos-mac-unix
-"set fileformats=unix,dos
 set fileformat=unix   
+set encoding=utf-8
 	
-"Sets Unicode. 
-"http://vim.wikia.com/wiki/Working_with_Unicode
-"if has("multi_byte")
-  "if &termencoding == ""
-		"let &termencoding = &encoding
-  "endif
-  "set encoding=utf-8
-  "setglobal fileencoding=utf-8 bomb
-  "set fileencodings=ucs-bom,utf-8,latin1
-"endif
 
 "---------------------------------------------------
 "/ ------ FILETYPE SPECIFIC STUFF -----------------

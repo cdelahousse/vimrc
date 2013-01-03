@@ -1,0 +1,8 @@
+
+
+2013-01-03 
+* (vundle settings) : I removed nerdtree. I want to use netrw instead.
+See http://vimcasts.org/episodes/the-file-explorer/
+
+* (Mappings for interesting func.) : removed jj,kk, kj, etc.. mapping b/c of
+what the manual calls ambiguous mappings. Slows down text insertion.
