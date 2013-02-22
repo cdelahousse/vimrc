@@ -8,7 +8,7 @@ references where necessary.
 1. Clone this repo into some folder. Copy it to your home folder, renaming it .vim
 
 
-		$> git clone https://github.com/cdelahousse/vimrc.git
+		$> git clone git://github.com/cdelahousse/vimrc.git
 
 		$> mv vimrc ~/.vim
 
@@ -20,9 +20,6 @@ references where necessary.
 
 		let g:my_vim_path	= '~/.vim'
 
-
-1. Delete the section of said file you don't need. Either the Windows or Linux
-section.
 
 1. Copy the vimrcLOCAL text file to your home directory and rename it to .vimrc
 

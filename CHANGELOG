@@ -1,4 +1,7 @@
+2013-02-22
+*	Updated the readme
 
+* Changed mappings, added tmux specific functionality
 
 2013-01-03 
 * (vundle settings) : I removed nerdtree. I want to use netrw instead.

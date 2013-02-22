@@ -1,27 +1,9 @@
 set nocompatible
 filetype off "for vundle
 
-"set custom vim path for local machine
-let g:my_vim_path	= '/cygdrive/d/Dropbox/My\ Dropbox/-config/vim'
-
-"add vundle to runtime path and run it -- Package Management
-execute "set rtp+=" . g:my_vim_path . '/bundle/vundle/'
-execute "call vundle#rc('" . g:my_vim_path . "/bundle/')"
-
-"Source my custom vimrc
-execute "source " . g:my_vim_path . "/.vimrc"
-
-"set rtp+=/cygdrive/d/Dropbox/My\ Dropbox/-config/vim/bundle/vundle/ call
-"vundle#rc('/cygdrive/d/dropbox/my\ dropbox/-config/vim/bundle/') source
-"/cygdrive/d/Dropbox/My\ Dropbox/-config/vim/.vimrc 
-"
-
-"OR FOR LINUX
-set nocompatible
-filetype off "for vundle
-
-"set custom vim path for local machine
-let g:my_vim_path	= '~/Dropbox/-config/vim'
+"set custom vim path for local machine (choose one)
+"let g:my_vim_path	= '~/Dropbox/-config/vim'
+let g:my_vim_path	= '~/.vim'
 
 "add vundle to runtime path and run it -- Package Management
 execute "set rtp+=" . g:my_vim_path . '/bundle/vundle/'
