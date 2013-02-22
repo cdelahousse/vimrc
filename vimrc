@@ -271,7 +271,7 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 	"for tmux
 	"TODO: Adds weird block character when not in tmux. Fix this. Put this within an if
 	"statment or something
-	set term=screen-256color
+	"set term=screen-256color
 
 	"let g:solarized_termcolors=256
 	colorscheme zenburn
@@ -304,6 +304,12 @@ nnoremap É ,
 
 "F1 always gets in the way of ESC 
 nnoremap <F1> <NOP>
+
+"Fuck arrows
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
 
 "Q is ex mode, which I never use but always accidentally enter
 nnoremap Q <NOP>
@@ -395,6 +401,9 @@ execute "nmap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
 "redraw screen because tmux/gnu screen sometimes screws up
 nnoremap <leader>sr :redraw!<cr>
 
+"For switching between the normal terminal and tmux
+nnoremap <leader>sx  :set term=screen-256color<CR>
+nnoremap <leader>sg  :set term=xterm-256color<CR>
 
 " Bash like keys for the command line"
 cnoremap <C-A> <Home>

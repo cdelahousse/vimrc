@@ -6,3 +6,5 @@ See http://vimcasts.org/episodes/the-file-explorer/
 
 * (Mappings for interesting func.) : removed jj,kk, kj, etc.. mapping b/c of
 what the manual calls ambiguous mappings. Slows down text insertion.
+Created <leader>sx, <leader>sg toggle for changing between tmux and the normal
+terminal
