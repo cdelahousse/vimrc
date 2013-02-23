@@ -1,0 +1,9 @@
+TODO
+
+*	Figure out ways to highlight/change colour the words TODO, XXX, todo, etc...
+["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:",  "NOTE:", "note:", "note", "NOTE", "NB", "xxx:", "XXX:", "todo:"]
+	Find remapping for $ and 0. These are hard to reach. Candidates: L
+
+TOLEARN
+
+* Easymotion
