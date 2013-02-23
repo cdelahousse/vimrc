@@ -32,7 +32,6 @@ Bundle 'matchit.zip'
 
 Bundle 'buftabs'
 Bundle 'IndexedSearch'
-Bundle 'superjudge/tasklist-pathogen'
 
 "TODO Figure out
 "Bundle 'ervandew/supertab'
