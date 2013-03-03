@@ -1,7 +1,7 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse 
-" Last updated: 2013/02/23
+" Last updated: 2013/03/03 
 "
 " See changelog
 "
@@ -38,6 +38,44 @@ Bundle 'IndexedSearch'
 "Bundle 'Shougo/neocomplcache'
 "Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'Command-T' ----> apperently ctrlp is better
+
+
+"-------------------------
+"/------- COLEMAK --------
+"-------------------------
+"I type colemak
+" h <==
+" k down
+" e up
+" l ==>
+"function! Colemak()
+
+	"noremap j n
+	"noremap k e
+	"nnoremap j nzzzv
+	"nnoremap J Nzzzv
+	""For long lines. Cursor goes down at line wrap instead of line end
+	"nnoremap n gj
+	"nnoremap e gk
+"endfunction
+
+"call Colemak()
+
+"-------------------------
+"/------- QWERTY --------
+"-------------------------
+"For QWERTY users
+function! Qwerty()
+	nnoremap n nzzzv
+	nnoremap N Nzzzv
+
+	"For long lines. Cursor goes down at line wrap instead of line end
+	nnoremap j gj
+	nnoremap k gk
+
+endfunction
+
+call Qwerty()
 
 "----------------------------------------
 "/------- GENERAL CONFIG SETTINGS -------
@@ -242,13 +280,15 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 	colorscheme zenburn
 
 	"highlight bg color of current line and remove default underlinehlight cursor
-	hi CursorLine cterm=none ctermbg=237 
-
+	hi CursorLine ctermbg=238 cterm=none 
 
 	"Highlight line in insert mode
 	set nocursorline
 	autocmd InsertLeave * set nocursorline
 	autocmd InsertEnter * set cursorline
+
+	"au InsertEnter * hi Normal ctermbg=234 guibg=#000000
+	"au InsertLeave * hi Normal ctermfg=188 ctermbg=237 guifg=#dcdccc "guibg=#3f3f3f 
 	
 	"For Mintty
 	"http://code.google.com/p/mintty/wiki/Tips
@@ -283,10 +323,6 @@ nnoremap Q <NOP>
 "Fuck man pages
 nnoremap K <NOP>
 
-"For long lines. Cursor goes down at line wrap instead of line end
-nnoremap j gj
-nnoremap k gk
-
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
 
@@ -299,8 +335,6 @@ noremap X "_X
 "https://bitbucket.org/sjl/dotfiles/src/ef5962b5abed/vim/.vimrcw
 nnoremap * *zzzv
 nnoremap # #zzzv
-nnoremap n nzzzv
-nnoremap N Nzzzv
 nnoremap g; g;zz
 nnoremap g, g,zz
 
@@ -538,5 +572,6 @@ endif
 
 "Strips trailing whitespace
 function! StripWhitespace ()
+
     exec ':%s/ \+$//gc'
 endfunction
