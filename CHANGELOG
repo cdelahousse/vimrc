@@ -1,3 +1,8 @@
+2013-03-23
+* Added Colemak bindings
+* Modified IndexedSearch.vim
+* Copying to the system clipboard will keep the text highlighted
+
 2013-03-03
 * Added sketch for colemak mappings
 * added highiligh on cursorline

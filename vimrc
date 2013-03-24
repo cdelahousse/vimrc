@@ -1,7 +1,7 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse 
-" Last updated: 2013/03/03 
+" Last updated: 2013-03-23
 "
 " See changelog
 "
@@ -15,6 +15,7 @@
 "- Keep these settings at the top of vimrc --
 "--------------------------------------------
 set nocompatible "called again in case local vimrc didn't. For Vundle
+
 
 "Package Management. Essential
 Bundle 'gmarik/vundle'
@@ -31,7 +32,9 @@ Bundle 'tpope/vim-ragtag'
 Bundle 'matchit.zip'
 
 Bundle 'buftabs'
-Bundle 'IndexedSearch'
+
+"Modified Indexed search. Removed mappings.
+Bundle 'cdelahousse/IndexedSearch.git'
 
 "TODO Figure out
 "Bundle 'ervandew/supertab'
@@ -43,23 +46,50 @@ Bundle 'IndexedSearch'
 "-------------------------
 "/------- COLEMAK --------
 "-------------------------
-"I type colemak
+"I type colemak. Theses are my remappings. Keys pairs ek and nj are swapped.
 " h <==
-" k down
+" n down
 " e up
 " l ==>
-"function! Colemak()
 
-	"noremap j n
-	"noremap k e
-	"nnoremap j nzzzv
-	"nnoremap J Nzzzv
-	""For long lines. Cursor goes down at line wrap instead of line end
-	"nnoremap n gj
-	"nnoremap e gk
-"endfunction
+" k end of word
+" j next search result
 
-"call Colemak()
+"Could use the following command instead of the Colemak() function,
+"but but langmap breaks plugins.
+"set langmap=nj,jn,ek,ke
+
+function! Colemak()
+
+	nnoremap n gj
+	vnoremap n gj
+	onoremap n j
+
+	noremap N J
+	" Keep the cursor in place while joining lines (from github/sjl)
+	nnoremap N mzJ`z
+
+	noremap j n
+	nnoremap j nzzzv
+	nnoremap J Nzzzv
+
+	nnoremap e gk
+	vnoremap e gk
+	onoremap e k
+
+	noremap k e
+	noremap K E
+
+	"-------
+	"Windows
+	"-------
+	nnoremap <C-w>n <C-w>j
+	nnoremap <C-w>e <C-w>k
+
+endfunction
+
+call Colemak()
+
 
 "-------------------------
 "/------- QWERTY --------
@@ -73,9 +103,12 @@ function! Qwerty()
 	nnoremap j gj
 	nnoremap k gk
 
+	" Keep the cursor in place while joining lines " (from github/sjl)
+	nnoremap J mzJ`z
+
 endfunction
 
-call Qwerty()
+"call Qwerty()
 
 "----------------------------------------
 "/------- GENERAL CONFIG SETTINGS -------
@@ -282,6 +315,9 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 	"highlight bg color of current line and remove default underlinehlight cursor
 	hi CursorLine ctermbg=238 cterm=none 
 
+	"Change the zenburn seach highlights
+	hi Search ctermfg=234 ctermbg=243
+
 	"Highlight line in insert mode
 	set nocursorline
 	autocmd InsertLeave * set nocursorline
@@ -320,9 +356,6 @@ noremap <Right> <NOP>
 "Q is ex mode, which I never use but always accidentally enter
 nnoremap Q <NOP>
 
-"Fuck man pages
-nnoremap K <NOP>
-
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
 
@@ -338,10 +371,6 @@ nnoremap # #zzzv
 nnoremap g; g;zz
 nnoremap g, g,zz
 
-" Keep the cursor in place while joining lines
-" (from github/sjl)
-nnoremap J mzJ`z
-
 "---------------------------------------------------------------
 "/ ---------- MAPPINGS FOR INTERESTING FUNCTIONALITY -----------
 "---------------------------------------------------------------
@@ -353,9 +382,9 @@ nnoremap <leader>b :bd!<CR>
 "XXX TESTING SPEED OF VIM WITHOUT THESE inoremaps. VIM IS SLOWING DOWN
 ""In insertmode, escape when jj or kk is pressed. It's a common
 ""sequence in normal mode but never in insert more.
-"inoremap jj <ESC>gj
-"inoremap kk <ESC>gk
-"inoremap hh <ESC>h
+inoremap jj <ESC>gj
+inoremap kk <ESC>gk
+inoremap hh <ESC>h
 
 ""kj is Faster than ESC
 "inoremap kj <ESC>
@@ -407,10 +436,12 @@ inoremap <C-k> <Esc>:m-2<CR>==gi
 vnoremap <C-j> :m'>+<CR>gv=gv
 vnoremap <C-k> :m-2<CR>gv=gv
 
+"Maintain visual mode after yanking
+vnoremap y ygv
 
 "Access system clipboard
 nnoremap <leader>p  "+p
-vnoremap <leader>y	"+y
+vnoremap <leader>y	"+ygv
 "Windows binding for pasting in insertmode
 inoremap <C-v>  <C-r>+
 
@@ -519,7 +550,6 @@ autocmd BufRead,BufNewFile   *.pl set filetype=prolog
 autocmd BufRead,BufNewFile   *.md setlocal filetype=markdown
 autocmd BufRead,BufNewFile   *.txt setlocal filetype=text
 
-"Set options
 function! SetTextOptions()
 	setlocal spell	 "Spell checking
 	setlocal spelllang=en
@@ -540,7 +570,6 @@ au BufReadPost *.rkt,*.rktl,*.scm set filetype=scheme
 function! SetLispySettings()
 	setlocal lisp
 	setlocal autoindent
-	setlocal expandtab
 	setlocal lispwords+=public-method,override-method,private-method,syntax-case,syntax-rules
 	setlocal lispwords+=..more..
 endfunction
