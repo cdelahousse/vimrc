@@ -25,16 +25,24 @@ Bundle 'Solarized'
 Bundle 'jnurmine/Zenburn'
 
 Bundle 'scrooloose/nerdcommenter'
-"Bundle 'scrooloose/syntastic'
+Bundle 'scrooloose/syntastic'
 
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-ragtag'
 Bundle 'matchit.zip'
 
+"Bundle 'rstacruz/sparkup'
+Bundle 'mattn/zencoding-vim'
+
 Bundle 'buftabs'
 
 "Modified Indexed search. Removed mappings.
 Bundle 'cdelahousse/IndexedSearch.git'
+
+"Bundle 'vimwiki/vimwiki'
+
+"Disables hjkl because character-wise movements are for pussies
+Bundle 'wikitopian/hardmode.git'
 
 "TODO Figure out
 "Bundle 'ervandew/supertab'
@@ -149,7 +157,7 @@ set shiftround "use multiple of shiftwidth when indenting with '<' and '>'
 
 "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 
-set noexpandtab	"Keep tabs as tabs, do not convert to spces
+set expandtab	"I like spaces
 set tabstop=2     " tab width (<tab>)
 set softtabstop=2 "Generally a good idea to keep this the same as shiftwidth
 set shiftwidth=2  " amount of columns for indentation
@@ -379,6 +387,9 @@ nnoremap g, g,zz
 "delete buffer
 nnoremap <leader>b :bd!<CR>
 
+"Make
+nnoremap <leader>m :w<CR>:make<CR>
+
 "XXX TESTING SPEED OF VIM WITHOUT THESE inoremaps. VIM IS SLOWING DOWN
 ""In insertmode, escape when jj or kk is pressed. It's a common
 ""sequence in normal mode but never in insert more.
@@ -424,9 +435,6 @@ cnoremap <C-K> <C-U>
 cnoremap <C-P> <Up>
 cnoremap <C-N> <Down>
 
-"Markdown
-nnoremap <leader>mm :%!markdown <cr>
-
 "Move lines up and down using
 "http://vim.wikia.com/wiki/Moving_lines_up_or_down_in_a_file
 nnoremap <C-j> :m+<CR>==
@@ -436,12 +444,12 @@ inoremap <C-k> <Esc>:m-2<CR>==gi
 vnoremap <C-j> :m'>+<CR>gv=gv
 vnoremap <C-k> :m-2<CR>gv=gv
 
-"Maintain visual mode after yanking
-vnoremap y ygv
-
 "Access system clipboard
 nnoremap <leader>p  "+p
-vnoremap <leader>y	"+ygv
+nnoremap <leader>Y	"+y$
+nnoremap <leader>yy "+yy
+vnoremap <leader>y	"+y
+
 "Windows binding for pasting in insertmode
 inoremap <C-v>  <C-r>+
 
@@ -466,6 +474,10 @@ map <silent> <S-L> :bn<CR>
 "nnoremap <leader>ev :vsp %%
 "nnoremap <leader>et :tabe %%
 
+"Auto Close Tags
+"TODO Check out rag tag
+iabbrev </ </<C-X><C-O>
+
 
 "---------------------------------------------------
 "/ --------------- TEXT EXPANSION ------------------
@@ -478,7 +490,7 @@ iabbrev xdate/ <c-r>=strftime("%Y/%m/%d")<CR>
 iabbrev xdate- <c-r>=strftime("%Y-%m-%d")<CR>
 
 "Filename
-inoremap fn/  <c-r>=expand('%:t:r')<CR>
+iabbrev fn/  <c-r>=expand('%:t:r')<CR>
 
 "Text Expansion
 iabbrev gh/ http://github.com/cdelahousse
@@ -518,6 +530,13 @@ let g:ragtag_global_maps = 1 "For Ragtag
 "Bufftabs directory and file name only
 :let g:buftabs_only_basename=1
 
+" Add spaces before comments text
+let g:NERDSpaceDelims=1
+
+"Add JSDoc to nerdCommenter
+let g:NERDCustomDelimiters = {
+    \ 'javascript': { 'left': '//', 'leftAlt': '/**', 'rightAlt': '*/' } }
+
 "---------------------------------------------------
 "/ ------ ENCODINGS AND FILE FORMATS SETTINGS ------
 "---------------------------------------------------
@@ -542,6 +561,9 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 "Prolog
 autocmd BufRead,BufNewFile   *.pl set filetype=prolog
 
+"Make
+autocmd FileType make setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab 
+
 "--------------------------
 "/ ------ TEXT FILES ----- 
 "--------------------------
@@ -551,10 +573,10 @@ autocmd BufRead,BufNewFile   *.md setlocal filetype=markdown
 autocmd BufRead,BufNewFile   *.txt setlocal filetype=text
 
 function! SetTextOptions()
-	setlocal spell	 "Spell checking
+	setlocal spell
 	setlocal spelllang=en
-	setlocal textwidth=0 
-	setlocal expandtab "spaces, not tabs
+	setlocal textwidth=80
+	setlocal expandtab 
 endfunction
 
 "Register options
