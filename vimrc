@@ -63,30 +63,30 @@ Bundle 'wikitopian/hardmode.git'
 
 function! Colemak()
 
-	nnoremap n gj
-	vnoremap n gj
-	onoremap n j
+  nnoremap n gj
+  vnoremap n gj
+  onoremap n j
 
-	noremap N J
-	" Keep the cursor in place while joining lines (from github/sjl)
-	nnoremap N mzJ`z
+  noremap N J
+  " Keep the cursor in place while joining lines (from github/sjl)
+  nnoremap N mzJ`z
 
-	noremap j n
-	nnoremap j nzzzv
-	nnoremap J Nzzzv
+  noremap j n
+  nnoremap j nzzzv
+  nnoremap J Nzzzv
 
-	nnoremap e gk
-	vnoremap e gk
-	onoremap e k
+  nnoremap e gk
+  vnoremap e gk
+  onoremap e k
 
-	noremap k e
-	noremap K E
+  noremap k e
+  noremap K E
 
-	"-------
-	"Windows
-	"-------
-	nnoremap <C-w>n <C-w>j
-	nnoremap <C-w>e <C-w>k
+  "-------
+  "Windows
+  "-------
+  nnoremap <C-w>n <C-w>j
+  nnoremap <C-w>e <C-w>k
 
 endfunction
 
@@ -98,15 +98,15 @@ call Colemak()
 "-------------------------
 "For QWERTY users
 function! Qwerty()
-	nnoremap n nzzzv
-	nnoremap N Nzzzv
+  nnoremap n nzzzv
+  nnoremap N Nzzzv
 
-	"For long lines. Cursor goes down at line wrap instead of line end
-	nnoremap j gj
-	nnoremap k gk
+  "For long lines. Cursor goes down at line wrap instead of line end
+  nnoremap j gj
+  nnoremap k gk
 
-	" Keep the cursor in place while joining lines " (from github/sjl)
-	nnoremap J mzJ`z
+  " Keep the cursor in place while joining lines " (from github/sjl)
+  nnoremap J mzJ`z
 
 endfunction
 
@@ -127,7 +127,7 @@ set hidden "Buffers can live in background
 set virtualedit=onemore " allow for cursor to go beyond last character
 "set gdefault " the /g flag on :s substitutions by default
 set viminfo+='1000,f1,:1000,/1000  "Sets bigger viminfo file.
-set history=100	"sets :command history
+set history=100 "sets :command history
 set autochdir "Change cwd to current file whenever a window change happens
 
 "----------------------------------------------
@@ -176,12 +176,12 @@ set wrapscan " set the search scan to wrap lines
 set backup "Enable backups
 
 if v:version >= 700
-	set undofile "persistent undo
+  set undofile "persistent undo
 endif
 
 if has("unix") || has("Darwin")
-	"In windows, $TEMP is already defined, but not in linux/unix/OSX
-	let $TEMP = '/tmp/'
+  "In windows, $TEMP is already defined, but not in linux/unix/OSX
+  let $TEMP = '/tmp/'
 endif
 
 "Setting swap and backup dir to system temp. I hate ~ files
@@ -193,8 +193,8 @@ set undodir=$TEMP//
 " ------ UNIX and LINUX Specific settings --------
 "-------------------------------------------------
 if has('unix')
-	"Make :! (ie. the bash command) work in interactiv mode
-	set shellcmdflag=-ic
+  "Make :! (ie. the bash command) work in interactiv mode
+  set shellcmdflag=-ic
 endif
 
 "-------------------------------------------------
@@ -203,11 +203,11 @@ endif
 
 " using gVIM with Cygwin on a Windows PC
 if has('win32')
-	source $VIMRUNTIME/mswin.vim
-	behave mswin
+  source $VIMRUNTIME/mswin.vim
+  behave mswin
 
-	"Cygin as shell
-	set shell=c:\\cygwin\\bin\\bash.exe shellcmdflag=-c shellxquote=\"
+  "Cygin as shell
+  set shell=c:\\cygwin\\bin\\bash.exe shellcmdflag=-c shellxquote=\"
 endif
 
 "---------------------------------------------
@@ -246,7 +246,7 @@ set showfulltag
 " These commands open folds
 set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
-set showmatch	" set show matching parenthesis
+set showmatch " set show matching parenthesis
 set matchtime=1 "showmatch time
 
 " Use the same symbols as TextMate for tabstops and EOLs. Useful for
@@ -265,40 +265,39 @@ set background=dark
 if has('gui_running')
   colorscheme solarized
 
-	set lines=48 columns=92 "set initial windows size
+  set lines=48 columns=92 "set initial windows size
 
-	"Remove gui cruft (menus and what not)
-	set guioptions-=m
-	set guioptions-=a
-	set guioptions-=t
-	set guioptions-=T
+  "Remove gui cruft (menus and what not)
+  set guioptions-=m
+  set guioptions-=a
+  set guioptions-=t
+  set guioptions-=T
 
-	" Set up the gui cursor to look nice
-	"http://www.derekwyatt.org/vim/the-vimrc-file/my-vimrc-file/
-	"Only works with gVim
-	set guicursor=n-v-c:block-Cursor-blinkon0
-	set guicursor+=ve:ver35-Cursor
-	set guicursor+=o:hor50-Cursor
-	set guicursor+=i-ci:ver25-Cursor
-	set guicursor+=r-cr:hor20-Cursor
-	set guicursor+=sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
+  " Set up the gui cursor to look nice
+  "http://www.derekwyatt.org/vim/the-vimrc-file/my-vimrc-file/
+  "Only works with gVim
+  set guicursor=n-v-c:block-Cursor-blinkon0
+  set guicursor+=ve:ver35-Cursor
+  set guicursor+=o:hor50-Cursor
+  set guicursor+=i-ci:ver25-Cursor
+  set guicursor+=r-cr:hor20-Cursor
+  set guicursor+=sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 
-	if has("win32")
-		set guifont=Consolas:h11:cANSI
-	elseif has("Darwin")
-	  "XXX
+  if has("win32")
+    set guifont=Consolas:h11:cANSI
+  elseif has("Darwin")
+    "XXX
     set guifont=Menlo\ Regular:h18
-	elseif has("unix")
-		set guifont=Monospace\ 11
-	endif
+  elseif has("unix")
+    set guifont=Monospace\ 11
+  endif
 
-	"Invisible character colors -- Tabs and EOL
-	highlight NonText guifg=#5a5a65
-	highlight SpecialKey guifg=#5a5a65
+  "Invisible character colors -- Tabs and EOL
+  highlight NonText guifg=#5a5a65
+  highlight SpecialKey guifg=#5a5a65
 
-	"highlight current line
-	set cursorline
-
+  "highlight current line
+  set cursorline
 
 "--------------------------------------------
 "/ --------- FOR TERMINAL EMULATORS ---------
@@ -306,33 +305,33 @@ if has('gui_running')
 
 else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 
-	"Set terminal to 256 colors
-	"Keep this on top of colorscheme
-	set t_Co=256
+  "Set terminal to 256 colors
+  "Keep this on top of colorscheme
+  set t_Co=256
 
-	"for tmux
-	"TODO: Adds weird block character when not in tmux. Fix this. Put this within an if
-	"statment or something
-	"set term=screen-256color
+  "for tmux
+  "TODO: Adds weird block character when not in tmux. Fix this. Put this within an if
+  "statment or something
+  "set term=screen-256color
 
-	colorscheme zenburn
+  colorscheme zenburn
 
-	"highlight bg color of current line and remove default underlinehlight cursor
-	hi CursorLine ctermbg=238 cterm=none
+  "highlight bg color of current line and remove default underlinehlight cursor
+  hi CursorLine ctermbg=238 cterm=none
 
-	"Change the zenburn seach highlights
-	hi Search ctermfg=234 ctermbg=243
+  "Change the zenburn seach highlights
+  hi Search ctermfg=234 ctermbg=243
 
-	"Highlight line in insert mode
-	set nocursorline
-	autocmd InsertLeave * set nocursorline
-	autocmd InsertEnter * set cursorline
+  "Highlight line in insert mode
+  set nocursorline
+  autocmd InsertLeave * set nocursorline
+  autocmd InsertEnter * set cursorline
 
-	"au InsertEnter * hi Normal ctermbg=234 guibg=#000000
-	"au InsertLeave * hi Normal ctermfg=188 ctermbg=237 guifg=#dcdccc "guibg=#3f3f3f
+  "au InsertEnter * hi Normal ctermbg=234 guibg=#000000
+  "au InsertLeave * hi Normal ctermfg=188 ctermbg=237 guifg=#dcdccc "guibg=#3f3f3f
 
-	"For Mintty
-	"http://code.google.com/p/mintty/wiki/Tips
+  "For Mintty
+  "http://code.google.com/p/mintty/wiki/Tips
 
 endif
 
@@ -408,11 +407,11 @@ inoremap (<CR>  (<CR>)<Esc>ko
 " Shortcut to rapidly toggle `set list`: Displays EOL and Tabs
 map <Leader>l :set list!<CR>
 
-"New line without entering insertmode
+"New line without entering insert mode
 nnoremap <S-CR> o<Esc>k
 nnoremap <CR> ko<Esc>j
 
-"Source _vimrc.
+"Source _vimrc
 nmap <leader>s :source $MYVIMRC<CR>
 
 "Edit vimrc
@@ -443,9 +442,9 @@ vnoremap <C-k> :m-2<CR>gv=gv
 
 "Access system clipboard
 nnoremap <leader>p  "+p
-nnoremap <leader>Y	"+y$
+nnoremap <leader>Y  "+y$
 nnoremap <leader>yy "+yy
-vnoremap <leader>y	"+y
+vnoremap <leader>y  "+y
 
 "Windows binding for pasting in insertmode
 inoremap <C-v>  <C-r>+
@@ -462,14 +461,6 @@ ca w!! w !sudo tee >/dev/null "%"
 " screen... But that's OK...
 map <silent> <S-H> :bp<CR>
 map <silent> <S-L> :bn<CR>
-
-"Open vim in current directory
-"http://vimcasts.org/episodes/the-edit-command/
-"cnoremap %% <C-R>=expand('%:h').'/'<CR>
-"nnoremap <leader>ew :e %%
-"nnoremap <leader>es :sp %%
-"nnoremap <leader>ev :vsp %%
-"nnoremap <leader>et :tabe %%
 
 "Auto Close Tags
 "TODO Check out rag tag
@@ -525,7 +516,7 @@ let g:neocomplcache_min_syntax_length = 3
 let g:ragtag_global_maps = 1 "For Ragtag
 
 "Bufftabs directory and file name only
-:let g:buftabs_only_basename=1
+let g:buftabs_only_basename=1
 
 " Add spaces before comments text
 let g:NERDSpaceDelims=1
@@ -570,10 +561,10 @@ autocmd BufRead,BufNewFile   *.md setlocal filetype=markdown
 autocmd BufRead,BufNewFile   *.txt setlocal filetype=text
 
 function! SetTextOptions()
-	setlocal spell
-	setlocal spelllang=en
-	setlocal textwidth=80
-	setlocal expandtab
+  setlocal spell
+  setlocal spelllang=en
+  setlocal textwidth=80
+  setlocal expandtab
 endfunction
 
 "Register options
@@ -587,10 +578,10 @@ autocmd Filetype text,markdown call SetTextOptions()
 au BufReadPost *.rkt,*.rktl,*.scm set filetype=scheme
 
 function! SetLispySettings()
-	setlocal lisp
-	setlocal autoindent
-	setlocal lispwords+=public-method,override-method,private-method,syntax-case,syntax-rules
-	setlocal lispwords+=..more..
+  setlocal lisp
+  setlocal autoindent
+  setlocal lispwords+=public-method,override-method,private-method,syntax-case,syntax-rules
+  setlocal lispwords+=..more..
 endfunction
 
 autocmd Filetype scheme call SetLispySettings()
@@ -601,7 +592,7 @@ autocmd Filetype scheme call SetLispySettings()
 "Keep near bottom of vimrc
 
 if filereadable(glob("~/.vimrc.local"))
-	"Keep settings you only want stored on this machine
-	source ~/.vimrc.local
+  "Keep settings you only want stored on this machine
+  source ~/.vimrc.local
 endif
 
