@@ -1,9 +1,7 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
-" http://github.com/cdelahousse 
-" Last updated: 2013-03-23
-"
-" See changelog
+" http://github.com/cdelahousse
+" Last updated: 2013-09-20
 "
 " Note: g:my_vim_path references the folder where this file and other my other
 " vim settings are located This was to be able to contain everything in one
@@ -24,22 +22,18 @@ Bundle 'gmarik/vundle'
 Bundle 'Solarized'
 Bundle 'jnurmine/Zenburn'
 
+
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
-
+Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-ragtag'
 Bundle 'matchit.zip'
-
-"Bundle 'rstacruz/sparkup'
 Bundle 'mattn/zencoding-vim'
-
 Bundle 'buftabs'
 
 "Modified Indexed search. Removed mappings.
 Bundle 'cdelahousse/IndexedSearch.git'
-
-"Bundle 'vimwiki/vimwiki'
 
 "Disables hjkl because character-wise movements are for pussies
 Bundle 'wikitopian/hardmode.git'
@@ -125,15 +119,15 @@ endfunction
 let mapleader = ","
 
 "filetype on "VUNDLE needs this off, see system vimrc
-filetype plugin on 
+filetype plugin on
 
 set ttyfast "for fast terminal connection, more characters sent to screen
 set shellslash " Set the forward slash to be the shell slash
 set hidden "Buffers can live in background
 set virtualedit=onemore " allow for cursor to go beyond last character
 "set gdefault " the /g flag on :s substitutions by default
-set viminfo+='1000,f1,:1000,/1000  "Sets bigger viminfo file. 
-set history=100	"sets :command history 
+set viminfo+='1000,f1,:1000,/1000  "Sets bigger viminfo file.
+set history=100	"sets :command history
 set autochdir "Change cwd to current file whenever a window change happens
 
 "----------------------------------------------
@@ -157,9 +151,9 @@ set shiftround "use multiple of shiftwidth when indenting with '<' and '>'
 
 "set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 
-set expandtab	"I like spaces
+set expandtab     " I like spaces
 set tabstop=2     " tab width (<tab>)
-set softtabstop=2 "Generally a good idea to keep this the same as shiftwidth
+set softtabstop=2 " Generally a good idea to keep this the same as shiftwidth
 set shiftwidth=2  " amount of columns for indentation
 
 set virtualedit=block "Allow cursor to move freely in block visual mode
@@ -169,11 +163,11 @@ set virtualedit=block "Allow cursor to move freely in block visual mode
 "-----------------------------
 
 "Case smart searching - see http://items.sjbach.com/319/configuring-vim-right
-set ignorecase 
+set ignorecase
 set smartcase "Case sensitive search for important boundary cases
 set hlsearch "Hightlight and incremental search
 set incsearch
-set wrapscan " set the search scan to wrap lines 
+set wrapscan " set the search scan to wrap lines
 
 "--------------------------------
 "/ ------ BACKUP AND SWAP -------
@@ -185,14 +179,14 @@ if v:version >= 700
 	set undofile "persistent undo
 endif
 
-if has("unix")
-	"In windows, $TEMP is already defined, but not in linux/unix
+if has("unix") || has("Darwin")
+	"In windows, $TEMP is already defined, but not in linux/unix/OSX
 	let $TEMP = '/tmp/'
 endif
 
 "Setting swap and backup dir to system temp. I hate ~ files
 set backupdir=$TEMP//
-set directory=$TEMP// 
+set directory=$TEMP//
 set undodir=$TEMP//
 
 "-------------------------------------------------
@@ -230,9 +224,9 @@ set cmdheight=1 "The command-line bar height (default = 1)
 set laststatus=2 "Always display status line
 
 set number "show line numbers on left
-set numberwidth=1 "min line number width 
+set numberwidth=1 "min line number width
 
-set scrolloff=12 "Viewport scroll X lines before cursor hits a side 
+set scrolloff=12 "Viewport scroll X lines before cursor hits a side
 set scroll=9 "Scroll up and down by how many lines using CTRL-D and CTRL-U
 set helpheight=29
 set winminheight=0 " windows can be 0 line high
@@ -242,7 +236,7 @@ set statusline=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
 
 set wildmenu "autocompletion menu when  <tab> is pressed
 "wildmenu completion, list matches, then longest common part, then all.
-set wildmode=list:longest,full	
+set wildmode=list:longest,full
 " ignores extensions on expansion/completion
 set wildignore+=.git
 
@@ -253,9 +247,9 @@ set showfulltag
 set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
 set showmatch	" set show matching parenthesis
-set matchtime=1 "showmatch time	
+set matchtime=1 "showmatch time
 
-" Use the same symbols as TextMate for tabstops and EOLs. Useful for 
+" Use the same symbols as TextMate for tabstops and EOLs. Useful for
 " :set list! See Mapping below
 set listchars=tab:»\ ,eol:¬
 
@@ -270,15 +264,15 @@ set background=dark
 
 if has('gui_running')
   colorscheme solarized
-	
-	set lines=48 columns=92 "set initial windows size 
+
+	set lines=48 columns=92 "set initial windows size
 
 	"Remove gui cruft (menus and what not)
-	set guioptions-=m 
+	set guioptions-=m
 	set guioptions-=a
 	set guioptions-=t
 	set guioptions-=T
-	
+
 	" Set up the gui cursor to look nice
 	"http://www.derekwyatt.org/vim/the-vimrc-file/my-vimrc-file/
 	"Only works with gVim
@@ -290,9 +284,12 @@ if has('gui_running')
 	set guicursor+=sm:block-Cursor-blinkwait175-blinkoff150-blinkon175
 
 	if has("win32")
-		set guifont=Consolas:h11:cANSI 
+		set guifont=Consolas:h11:cANSI
+	elseif has("Darwin")
+	  "XXX
+    set guifont=Menlo\ Regular:h18
 	elseif has("unix")
-		set guifont=Monospace\ 11 
+		set guifont=Monospace\ 11
 	endif
 
 	"Invisible character colors -- Tabs and EOL
@@ -300,15 +297,15 @@ if has('gui_running')
 	highlight SpecialKey guifg=#5a5a65
 
 	"highlight current line
-	set cursorline 
+	set cursorline
 
 
 "--------------------------------------------
 "/ --------- FOR TERMINAL EMULATORS ---------
 "--------------------------------------------
 
-else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native' 
-	
+else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
+
 	"Set terminal to 256 colors
 	"Keep this on top of colorscheme
 	set t_Co=256
@@ -321,7 +318,7 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 	colorscheme zenburn
 
 	"highlight bg color of current line and remove default underlinehlight cursor
-	hi CursorLine ctermbg=238 cterm=none 
+	hi CursorLine ctermbg=238 cterm=none
 
 	"Change the zenburn seach highlights
 	hi Search ctermfg=234 ctermbg=243
@@ -332,8 +329,8 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 	autocmd InsertEnter * set cursorline
 
 	"au InsertEnter * hi Normal ctermbg=234 guibg=#000000
-	"au InsertLeave * hi Normal ctermfg=188 ctermbg=237 guifg=#dcdccc "guibg=#3f3f3f 
-	
+	"au InsertLeave * hi Normal ctermfg=188 ctermbg=237 guifg=#dcdccc "guibg=#3f3f3f
+
 	"For Mintty
 	"http://code.google.com/p/mintty/wiki/Tips
 
@@ -352,7 +349,7 @@ nnoremap ; :
 nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
 "can't map to <esc> because of wierd control characters
 
-"F1 always gets in the way of ESC 
+"F1 always gets in the way of ESC
 nnoremap <F1> <NOP>
 
 "Fuck arrows
@@ -367,9 +364,9 @@ nnoremap Q <NOP>
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
 
-"allow deleting selection without updating the clipboard (yank buffer) 
-"http://www.pixelbeat.org/settings/.vimrc 
-noremap x "_xh 
+"allow deleting selection without updating the clipboard (yank buffer)
+"http://www.pixelbeat.org/settings/.vimrc
+noremap x "_xh
 noremap X "_X
 
 "Keep jump in middle of window on search
@@ -404,7 +401,7 @@ inoremap hh <ESC>h
 "https://bitbucket.org/sjl/dotfiles/src/ef5962b5abed/vim/.vimrc
 inoremap <c-cr> <esc>A<CR>
 
-"Creates nicely spaced and completed brackets. 
+"Creates nicely spaced and completed brackets.
 inoremap {<CR>  {<CR>}<Esc>ko
 inoremap (<CR>  (<CR>)<Esc>ko
 
@@ -418,7 +415,7 @@ nnoremap <CR> ko<Esc>j
 "Source _vimrc.
 nmap <leader>s :source $MYVIMRC<CR>
 
-"Edit vimrc 
+"Edit vimrc
 execute "nmap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
 
 "redraw screen because tmux/gnu screen sometimes screws up
@@ -460,7 +457,7 @@ nnoremap S i<CR><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w
 " sudo write
 ca w!! w !sudo tee >/dev/null "%"
 
-" Change buffer and the clear the command line (for buftab plugin) using <silent> 
+" Change buffer and the clear the command line (for buftab plugin) using <silent>
 " This mapping conflicts with default mapping of moving cursor to top and bottom of the
 " screen... But that's OK...
 map <silent> <S-H> :bp<CR>
@@ -485,7 +482,7 @@ iabbrev </ </<C-X><C-O>
 
 "Current date yyyy/mm/dd HH:MM:SS
 iabbrev ydate <c-r>=strftime("%Y/%m/%d %H:%M:%S")<CR>
-"Current date yyyy/mm/dd 
+"Current date yyyy/mm/dd
 iabbrev xdate/ <c-r>=strftime("%Y/%m/%d")<CR>
 iabbrev xdate- <c-r>=strftime("%Y-%m-%d")<CR>
 
@@ -524,8 +521,8 @@ let g:neocomplcache_enable_at_startup = 1
 " Set minimum syntax keyword length.
 let g:neocomplcache_min_syntax_length = 3
 
-" Remember the awesomeness of ragtag CX-<Slash> 
-let g:ragtag_global_maps = 1 "For Ragtag 
+" Remember the awesomeness of ragtag CX-<Slash>
+let g:ragtag_global_maps = 1 "For Ragtag
 
 "Bufftabs directory and file name only
 :let g:buftabs_only_basename=1
@@ -541,7 +538,7 @@ let g:NERDCustomDelimiters = {
 "/ ------ ENCODINGS AND FILE FORMATS SETTINGS ------
 "---------------------------------------------------
 
-set fileformat=unix   
+set fileformat=unix  
 set encoding=utf-8
 
 "---------------------------------------------------
@@ -562,10 +559,10 @@ autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 autocmd BufRead,BufNewFile   *.pl set filetype=prolog
 
 "Make
-autocmd FileType make setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab 
+autocmd FileType make setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 
 "--------------------------
-"/ ------ TEXT FILES ----- 
+"/ ------ TEXT FILES -----
 "--------------------------
 
 "Recognize markdown files
@@ -576,14 +573,14 @@ function! SetTextOptions()
 	setlocal spell
 	setlocal spelllang=en
 	setlocal textwidth=80
-	setlocal expandtab 
+	setlocal expandtab
 endfunction
 
 "Register options
 autocmd Filetype text,markdown call SetTextOptions()
 
 "--------------------------
-"/ ------ SCHEME --------- 
+"/ ------ SCHEME ---------
 "--------------------------
 
 "http://docs.racket-lang.org/guide/Vim.html
@@ -596,33 +593,15 @@ function! SetLispySettings()
 	setlocal lispwords+=..more..
 endfunction
 
-autocmd Filetype scheme call SetLispySettings() 
+autocmd Filetype scheme call SetLispySettings()
 
 "------------------------------------------
 "/ ---- SETTINGS FOR LOCAL MACHINE --------
 "------------------------------------------
 "Keep near bottom of vimrc
 
-if filereadable(glob("~/.vimrc.local")) 
+if filereadable(glob("~/.vimrc.local"))
 	"Keep settings you only want stored on this machine
 	source ~/.vimrc.local
 endif
 
-"http://news.ycombinator.com/item?id=1464623
-"http://peter-hoffmann.com/2010/refresh-browser-on-save-with-inotify-and-xdotool.html
-"Install XDOTOOL == fake linux input mouse and keyboard
-"Refresshes browse
-"autocmd BufWriteCmd *.html,*.css,*.haml :call Refresh_browser()
-    "function()! Refresh_browser()
-        "if &modified
-            "write
-            "silent !xdotool search --class google-chrome key ctrl+r
-        "endif
-    "endfunction
-    "
-
-"Strips trailing whitespace
-function! StripWhitespace ()
-
-    exec ':%s/ \+$//gc'
-endfunction
