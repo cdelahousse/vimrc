@@ -1,7 +1,7 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse
-" Last updated: 2013-09-20
+" Last updated: 2013-10-22
 "
 " Note: g:my_vim_path references the folder where this file and other my other
 " vim settings are located This was to be able to contain everything in one
@@ -12,10 +12,9 @@
 "--------------------------------------------
 "- Keep these settings at the top of vimrc --
 "--------------------------------------------
-set nocompatible "called again in case local vimrc didn't. For Vundle
+set nocompatible "For Vundle
 
-
-"Package Management. Essential
+"Package Management.
 Bundle 'gmarik/vundle'
 
 "Colour schemes
@@ -31,6 +30,11 @@ Bundle 'tpope/vim-ragtag'
 Bundle 'matchit.zip'
 Bundle 'mattn/zencoding-vim'
 Bundle 'buftabs'
+Bundle 'gregsexton/MatchTag.git'
+
+"Syntax Highlighting
+Bundle 'groenewege/vim-less'
+Bundle 'nono/vim-handlebars'
 
 "Modified Indexed search. Removed mappings.
 Bundle 'cdelahousse/IndexedSearch.git'
@@ -43,7 +47,6 @@ Bundle 'wikitopian/hardmode.git'
 "Bundle 'Shougo/neocomplcache'
 "Bundle 'Lokaltog/vim-easymotion'
 "Bundle 'Command-T' ----> apperently ctrlp is better
-
 
 "-------------------------
 "/------- COLEMAK --------
@@ -125,7 +128,6 @@ set ttyfast "for fast terminal connection, more characters sent to screen
 set shellslash " Set the forward slash to be the shell slash
 set hidden "Buffers can live in background
 set virtualedit=onemore " allow for cursor to go beyond last character
-"set gdefault " the /g flag on :s substitutions by default
 set viminfo+='1000,f1,:1000,/1000  "Sets bigger viminfo file.
 set history=100 "sets :command history
 set autochdir "Change cwd to current file whenever a window change happens
@@ -180,8 +182,8 @@ if v:version >= 700
 endif
 
 if has("unix") || has("Darwin")
-  "In windows, $TEMP is already defined, but not in linux/unix/OSX
-  let $TEMP = '/tmp/'
+  "On windows, $TEMP is already defined, but not in linux/unix/OSX
+  let $TEMP = '~/tmp,/tmp'
 endif
 
 "Setting swap and backup dir to system temp. I hate ~ files
@@ -223,7 +225,7 @@ set visualbell "Removes beeping
 set cmdheight=1 "The command-line bar height (default = 1)
 set laststatus=2 "Always display status line
 
-set number "show line numbers on left
+set number
 set numberwidth=1 "min line number width
 
 set scrolloff=12 "Viewport scroll X lines before cursor hits a side
@@ -231,8 +233,8 @@ set scroll=9 "Scroll up and down by how many lines using CTRL-D and CTRL-U
 set helpheight=29
 set winminheight=0 " windows can be 0 line high
 
-"Format Status Line
-set statusline=%f\ %m\ %r\ Line:%l/%L[%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
+"EXAMPLE ~/Dropbox/config/vim/vimrc   Line:269/595 [45%] Col:0 Buf:2 [0][0x0]
+set statusline=%F\ %m\ %r\ Line:%l/%L\ [%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
 
 set wildmenu "autocompletion menu when  <tab> is pressed
 "wildmenu completion, list matches, then longest common part, then all.
@@ -316,19 +318,16 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 
   colorscheme zenburn
 
-  "highlight bg color of current line and remove default underlinehlight cursor
-  hi CursorLine ctermbg=238 cterm=none
-
   "Change the zenburn seach highlights
-  hi Search ctermfg=234 ctermbg=243
+  highlight Search ctermfg=234 ctermbg=243
+
+  set mouse+=a "For scrolling
 
   "Highlight line in insert mode
   set nocursorline
   autocmd InsertLeave * set nocursorline
   autocmd InsertEnter * set cursorline
-
-  "au InsertEnter * hi Normal ctermbg=234 guibg=#000000
-  "au InsertLeave * hi Normal ctermfg=188 ctermbg=237 guifg=#dcdccc "guibg=#3f3f3f
+  highlight  CursorLine ctermbg=238 cterm=none
 
   "For Mintty
   "http://code.google.com/p/mintty/wiki/Tips
@@ -351,12 +350,6 @@ nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
 "F1 always gets in the way of ESC
 nnoremap <F1> <NOP>
 
-"Fuck arrows
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
-
 "Q is ex mode, which I never use but always accidentally enter
 nnoremap Q <NOP>
 
@@ -365,7 +358,7 @@ nnoremap Y y$
 
 "allow deleting selection without updating the clipboard (yank buffer)
 "http://www.pixelbeat.org/settings/.vimrc
-noremap x "_xh
+noremap x "_x
 noremap X "_X
 
 "Keep jump in middle of window on search
@@ -380,23 +373,21 @@ nnoremap g, g,zz
 "---------------------------------------------------------------
 
 "Quick shortcuts :
+
 "delete buffer
 nnoremap <leader>b :bd!<CR>
 
 "Make
-nnoremap <leader>m :w<CR>:make<CR>
+nnoremap <leader>sm :w<CR>:make<CR>
 
-"XXX TESTING SPEED OF VIM WITHOUT THESE inoremaps. VIM IS SLOWING DOWN
 ""In insertmode, escape when jj or kk is pressed. It's a common
 ""sequence in normal mode but never in insert more.
 inoremap jj <ESC>gj
 inoremap kk <ESC>gk
 inoremap hh <ESC>h
 
-""kj is Faster than ESC
-"inoremap kj <ESC>
-
-"Write to new line without exiting insertmode or breaking current line
+"TODO FIX
+"Write to new line without exiting insert mode or breaking current line
 "https://bitbucket.org/sjl/dotfiles/src/ef5962b5abed/vim/.vimrc
 inoremap <c-cr> <esc>A<CR>
 
@@ -404,25 +395,28 @@ inoremap <c-cr> <esc>A<CR>
 inoremap {<CR>  {<CR>}<Esc>ko
 inoremap (<CR>  (<CR>)<Esc>ko
 
-" Shortcut to rapidly toggle `set list`: Displays EOL and Tabs
-map <Leader>l :set list!<CR>
-
 "New line without entering insert mode
 nnoremap <S-CR> o<Esc>k
 nnoremap <CR> ko<Esc>j
 
-"Source _vimrc
-nmap <leader>s :source $MYVIMRC<CR>
+"Source vimrc
+nnoremap <leader>ss :source $MYVIMRC<CR>
 
 "Edit vimrc
-execute "nmap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
+execute "nnoremap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
 
-"redraw screen because tmux/gnu screen sometimes screws up
-nnoremap <leader>sr :redraw!<cr>
+"Search and repace word under cursor
+:nnoremap <Leader>sr :%s/\<<C-r><C-w>\>/
 
 "For switching between the normal terminal and tmux
 nnoremap <leader>sx  :set term=screen-256color<CR>
 nnoremap <leader>sg  :set term=xterm-256color<CR>
+
+"redraw screen
+nnoremap <leader>sd :redraw!<cr>
+
+"toggle `set list`: Displays EOL and Tabs
+nnoremap <Leader>sl :set list!<CR>
 
 " Bash like keys for the command line"
 cnoremap <C-A> <Home>
@@ -459,13 +453,12 @@ ca w!! w !sudo tee >/dev/null "%"
 " Change buffer and the clear the command line (for buftab plugin) using <silent>
 " This mapping conflicts with default mapping of moving cursor to top and bottom of the
 " screen... But that's OK...
-map <silent> <S-H> :bp<CR>
-map <silent> <S-L> :bn<CR>
+nnoremap <silent> <S-H> :bp<CR>
+nnoremap <silent> <S-L> :bn<CR>
 
 "Auto Close Tags
 "TODO Check out rag tag
 iabbrev </ </<C-X><C-O>
-
 
 "---------------------------------------------------
 "/ --------------- TEXT EXPANSION ------------------
@@ -525,6 +518,10 @@ let g:NERDSpaceDelims=1
 let g:NERDCustomDelimiters = {
     \ 'javascript': { 'left': '//', 'leftAlt': '/**', 'rightAlt': '*/' } }
 
+"TODO: Fix this
+" \ 'javascript': { 'left': '//', 'leftAlt': '/**', 'rightAlt': '*/' }
+" \ 'handlebars': { 'left': '{{!', 'right': '}}'} }
+
 "---------------------------------------------------
 "/ ------ ENCODINGS AND FILE FORMATS SETTINGS ------
 "---------------------------------------------------
@@ -551,6 +548,9 @@ autocmd BufRead,BufNewFile   *.pl set filetype=prolog
 
 "Make
 autocmd FileType make setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
+
+"Handlebars
+autocmd BufRead,BufNewFile   *.hbs setlocal filetype=handlebars
 
 "--------------------------
 "/ ------ TEXT FILES -----
