@@ -8,16 +8,17 @@
 " directory to ease deploying my vimrc to multiple machines
 
 " TODO:
-" * Fix Colemak plugin bindings
+" * Fix Colemak plugin bindings (ie Nerdtree);
 " * Fix QWERTY bindings
+" * Move keyboard bindings to function definition section
 " * Make bracket matching less obvious
 " * Make search results more obvious
 " * Learn EasyMotion
 " *	Figure out ways to highlight/change colour the words TODO, XXX, todo, etc...
-" * ["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:",  "NOTE:", "note:", "note", "NOTE", "NB", "xxx:", "XXX:", "todo:"]
+" * ["FIXME", "TODO", "XXX", "todo", "xxx",
+"   "TODO:",  "NOTE:", "note:", "note", "NOTE", "NB", "xxx:", "XXX:", "todo:"]
 " * Find remapping for $ and 0. These are hard to reach. Candidates: L
-" * Macvim font sizes
-" * fix nerdtree bindings with colemak
+" * Comments formatting. See TODO
 
 "--------------------------------------------
 "/ ------------ VUNDLE SETTINGS -------------
@@ -62,45 +63,40 @@ Bundle 'wikitopian/hardmode.git'
 "-------------------------
 "/------- COLEMAK --------
 "-------------------------
-"I type colemak. Theses are my remappings. Keys pairs ek and nj are swapped.
-" h <==
-" n down
-" e up
-" l ==>
 
-" k end of word
-" j next search result
-
-"Could use the following command instead of the Colemak() function,
-"but but langmap breaks plugins.
+"I could use langmap instead of Colemak() function, but but langmap breaks plugins.
 "set langmap=nj,jn,ek,ke
 
 function! Colemak()
 
+  "left (<=) is `h`, right (=>) is `l` as with QWERTY
+  "Keys swapped are nNejJkK
+
+  "down
   nnoremap n gj
   vnoremap n gj
   onoremap n j
 
-  noremap N J
-  " Keep the cursor in place while joining lines (from github/sjl)
-  nnoremap N mzJ`z
-
-  noremap j n
-  nnoremap j nzzzv
-  nnoremap J Nzzzv
-
+  "Up
   nnoremap e gk
   vnoremap e gk
   onoremap e k
 
+  "Join lines
+  "Keep the cursor in place while joining lines (from github/sjl)
+  noremap N J
+  nnoremap N mzJ`z
+
+  "Next/prev search result
+  "Keep result centered (zzzv)
+  "Invert line color on next item. See HLNext definition
+  noremap j n:call HLNext(0.6)<cr>
+  nnoremap j nzzzv:call HLNext(065)<cr>
+  nnoremap J Nzzzv:call HLNext(0.6)<cr>
+
+  "Move to end of next word
   noremap k e
   noremap K E
-
-  "-------
-  "Windows
-  "-------
-  nnoremap <C-w>n <C-w>j
-  nnoremap <C-w>e <C-w>k
 
 endfunction
 
@@ -110,6 +106,7 @@ call Colemak()
 "/------- QWERTY --------
 "-------------------------
 "For QWERTY users
+"TODO: Fix this. I think I just need to reset all mappings. n->n, k->k, etc.
 function! Qwerty()
   nnoremap n nzzzv
   nnoremap N Nzzzv
@@ -147,10 +144,10 @@ set autochdir "Change cwd to current file whenever a window change happens
 "----------------------------------------------
 
 set autoread  "Reload files changed outside vim
-set wrap "wrap text
+set wrap
 set linebreak "wrap lines at convenient points
 set textwidth=80 "hard line breaks at this number
-set colorcolumn=+1 " highlight column after 'textwidth'
+set colorcolumn=+1,+21 "make me aware of long lines
 
 filetype indent on
 
@@ -161,7 +158,8 @@ set copyindent " copy the previous indentation on autoindenting
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set shiftround "use multiple of shiftwidth when indenting with '<' and '>'
 
-set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
+"TODO: figure this out
+" set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 
 set expandtab     " expant tabs to spaces
 set tabstop=2     " tab width (<tab>)
@@ -539,7 +537,7 @@ let g:NERDCustomDelimiters = {
 "/ ------ ENCODINGS AND FILE FORMATS SETTINGS ------
 "---------------------------------------------------
 
-set fileformat=unix  
+set fileformat=unix
 set encoding=utf-8
 
 "---------------------------------------------------
@@ -598,6 +596,25 @@ function! SetLispySettings()
 endfunction
 
 autocmd Filetype scheme call SetLispySettings()
+
+
+"------------------------------------------
+"/ ---- FUNCTION DEFINITIONS -------------
+"------------------------------------------
+
+" Blink on next search item
+" http://programming.oreilly.com/2013/10/more-instantly-better-vim.html
+" https://docs.google.com/file/d/0Bx3f0gFZh5Jqc0MtcUstV3BKdTQ/edit
+" USAGE:
+"   nnoremap <silent> n n:call HLNext(0.4)<cr>
+"   nnoremap <silent> N N:call HLNext(0.4)<cr>
+function! HLNext (blinktime)
+  set invcursorline
+  redraw
+  exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
+  set invcursorline
+  redraw
+endfunction
 
 "------------------------------------------
 "/ ---- SETTINGS FOR LOCAL MACHINE --------
