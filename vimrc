@@ -8,6 +8,7 @@
 " directory to ease deploying my vimrc to multiple machines
 
 " TODO:
+" * Disable listchars in insert mode
 " * Fix Colemak plugin bindings (ie Nerdtree);
 " * Fix QWERTY bindings
 " * Move keyboard bindings to function definition section
@@ -90,9 +91,9 @@ function! Colemak()
   "Next/prev search result
   "Keep result centered (zzzv)
   "Invert line color on next item. See HLNext definition
-  noremap j n:call HLNext(0.6)<cr>
-  nnoremap j nzzzv:call HLNext(0.6)<cr>
-  nnoremap J Nzzzv:call HLNext(0.6)<cr>
+  noremap j n:call BlinkCursorLine(0.4)<cr>
+  nnoremap j nzzzv:call BlinkCursorLine(0.4)<cr>
+  nnoremap J Nzzzv:call BlinkCursorLine(0.4)<cr>
 
   "Move to end of next word
   noremap k e
@@ -147,10 +148,11 @@ set autoread  "Reload files changed outside vim
 set wrap
 set linebreak "wrap lines at convenient points
 set textwidth=80 "hard line breaks at this number
-set colorcolumn=+1,+21 "make me aware of long lines
+" Make me aware of long lines
+set colorcolumn=+1
+call matchadd('ColorColumn', '\%101v')
 
 filetype indent on
-
 set smarttab " insert tabs line according to shiftwidth, not tabstop
 set autoindent " always set autoindenting on
 set smartindent "Indents smartly for c-like languages
@@ -184,10 +186,7 @@ set wrapscan " set the search scan to wrap lines
 "--------------------------------
 
 set backup "Enable backups
-
-if v:version >= 700
-  set undofile "persistent undo
-endif
+set undofile "persistent undo
 
 if has("unix") || has("Darwin")
   "On windows, $TEMP is already defined, but not in linux/unix/OSX
@@ -350,8 +349,12 @@ endif
 nnoremap ; :
 
 "<space> a turns off highlighting
-nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
 "can't map to <esc> because of wierd control characters
+" nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
+" use :noh instead
+
+"Page Down like less. Blink to tell show me where the cursor is
+nnoremap <SPACE> <PAGEDOWN>:call BlinkCursorLine(0.4)<CR>
 
 "F1 always gets in the way of ESC
 nnoremap <F1> <NOP>
@@ -461,8 +464,8 @@ nnoremap S i<CR><esc>^mwgk:silent! s/\v +$//<CR>:noh<CR>`w
 ca w!! w !sudo tee >/dev/null "%"
 
 " Change buffer and the clear the command line (for buftab plugin) using <silent>
-" This mapping conflicts with default mapping of moving cursor to top and bottom of the
-" screen... But that's OK...
+" This mapping conflicts with default mapping of moving cursor to top and bottom
+" of the screen... But that's OK...
 nnoremap <silent> <S-H> :bp<CR>
 nnoremap <silent> <S-L> :bn<CR>
 
@@ -605,9 +608,9 @@ autocmd Filetype scheme call SetLispySettings()
 " http://programming.oreilly.com/2013/10/more-instantly-better-vim.html
 " https://docs.google.com/file/d/0Bx3f0gFZh5Jqc0MtcUstV3BKdTQ/edit
 " USAGE:
-"   nnoremap <silent> n n:call HLNext(0.4)<cr>
-"   nnoremap <silent> N N:call HLNext(0.4)<cr>
-function! HLNext (blinktime)
+"   nnoremap <silent> n n:call BlinkCursorLine(0.4)<cr>
+"   nnoremap <silent> N N:call BlinkCursorLine(0.4)<cr>
+function! BlinkCursorLine (blinktime)
   set invcursorline
   redraw
   exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
