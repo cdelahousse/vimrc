@@ -1,20 +1,30 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse
-" Last updated: 2013-10-22
+" Last updated: 2013-11-30
 "
 " Note: g:my_vim_path references the folder where this file and other my other
 " vim settings are located This was to be able to contain everything in one
 " directory to ease deploying my vimrc to multiple machines
-"
+
+" TODO:
+" * Fix Colemak plugin bindings
+" * Fix QWERTY bindings
+" * Make bracket matching less obvious
+" * Make search results more obvious
+" * Learn EasyMotion
+" *	Figure out ways to highlight/change colour the words TODO, XXX, todo, etc...
+" * ["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:",  "NOTE:", "note:", "note", "NOTE", "NB", "xxx:", "XXX:", "todo:"]
+" * Find remapping for $ and 0. These are hard to reach. Candidates: L
+" * Macvim font sizes
+" * fix nerdtree bindings with colemak
+
 "--------------------------------------------
 "/ ------------ VUNDLE SETTINGS -------------
 "--------------------------------------------
 "- Keep these settings at the top of vimrc --
 "--------------------------------------------
 set nocompatible "For Vundle
-
-"Package Management.
 Bundle 'gmarik/vundle'
 
 "Colour schemes
@@ -28,9 +38,10 @@ Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-ragtag'
 Bundle 'matchit.zip'
-Bundle 'mattn/zencoding-vim'
+Bundle 'mattn/emmet-vim'
 Bundle 'buftabs'
 Bundle 'gregsexton/MatchTag.git'
+Bundle 'editorconfig/editorconfig-vim'
 
 "Syntax Highlighting
 Bundle 'groenewege/vim-less'
@@ -95,7 +106,6 @@ endfunction
 
 call Colemak()
 
-
 "-------------------------
 "/------- QWERTY --------
 "-------------------------
@@ -121,7 +131,7 @@ endfunction
 
 let mapleader = ","
 
-"filetype on "VUNDLE needs this off, see system vimrc
+"filetype on - VUNDLE needs this off, see system vimrc
 filetype plugin on
 
 set ttyfast "for fast terminal connection, more characters sent to screen
@@ -136,7 +146,7 @@ set autochdir "Change cwd to current file whenever a window change happens
 "/ -------------- EDITING  --------------------
 "----------------------------------------------
 
-"set autoread  "Reload files changed outside vim
+set autoread  "Reload files changed outside vim
 set wrap "wrap text
 set linebreak "wrap lines at convenient points
 set textwidth=80 "hard line breaks at this number
@@ -151,9 +161,9 @@ set copyindent " copy the previous indentation on autoindenting
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
 set shiftround "use multiple of shiftwidth when indenting with '<' and '>'
 
-"set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
+set comments=sl:/*,mb:*,elx:*/  " auto format comment blocks
 
-set expandtab     " I like spaces
+set expandtab     " expant tabs to spaces
 set tabstop=2     " tab width (<tab>)
 set softtabstop=2 " Generally a good idea to keep this the same as shiftwidth
 set shiftwidth=2  " amount of columns for indentation
@@ -267,17 +277,16 @@ set background=dark
 if has('gui_running')
   colorscheme solarized
 
-  set lines=48 columns=92 "set initial windows size
+  set lines=48 columns=100 "set initial windows size
 
-  "Remove gui cruft (menus and what not)
+  "Remove gui cruft
   set guioptions-=m
   set guioptions-=a
   set guioptions-=t
   set guioptions-=T
 
-  " Set up the gui cursor to look nice
+  " Set up the gui cursor to look nice. Only work in gVim
   "http://www.derekwyatt.org/vim/the-vimrc-file/my-vimrc-file/
-  "Only works with gVim
   set guicursor=n-v-c:block-Cursor-blinkon0
   set guicursor+=ve:ver35-Cursor
   set guicursor+=o:hor50-Cursor
@@ -287,8 +296,7 @@ if has('gui_running')
 
   if has("win32")
     set guifont=Consolas:h11:cANSI
-  elseif has("Darwin")
-    "XXX
+  elseif has("mac")
     set guifont=Menlo\ Regular:h18
   elseif has("unix")
     set guifont=Monospace\ 11
@@ -309,19 +317,20 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 
   "Set terminal to 256 colors
   "Keep this on top of colorscheme
-  set t_Co=256
+  " set t_Co=256
 
-  "for tmux
-  "TODO: Adds weird block character when not in tmux. Fix this. Put this within an if
-  "statment or something
-  "set term=screen-256color
+  "disable Background Color Erase (BCE) so that color schemes
+  "render properly when inside 256-color tmux and GNU screen.
+  "http://snk.tuxfamily.org/log/vim-256color-bce.html
+  "http://sunaku.github.io/vim-256color-bce.html
+  set t_ut=
 
   colorscheme zenburn
 
   "Change the zenburn seach highlights
   highlight Search ctermfg=234 ctermbg=243
 
-  set mouse+=a "For scrolling
+  set mouse+=a "enable mouse
 
   "Highlight line in insert mode
   set nocursorline
@@ -350,6 +359,12 @@ nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
 "F1 always gets in the way of ESC
 nnoremap <F1> <NOP>
 
+"Disable arrow keys
+noremap <Up> <NOP>
+noremap <Down> <NOP>
+noremap <Left> <NOP>
+noremap <Right> <NOP>
+
 "Q is ex mode, which I never use but always accidentally enter
 nnoremap Q <NOP>
 
@@ -358,8 +373,8 @@ nnoremap Y y$
 
 "allow deleting selection without updating the clipboard (yank buffer)
 "http://www.pixelbeat.org/settings/.vimrc
-noremap x "_x
-noremap X "_X
+nnoremap x "_x
+nnoremap X "_X
 
 "Keep jump in middle of window on search
 "https://bitbucket.org/sjl/dotfiles/src/ef5962b5abed/vim/.vimrcw
@@ -371,8 +386,6 @@ nnoremap g, g,zz
 "---------------------------------------------------------------
 "/ ---------- MAPPINGS FOR INTERESTING FUNCTIONALITY -----------
 "---------------------------------------------------------------
-
-"Quick shortcuts :
 
 "delete buffer
 nnoremap <leader>b :bd!<CR>
@@ -405,12 +418,12 @@ nnoremap <leader>ss :source $MYVIMRC<CR>
 "Edit vimrc
 execute "nnoremap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
 
-"Search and repace word under cursor
-:nnoremap <Leader>sr :%s/\<<C-r><C-w>\>/
+"Search and replace word under cursor
+:nnoremap <Leader>sr :%s/<C-r><C-w>//gc<Left><Left><Left>
 
 "For switching between the normal terminal and tmux
-nnoremap <leader>sx  :set term=screen-256color<CR>
-nnoremap <leader>sg  :set term=xterm-256color<CR>
+" nnoremap <leader>sx  :set term=screen-256color<CR>
+" nnoremap <leader>sg  :set term=xterm-256color<CR>
 
 "redraw screen
 nnoremap <leader>sd :redraw!<cr>
@@ -552,9 +565,11 @@ autocmd FileType make setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 "Handlebars
 autocmd BufRead,BufNewFile   *.hbs setlocal filetype=handlebars
 
-"--------------------------
+"Git Commit messages
+"http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
+autocmd FileType gitcommit set textwidth=72
+
 "/ ------ TEXT FILES -----
-"--------------------------
 
 "Recognize markdown files
 autocmd BufRead,BufNewFile   *.md setlocal filetype=markdown
@@ -570,9 +585,7 @@ endfunction
 "Register options
 autocmd Filetype text,markdown call SetTextOptions()
 
-"--------------------------
 "/ ------ SCHEME ---------
-"--------------------------
 
 "http://docs.racket-lang.org/guide/Vim.html
 au BufReadPost *.rkt,*.rktl,*.scm set filetype=scheme
