@@ -91,7 +91,7 @@ function! Colemak()
   "Keep result centered (zzzv)
   "Invert line color on next item. See HLNext definition
   noremap j n:call HLNext(0.6)<cr>
-  nnoremap j nzzzv:call HLNext(065)<cr>
+  nnoremap j nzzzv:call HLNext(0.6)<cr>
   nnoremap J Nzzzv:call HLNext(0.6)<cr>
 
   "Move to end of next word
@@ -259,9 +259,8 @@ set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 set showmatch " set show matching parenthesis
 set matchtime=1 "showmatch time
 
-" Use the same symbols as TextMate for tabstops and EOLs. Useful for
-" :set list! See Mapping below
-set listchars=tab:»\ ,eol:¬
+set list
+set listchars=tab:»~,trail:·,precedes:«,extends:»
 
 "Resize splits when the window is resized
 au VimResized * exe "normal! \<c-w>="
