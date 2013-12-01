@@ -33,7 +33,6 @@ Bundle 'gmarik/vundle'
 Bundle 'Solarized'
 Bundle 'jnurmine/Zenburn'
 
-
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
 Bundle 'scrooloose/nerdtree'
@@ -91,9 +90,9 @@ function! Colemak()
   "Next/prev search result
   "Keep result centered (zzzv)
   "Invert line color on next item. See HLNext definition
-  noremap j n:call BlinkCursorLine(0.4)<cr>
-  nnoremap j nzzzv:call BlinkCursorLine(0.4)<cr>
-  nnoremap J Nzzzv:call BlinkCursorLine(0.4)<cr>
+  noremap <silent> j n:call BlinkCursorLine(0.4)<cr>
+  nnoremap <silent> j nzzzv:call BlinkCursorLine(0.4)<cr>
+  nnoremap <silent> J Nzzzv:call BlinkCursorLine(0.4)<cr>
 
   "Move to end of next word
   noremap k e
@@ -154,7 +153,7 @@ call matchadd('ColorColumn', '\%101v')
 
 filetype indent on
 set smarttab " insert tabs line according to shiftwidth, not tabstop
-set autoindent " always set autoindenting on
+set autoindent
 set smartindent "Indents smartly for c-like languages
 set copyindent " copy the previous indentation on autoindenting
 set backspace=indent,eol,start " allow backspacing over everything in insert mode
@@ -179,7 +178,7 @@ set ignorecase
 set smartcase "Case sensitive search for important boundary cases
 set hlsearch "Hightlight and incremental search
 set incsearch
-set wrapscan " set the search scan to wrap lines
+set wrapscan
 
 "--------------------------------
 "/ ------ BACKUP AND SWAP -------
@@ -334,9 +333,6 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
   autocmd InsertEnter * set cursorline
   highlight  CursorLine ctermbg=238 cterm=none
 
-  "For Mintty
-  "http://code.google.com/p/mintty/wiki/Tips
-
 endif
 
 
@@ -351,10 +347,10 @@ nnoremap ; :
 "<space> a turns off highlighting
 "can't map to <esc> because of wierd control characters
 " nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
-" use :noh instead
+" use :noh instead. <Backspace> seems to be a good candidate for mapping
 
 "Page Down like less. Blink to tell show me where the cursor is
-nnoremap <SPACE> <PAGEDOWN>:call BlinkCursorLine(0.4)<CR>
+nnoremap <silent> <SPACE> <PAGEDOWN>:call BlinkCursorLine(0.4)<CR>
 
 "F1 always gets in the way of ESC
 nnoremap <F1> <NOP>
@@ -599,7 +595,6 @@ endfunction
 
 autocmd Filetype scheme call SetLispySettings()
 
-
 "------------------------------------------
 "/ ---- FUNCTION DEFINITIONS -------------
 "------------------------------------------
@@ -618,13 +613,25 @@ function! BlinkCursorLine (blinktime)
   redraw
 endfunction
 
-"------------------------------------------
-"/ ---- SETTINGS FOR LOCAL MACHINE --------
-"------------------------------------------
-"Keep near bottom of vimrc
+function! MoveCursorPositionOnLastExit()
+  if line("'\"") > 1 && line("'\"") <= line("$")
+    execute "normal! g`\""
+  endif
+endfunction
 
-if filereadable(glob("~/.vimrc.local"))
-  "Keep settings you only want stored on this machine
-  source ~/.vimrc.local
-endif
+function! SourceIfFileExists(path)
+  if filereadable(glob(a:path))
+    echom "Sourcing " . a:path . "."
+    source a:path
+  endif
+endfunction
+
+"-----------------
+"/ ---- CALLS ----
+"-----------------
+
+autocmd BufReadPost * call MoveCursorPositionOnLastExit()
+
+"Source Local settings. Keep near bottom of vimrc
+call SourceIfFileExists("~/.vimrc.local")
 
