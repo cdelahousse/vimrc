@@ -619,11 +619,13 @@ function! MoveCursorPositionOnLastExit()
 endfunction
 
 function! SourceIfFileExists(path)
-  if filereadable(glob(a:path))
+  let expanded = glob(a:path)
+  if filereadable(expanded)
     echom "Sourcing " . a:path . "."
-    source a:path
+    exec ":source " . expanded
   endif
 endfunction
+
 
 "-----------------
 "/ ---- CALLS ----
@@ -631,6 +633,6 @@ endfunction
 
 autocmd BufReadPost * call MoveCursorPositionOnLastExit()
 
-"Source Local settings. Keep near bottom of vimrc
+"Source Local settings. Keep this near bottom of vimrc
 call SourceIfFileExists("~/.vimrc.local")
 
