@@ -1,25 +1,28 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse
-" Last updated: 2013-11-30
+" Last updated: 2013-12-02
 "
 " Note: g:my_vim_path references the folder where this file and other my other
 " vim settings are located This was to be able to contain everything in one
 " directory to ease deploying my vimrc to multiple machines
 
 " TODO:
-" * Disable listchars in insert mode
-" * Fix Colemak plugin bindings (ie Nerdtree);
 " * Fix QWERTY bindings
-" * Move keyboard bindings to function definition section
-" * Make bracket matching less obvious
-" * Make search results more obvious
 " * Learn EasyMotion
-" *	Figure out ways to highlight/change colour the words TODO, XXX, todo, etc...
-" * ["FIXME", "TODO", "XXX", "todo", "xxx",
-"   "TODO:",  "NOTE:", "note:", "note", "NOTE", "NB", "xxx:", "XXX:", "todo:"]
-" * Find remapping for $ and 0. These are hard to reach. Candidates: L
+" * Use ctrl-p
+" * Fugitive
+" * Tern for vim
+" * Ack.vim or Ag.vim
+" * Look into Hard Mode
+" * Make bracket matching less obvious
+" * Valloric/YouCompleteMe' with Tern
+" * Vim Smooth Scroll
 " * Comments formatting. See TODO
+" * Figure out ways to highlight/change colour the words TODO, XXX, todo, etc...
+"   ["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:",  "NOTE:", "note:",
+      "note", "NOTE", "NB", "xxx:", "XXX:", "todo:"]
+" * Find remapping for $ and 0. These are hard to reach. Candidates: L
 
 "--------------------------------------------
 "/ ------------ VUNDLE SETTINGS -------------
@@ -33,9 +36,14 @@ Bundle 'gmarik/vundle'
 Bundle 'Solarized'
 Bundle 'jnurmine/Zenburn'
 
+"Syntax Highlighting
+Bundle 'groenewege/vim-less'
+Bundle 'nono/vim-handlebars'
+Bundle "pangloss/vim-javascript"
+
+"Plugins
 Bundle 'scrooloose/nerdcommenter'
 Bundle 'scrooloose/syntastic'
-Bundle 'scrooloose/nerdtree'
 Bundle 'tpope/vim-surround'
 Bundle 'tpope/vim-ragtag'
 Bundle 'matchit.zip'
@@ -43,22 +51,14 @@ Bundle 'mattn/emmet-vim'
 Bundle 'buftabs'
 Bundle 'gregsexton/MatchTag.git'
 Bundle 'editorconfig/editorconfig-vim'
-
-"Syntax Highlighting
-Bundle 'groenewege/vim-less'
-Bundle 'nono/vim-handlebars'
+Bundle 'kien/ctrlp.vim'
+Bundle 'Lokaltog/vim-easymotion'
 
 "Modified Indexed search. Removed mappings.
 Bundle 'cdelahousse/IndexedSearch.git'
 
 "Disables hjkl because character-wise movements are for pussies
 Bundle 'wikitopian/hardmode.git'
-
-"TODO Figure out
-"Bundle 'ervandew/supertab'
-"Bundle 'Shougo/neocomplcache'
-"Bundle 'Lokaltog/vim-easymotion'
-"Bundle 'Command-T' ----> apperently ctrlp is better
 
 "-------------------------
 "/------- COLEMAK --------
@@ -367,8 +367,7 @@ nnoremap Q <NOP>
 " Yank from the cursor to the end of the line, to be consistent with C and D.
 nnoremap Y y$
 
-"allow deleting selection without updating the clipboard (yank buffer)
-"http://www.pixelbeat.org/settings/.vimrc
+"Do not fill the yank register with single chars
 nnoremap x "_x
 nnoremap X "_X
 
