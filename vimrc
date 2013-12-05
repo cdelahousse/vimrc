@@ -60,68 +60,6 @@ Bundle 'cdelahousse/IndexedSearch.git'
 "Disables hjkl because character-wise movements are for pussies
 Bundle 'wikitopian/hardmode.git'
 
-"-------------------------
-"/------- COLEMAK --------
-"-------------------------
-
-"I could use langmap instead of Colemak() function, but but langmap breaks plugins.
-"set langmap=nj,jn,ek,ke
-
-function! Colemak()
-
-  "left (<=) is `h`, right (=>) is `l` as with QWERTY
-  "Keys swapped are nNejJkK
-
-  "down
-  nnoremap n gj
-  vnoremap n gj
-  onoremap n j
-
-  "Up
-  nnoremap e gk
-  vnoremap e gk
-  onoremap e k
-
-  "Join lines
-  "Keep the cursor in place while joining lines (from github/sjl)
-  noremap N J
-  nnoremap N mzJ`z
-
-  "Next/prev search result
-  "Keep result centered (zzzv)
-  "Invert line color on next item. See HLNext definition
-  noremap <silent> j n:call BlinkCursorLine(0.4)<cr>
-  nnoremap <silent> j nzzzv:call BlinkCursorLine(0.4)<cr>
-  nnoremap <silent> J Nzzzv:call BlinkCursorLine(0.4)<cr>
-
-  "Move to end of next word
-  noremap k e
-  noremap K E
-
-endfunction
-
-call Colemak()
-
-"-------------------------
-"/------- QWERTY --------
-"-------------------------
-"For QWERTY users
-"TODO: Fix this. I think I just need to reset all mappings. n->n, k->k, etc.
-function! Qwerty()
-  nnoremap n nzzzv
-  nnoremap N Nzzzv
-
-  "For long lines. Cursor goes down at line wrap instead of line end
-  nnoremap j gj
-  nnoremap k gk
-
-  " Keep the cursor in place while joining lines " (from github/sjl)
-  nnoremap J mzJ`z
-
-endfunction
-
-"call Qwerty()
-
 "----------------------------------------
 "/------- GENERAL CONFIG SETTINGS -------
 "----------------------------------------
@@ -621,15 +559,87 @@ endfunction
 function! SourceIfFileExists(path)
   let expanded = glob(a:path)
   if filereadable(expanded)
-    echom "Sourcing " . a:path . "."
     exec ":source " . expanded
   endif
+endfunction
+
+"--------------------------------
+"/ -- KEYBOARD LAYOUT BINDINGS --
+"--------------------------------
+
+" I use a keyboard layout called Colemak
+function! Colemak()
+
+  "left (<=) is `h`, right (=>) is `l` as with QWERTY
+  "Keys swapped are nNejJkK
+
+  "down
+  nnoremap n gj
+  vnoremap n gj
+  onoremap n j
+
+  "Up
+  nnoremap e gk
+  vnoremap e gk
+  onoremap e k
+
+  "Join lines
+  "Keep the cursor in place while joining lines (from github/sjl)
+  noremap N J
+  nnoremap N mzJ`z
+
+  "Next/prev search result
+  "Keep result centered (zzzv)
+  "Invert line color on next item. See HLNext definition
+  noremap <silent> j n:call BlinkCursorLine(0.4)<cr>
+  nnoremap <silent> j nzzzv:call BlinkCursorLine(0.4)<cr>
+  nnoremap <silent> J Nzzzv:call BlinkCursorLine(0.4)<cr>
+
+  "Move to end of next word
+  noremap k e
+  noremap K E
+
+" NOTE: I could have used `langmap` instead of this Colemak() function,
+" but but langmap breaks a few plugins.
+" `set langmap=nj,jn,ek,ke`
+
+endfunction
+
+"For QWERTY keyboard layout users. Resets everything to approximate vim defaults.
+function! Qwerty()
+  nnoremap j gj
+  vnoremap j gj
+  onoremap j j
+
+  vnoremap J J
+  onoremap J J
+  nnoremap J mzJ`z
+
+  nnoremap k gk
+  vnoremap k gk
+  onoremap k k
+
+  noremap e e
+  noremap E E
+
+  vnoremap <silent> n n:call BlinkCursorLine(0.4)<cr>
+  onoremap n n
+  nnoremap <silent> n nzzzv:call BlinkCursorLine(0.4)<cr>
+
+  nnoremap <silent> N Nzzzv:call BlinkCursorLine(0.4)<cr>
+  vnoremap N N
+  onoremap N N
+
 endfunction
 
 
 "-----------------
 "/ ---- CALLS ----
 "-----------------
+
+"Set keybindings
+call Colemak()
+" call Qwerty()
 
 autocmd BufReadPost * call MoveCursorPositionOnLastExit()
 
