@@ -38,8 +38,8 @@ Bundle 'jnurmine/Zenburn'
 
 "Syntax Highlighting
 Bundle 'groenewege/vim-less'
-Bundle 'nono/vim-handlebars'
-Bundle "pangloss/vim-javascript"
+Bundle 'mustache/vim-mustache-handlebars'
+Bundle 'pangloss/vim-javascript'
 
 "Plugins
 Bundle 'scrooloose/nerdcommenter'
@@ -288,7 +288,7 @@ nnoremap ; :
 " use :noh instead. <Backspace> seems to be a good candidate for mapping
 
 "Page Down like less. Blink to tell show me where the cursor is
-nnoremap <silent> <SPACE> <PAGEDOWN>:call BlinkCursorLine(0.4)<CR>
+nnoremap <silent> <SPACE> <PAGEDOWN>:call MyBlinkCursorLine()<CR>
 
 "F1 always gets in the way of ESC
 nnoremap <F1> <NOP>
@@ -454,19 +454,17 @@ let g:neocomplcache_min_syntax_length = 3
 " Remember the awesomeness of ragtag CX-<Slash>
 let g:ragtag_global_maps = 1 "For Ragtag
 
-"Bufftabs directory and file name only
+" Bufftabs directory and file name only
 let g:buftabs_only_basename=1
 
 " Add spaces before comments text
 let g:NERDSpaceDelims=1
 
-"Add JSDoc to nerdCommenter
+" for JSDoc and handlebars
 let g:NERDCustomDelimiters = {
-    \ 'javascript': { 'left': '//', 'leftAlt': '/**', 'rightAlt': '*/' } }
-
-"TODO: Fix this
-" \ 'javascript': { 'left': '//', 'leftAlt': '/**', 'rightAlt': '*/' }
-" \ 'handlebars': { 'left': '{{!', 'right': '}}'} }
+    \ 'javascript': { 'left': '//', 'leftAlt': '/**', 'rightAlt': '*/' },
+    \ 'mustache': { 'left': '{{!--', 'right' : '--}}'}
+    \ }
 
 "---------------------------------------------------
 "/ ------ ENCODINGS AND FILE FORMATS SETTINGS ------
@@ -490,13 +488,10 @@ autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
 autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 "Prolog
-autocmd BufRead,BufNewFile   *.pl set filetype=prolog
+autocmd BufRead,BufNewFile *.pl set filetype=prolog
 
 "Make
 autocmd FileType make setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
-
-"Handlebars
-autocmd BufRead,BufNewFile   *.hbs setlocal filetype=handlebars
 
 "Git Commit messages
 "http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
@@ -541,13 +536,16 @@ autocmd Filetype scheme call SetLispySettings()
 " https://docs.google.com/file/d/0Bx3f0gFZh5Jqc0MtcUstV3BKdTQ/edit
 " USAGE:
 "   nnoremap <silent> n n:call BlinkCursorLine(0.4)<cr>
-"   nnoremap <silent> N N:call BlinkCursorLine(0.4)<cr>
 function! BlinkCursorLine (blinktime)
   set invcursorline
   redraw
   exec 'sleep ' . float2nr(a:blinktime * 1000) . 'm'
   set invcursorline
   redraw
+endfunction
+
+function! MyBlinkCursorLine()
+  :call BlinkCursorLine(0.3)
 endfunction
 
 function! MoveCursorPositionOnLastExit()
@@ -591,9 +589,9 @@ function! Colemak()
   "Next/prev search result
   "Keep result centered (zzzv)
   "Invert line color on next item. See HLNext definition
-  noremap <silent> j n:call BlinkCursorLine(0.4)<cr>
-  nnoremap <silent> j nzzzv:call BlinkCursorLine(0.4)<cr>
-  nnoremap <silent> J Nzzzv:call BlinkCursorLine(0.4)<cr>
+  noremap <silent> j n:call MyBlinkCursorLine()<cr>
+  nnoremap <silent> j nzzzv:call MyBlinkCursorLine()<cr>
+  nnoremap <silent> J Nzzzv:call MyBlinkCursorLine()<cr>
 
   "Move to end of next word
   noremap k e
@@ -622,11 +620,11 @@ function! Qwerty()
   noremap e e
   noremap E E
 
-  vnoremap <silent> n n:call BlinkCursorLine(0.4)<cr>
+  vnoremap <silent> n n:call MyBlinkCursorLine()<cr>
   onoremap n n
-  nnoremap <silent> n nzzzv:call BlinkCursorLine(0.4)<cr>
+  nnoremap <silent> n nzzzv:call MyBlinkCursorLine()<cr>
 
-  nnoremap <silent> N Nzzzv:call BlinkCursorLine(0.4)<cr>
+  nnoremap <silent> N Nzzzv:call MyBlinkCursorLine()<cr>
   vnoremap N N
   onoremap N N
 
