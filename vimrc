@@ -8,14 +8,13 @@
 " directory to ease deploying my vimrc to multiple machines
 
 " TODO:
-" * Fix QWERTY bindings
+" * Fix search and replace highlighting
 " * Learn EasyMotion
 " * Use ctrl-p
 " * Fugitive
 " * Tern for vim
 " * Ack.vim or Ag.vim
 " * Look into Hard Mode
-" * Make bracket matching less obvious
 " * Valloric/YouCompleteMe' with Tern
 " * Vim Smooth Scroll
 " * Comments formatting. See TODO
@@ -192,8 +191,8 @@ set showfulltag
 " These commands open folds
 set foldopen=block,insert,jump,mark,percent,quickfix,search,tag,undo
 
-set showmatch " set show matching parenthesis
-set matchtime=1 "showmatch time
+set showmatch " show matching bracket when inserting a bracket
+set matchtime=1
 
 set list
 set listchars=tab:»~,trail:·,precedes:«,extends:»
@@ -260,16 +259,18 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 
   colorscheme zenburn
 
-  "Change the zenburn seach highlights
+  " Search Highlights
   highlight Search ctermfg=234 ctermbg=243
+  " Paren Matching Colour
+  highlight MatchParen cterm=none ctermfg=234 ctermbg=242
+  " cursor line
+  highlight CursorLine ctermbg=238 cterm=none
 
-  set mouse+=a "enable mouse
 
-  "Highlight line in insert mode
+  "Highlight cursor line in insert mode
   set nocursorline
   autocmd InsertLeave * set nocursorline
   autocmd InsertEnter * set cursorline
-  highlight  CursorLine ctermbg=238 cterm=none
 
 endif
 
