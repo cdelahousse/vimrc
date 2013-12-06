@@ -1,7 +1,7 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse
-" Last updated: 2013-12-02
+" Last updated: 2013-12-06
 "
 " Note: g:my_vim_path references the folder where this file and other my other
 " vim settings are located This was to be able to contain everything in one
@@ -110,10 +110,9 @@ set virtualedit=block "Allow cursor to move freely in block visual mode
 "/ -------- SEARCHING --------
 "-----------------------------
 
-"Case smart searching - see http://items.sjbach.com/319/configuring-vim-right
 set ignorecase
 set smartcase "Case sensitive search for important boundary cases
-set hlsearch "Hightlight and incremental search
+set hlsearch
 set incsearch
 set wrapscan
 
@@ -121,8 +120,8 @@ set wrapscan
 "/ ------ BACKUP AND SWAP -------
 "--------------------------------
 
-set backup "Enable backups
-set undofile "persistent undo
+set backup
+set undofile
 
 if has("unix") || has("Darwin")
   "On windows, $TEMP is already defined, but not in linux/unix/OSX
@@ -159,7 +158,7 @@ endif
 "/ -------- GENERAL GUI SETTINGS -------------
 "---------------------------------------------
 
-syntax enable "Syntax highlighting
+syntax enable
 
 set ruler "Shows colums, rows, percentage of location in file. Like g-Ctrl-G
 set showcmd " Show the current command
@@ -257,6 +256,7 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
   "http://sunaku.github.io/vim-256color-bce.html
   set t_ut=
 
+  set mouse+=a "enable mouse
   colorscheme zenburn
 
   " Search Highlights
@@ -275,30 +275,29 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
 endif
 
 
-"---------------------------------------------------
-"/ ------- MODIFIED DEFAULT MAPPINGS --------------
-"---------------------------------------------------
+"-----------------------------
+"/ ------- MAPPINGS ----------
+"-----------------------------
 
 " Switches : to ;. Saves alot of keystrokes
 " Normal mode only
 nnoremap ; :
 
-"<space> a turns off highlighting
+"<BACKSPACE> a turns off highlighting
 "can't map to <esc> because of wierd control characters
-" nnoremap <silent> <space> :nohlsearch<Bar>:echo<CR>
-" use :noh instead. <Backspace> seems to be a good candidate for mapping
+nnoremap <silent> <BACKSPACE> <BACKSPACE>:nohlsearch<Bar>:echo<CR>
 
-"Page Down like less. Blink to tell show me where the cursor is
+"Page Down like less. Blink to tell show me where the cursor is.
 nnoremap <silent> <SPACE> <PAGEDOWN>:call MyBlinkCursorLine()<CR>
 
 "F1 always gets in the way of ESC
 nnoremap <F1> <NOP>
 
 "Disable arrow keys
-noremap <Up> <NOP>
-noremap <Down> <NOP>
-noremap <Left> <NOP>
-noremap <Right> <NOP>
+noremap <Up> :echo "Use HJKL"<CR>
+noremap <Down> :echo "Use HJKL"<CR>
+noremap <Left> :echo "Use HJKL"<CR>
+noremap <Right> :echo "Use HJKL"<CR>
 
 "Q is ex mode, which I never use but always accidentally enter
 nnoremap Q <NOP>
@@ -316,10 +315,6 @@ nnoremap * *zzzv
 nnoremap # #zzzv
 nnoremap g; g;zz
 nnoremap g, g,zz
-
-"---------------------------------------------------------------
-"/ ---------- MAPPINGS FOR INTERESTING FUNCTIONALITY -----------
-"---------------------------------------------------------------
 
 "delete buffer
 nnoremap <leader>b :bd!<CR>
@@ -354,10 +349,6 @@ execute "nnoremap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
 
 "Search and replace word under cursor
 :nnoremap <Leader>sr :%s/<C-r><C-w>//gc<Left><Left><Left>
-
-"For switching between the normal terminal and tmux
-" nnoremap <leader>sx  :set term=screen-256color<CR>
-" nnoremap <leader>sg  :set term=xterm-256color<CR>
 
 "redraw screen
 nnoremap <leader>sd :redraw!<cr>
@@ -445,15 +436,14 @@ let g:EasyMotion_leader_key = '<leader><leader>'
 "/ -------------- PLUGIN SETTINGS ------------------
 "---------------------------------------------------
 
-
 "Enable neocomplcache
-let g:neocomplcache_enable_at_startup = 1
+" let g:neocomplcache_enable_at_startup = 1
 
 " Set minimum syntax keyword length.
-let g:neocomplcache_min_syntax_length = 3
+" let g:neocomplcache_min_syntax_length = 3
 
 " Remember the awesomeness of ragtag CX-<Slash>
-let g:ragtag_global_maps = 1 "For Ragtag
+let g:ragtag_global_maps = 1
 
 " Bufftabs directory and file name only
 let g:buftabs_only_basename=1
