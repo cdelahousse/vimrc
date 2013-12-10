@@ -8,7 +8,6 @@
 " directory to ease deploying my vimrc to multiple machines
 
 " TODO:
-" * Fix search and replace highlighting
 " * Learn EasyMotion
 " * Use ctrl-p
 " * Fugitive
@@ -347,8 +346,9 @@ nnoremap <leader>ss :source $MYVIMRC<CR>
 "Edit vimrc
 execute "nnoremap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
 
-"Search and replace word under cursor
-:nnoremap <Leader>sr :%s/<C-r><C-w>//gc<Left><Left><Left>
+"Search and replace word under cursor. Note: the vis mapping saves to "h
+nnoremap <leader>sr :%s/<C-r><C-w>//gc<Left><Left><Left>
+vnoremap <leader>sr "hy:%s/<C-r>h//gc<left><left><left>
 
 "redraw screen
 nnoremap <leader>sd :redraw!<cr>
