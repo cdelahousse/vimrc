@@ -1,7 +1,7 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse
-" Last updated: 2013-12-06
+" Last updated: 2013-12-10
 "
 " Note: g:my_vim_path references the folder where this file and other my other
 " vim settings are located This was to be able to contain everything in one
@@ -9,7 +9,6 @@
 
 " TODO:
 " * Learn EasyMotion
-" * Use ctrl-p
 " * Fugitive
 " * Tern for vim
 " * Ack.vim or Ag.vim
@@ -104,6 +103,8 @@ set softtabstop=2 " Generally a good idea to keep this the same as shiftwidth
 set shiftwidth=2  " amount of columns for indentation
 
 set virtualedit=block "Allow cursor to move freely in block visual mode
+
+set iskeyword-=_ "Don't allow underscores in words
 
 "-----------------------------
 "/ -------- SEARCHING --------
@@ -347,14 +348,14 @@ nnoremap <leader>ss :source $MYVIMRC<CR>
 execute "nnoremap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
 
 "Search and replace word under cursor. Note: the vis mapping saves to "h
-nnoremap <leader>sr :%s/<C-r><C-w>//gc<Left><Left><Left>
+nnoremap <leader>sr :%s/<C-r><C-w>//gc<left><left><left>
 vnoremap <leader>sr "hy:%s/<C-r>h//gc<left><left><left>
 
 "redraw screen
 nnoremap <leader>sd :redraw!<cr>
 
 "toggle `set list`: Displays EOL and Tabs
-nnoremap <Leader>sl :set list!<CR>
+nnoremap <leader>sl :set list!<CR>
 
 " Bash like keys for the command line"
 cnoremap <C-A> <Home>
