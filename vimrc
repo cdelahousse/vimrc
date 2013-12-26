@@ -1,19 +1,18 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse
-" Last updated: 2013-12-10
+" Last updated: 2013-12-26
 "
 " Note: g:my_vim_path references the folder where this file and other my other
 " vim settings are located This was to be able to contain everything in one
 " directory to ease deploying my vimrc to multiple machines
 
 " TODO:
+" * Search and replace highlighting
 " * Learn EasyMotion
 " * Fugitive
-" * Tern for vim
 " * Ack.vim or Ag.vim
 " * Look into Hard Mode
-" * Valloric/YouCompleteMe' with Tern
 " * Vim Smooth Scroll
 " * Comments formatting. See TODO
 " * Figure out ways to highlight/change colour the words TODO, XXX, todo, etc...
@@ -33,9 +32,10 @@ Bundle 'gmarik/vundle'
 Bundle 'Solarized'
 Bundle 'jnurmine/Zenburn'
 
-"Syntax Highlighting
+"Syntax Highlighting and indenting
 Bundle 'groenewege/vim-less'
 Bundle 'mustache/vim-mustache-handlebars'
+Bundle 'jelera/vim-javascript-syntax'
 Bundle 'pangloss/vim-javascript'
 
 "Plugins
@@ -50,6 +50,8 @@ Bundle 'gregsexton/MatchTag.git'
 Bundle 'editorconfig/editorconfig-vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'Valloric/YouCompleteMe'
+Bundle 'marijnh/tern_for_vim'
 
 "Modified Indexed search. Removed mappings.
 Bundle 'cdelahousse/IndexedSearch.git'
@@ -281,7 +283,7 @@ endif
 
 " Switches : to ;. Saves alot of keystrokes
 " Normal mode only
-nnoremap ; :
+" nnoremap ; :
 
 "<BACKSPACE> a turns off highlighting
 "can't map to <esc> because of wierd control characters
