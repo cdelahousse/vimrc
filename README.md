@@ -44,3 +44,10 @@ it done for you.
 
     :BundleInstall!
 
+1. Install dependencies
+
+    jshint
+    python-dev
+    cmake
+
+1. Build tern and YouCompleteMe
