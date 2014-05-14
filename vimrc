@@ -8,6 +8,7 @@
 " directory to ease deploying my vimrc to multiple machines
 
 " TODO:
+" * Fix search blink
 " * Search and replace highlighting
 " * Learn EasyMotion
 " * Fugitive
@@ -19,6 +20,7 @@
 "   ["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:",  "NOTE:", "note:",
       "note", "NOTE", "NB", "xxx:", "XXX:", "todo:"]
 " * Find remapping for $ and 0. These are hard to reach. Candidates: L
+" Look into Language Tool: https://github.com/vim-scripts/LanguageTool
 
 "--------------------------------------------
 "/ ------------ VUNDLE SETTINGS -------------
@@ -33,7 +35,7 @@ Bundle 'Solarized'
 Bundle 'jnurmine/Zenburn'
 
 "Syntax Highlighting and indenting
-Bundle 'groenewege/vim-less'
+"Bundle 'groenewege/vim-less'
 Bundle 'mustache/vim-mustache-handlebars'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'pangloss/vim-javascript'
@@ -261,13 +263,9 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
   set mouse+=a "enable mouse
   colorscheme zenburn
 
-  " Search Highlights
   highlight Search ctermfg=234 ctermbg=243
-  " Paren Matching Colour
   highlight MatchParen cterm=none ctermfg=234 ctermbg=242
-  " cursor line
   highlight CursorLine ctermbg=238 cterm=none
-
 
   "Highlight cursor line in insert mode
   set nocursorline
@@ -288,9 +286,6 @@ endif
 "<BACKSPACE> a turns off highlighting
 "can't map to <esc> because of wierd control characters
 nnoremap <silent> <BACKSPACE> <BACKSPACE>:nohlsearch<Bar>:echo<CR>
-
-"Page Down like less. Blink to tell show me where the cursor is.
-nnoremap <silent> <SPACE> <PAGEDOWN>:call MyBlinkCursorLine()<CR>
 
 "F1 always gets in the way of ESC
 nnoremap <F1> <NOP>
@@ -490,6 +485,9 @@ autocmd FileType make setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 "Git Commit messages
 "http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 autocmd FileType gitcommit set textwidth=72
+
+"Python
+autocmd BufRead *.py setlocal tabstop=4 expandtab shiftwidth=4 softtabstop=4
 
 "/ ------ TEXT FILES -----
 
