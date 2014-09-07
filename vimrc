@@ -396,6 +396,20 @@ nnoremap <silent> <S-L> :bn<CR>
 "TODO Check out rag tag
 iabbrev </ </<C-X><C-O>
 
+
+"Smart indent when entering insert mode with i on empty lines
+"http://stackoverflow.com/questions/3003393/
+"Use `cc` as alternative
+function! IndentWithI()
+  if len(getline('.')) == 0
+    return "\"_ddO"
+  else
+    return "i"
+  endif
+endfunction
+
+nnoremap <expr> i IndentWithI()
+
 "---------------------------------------------------
 "/ --------------- TEXT EXPANSION ------------------
 "---------------------------------------------------
