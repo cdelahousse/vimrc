@@ -1,13 +1,16 @@
+"set custom vim path for local machine (choose one)
+let g:MY_VIM_PATH = '~/Dropbox/config/vim'
+" let g:MY_VIM_PATH = '~/.vim'
+
+"Allow finicky and brittle settings?
+let g:FINICKY = 1
+
 set nocompatible
 filetype off "for vundle
 
-"set custom vim path for local machine (choose one)
-let g:my_vim_path	= '~/Dropbox/config/vim'
-" let g:my_vim_path	= '~/.vim'
-
 "add vundle to runtime path and run it -- Package Management
-execute "set rtp+=" . g:my_vim_path . '/bundle/vundle/'
-execute "call vundle#rc('" . g:my_vim_path . "/bundle/')"
+execute "set rtp+=" . g:MY_VIM_PATH . '/bundle/vundle/'
+execute "call vundle#rc('" . g:MY_VIM_PATH . "/bundle/')"
 
 "Source my custom vimrc
-execute "source " . g:my_vim_path . "/vimrc"
+execute "source " . g:MY_VIM_PATH . "/vimrc"

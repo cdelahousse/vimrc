@@ -1,9 +1,9 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse
-" Last updated: 2013-12-26
+" Last updated: 2014-10-03
 "
-" Note: g:my_vim_path references the folder where this file and other my other
+" Note: g:MY_VIM_PATH references the folder where this file and other my other
 " vim settings are located This was to be able to contain everything in one
 " directory to ease deploying my vimrc to multiple machines
 
@@ -52,14 +52,18 @@ Bundle 'gregsexton/MatchTag.git'
 Bundle 'editorconfig/editorconfig-vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Lokaltog/vim-easymotion'
-Bundle 'Valloric/YouCompleteMe'
-Bundle 'marijnh/tern_for_vim'
 
 "Modified Indexed search. Removed mappings.
 Bundle 'cdelahousse/IndexedSearch.git'
 
 "Disables hjkl because character-wise movements are for pussies
 Bundle 'wikitopian/hardmode.git'
+
+if (g:FINICKY)
+  " The following plugins require compile steps
+  Bundle 'Valloric/YouCompleteMe'
+  Bundle 'marijnh/tern_for_vim'
+endif
 
 "----------------------------------------
 "/------- GENERAL CONFIG SETTINGS -------
@@ -342,7 +346,7 @@ nnoremap <CR> ko<Esc>j
 nnoremap <leader>ss :source $MYVIMRC<CR>
 
 "Edit vimrc
-execute "nnoremap <leader>se :e " . g:my_vim_path . "/vimrc<CR>"
+execute "nnoremap <leader>se :e " . g:MY_VIM_PATH . "/vimrc<CR>"
 
 "Search and replace word under cursor. Note: the vis mapping saves to "h
 nnoremap <leader>sr :%s/<C-r><C-w>//gc<left><left><left>
