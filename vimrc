@@ -1,7 +1,7 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse
-" Last updated: 2014-10-03
+" Last updated: 2014-10-17
 "
 " Note: g:MY_VIM_PATH references the folder where this file and other my other
 " vim settings are located This was to be able to contain everything in one
@@ -15,7 +15,7 @@
 " * Ack.vim or Ag.vim
 " * Look into Hard Mode
 " * Vim Smooth Scroll
-" * Comments formatting. See TODO
+" * Comments formatting.
 " * Figure out ways to highlight/change colour the words TODO, XXX, todo, etc...
 "   ["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:",  "NOTE:", "note:",
       "note", "NOTE", "NB", "xxx:", "XXX:", "todo:"]
@@ -52,6 +52,7 @@ Bundle 'gregsexton/MatchTag.git'
 Bundle 'editorconfig/editorconfig-vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Lokaltog/vim-easymotion'
+Bundle 'bkad/CamelCaseMotion'
 
 "Modified Indexed search. Removed mappings.
 Bundle 'cdelahousse/IndexedSearch.git'
@@ -447,6 +448,28 @@ let g:EasyMotion_leader_key = '<leader><leader>'
 " NerdCommenter (NOTES)
 "[count]<leader>cy- Like cc except that the commented line(s) are yanked first.
 "<leader>c$ - Comments the current line from the cursor to the end of line.
+
+"camelCaseMotion
+"Replace the default w, b and e mappings instead of defining
+"additional mappings ,w, ,b and ,e
+"Note: for some reason ,w, ,b and ,e still works. I should look into disabling
+"this.
+map <silent> w <Plug>CamelCaseMotion_w
+map <silent> b <Plug>CamelCaseMotion_b
+map <silent> e <Plug>CamelCaseMotion_e
+sunmap w
+sunmap b
+sunmap e
+
+"Replace default iw text-object and define ib and ie motions:
+omap <silent> iw <Plug>CamelCaseMotion_iw
+xmap <silent> iw <Plug>CamelCaseMotion_iw
+omap <silent> ib <Plug>CamelCaseMotion_ib
+xmap <silent> ib <Plug>CamelCaseMotion_ib
+omap <silent> ie <Plug>CamelCaseMotion_ie
+xmap <silent> ie <Plug>CamelCaseMotion_ie
+
+
 
 "---------------------------------------------------
 "/ -------------- PLUGIN SETTINGS ------------------
