@@ -87,12 +87,12 @@ set autochdir "Change cwd to current file whenever a window change happens
 "/ -------------- EDITING  --------------------
 "----------------------------------------------
 
-set autoread  "Reload files changed outside vim
 set wrap
 set linebreak "wrap lines at convenient points
 set textwidth=80 "hard line breaks at this number
 " Make me aware of long lines
 set colorcolumn=+1
+" Hightlight the 101st character
 call matchadd('ColorColumn', '\%101v')
 
 filetype indent on
@@ -269,13 +269,14 @@ else "if &term=~"^xterm" || &term=~'rxvt-cygwin-native'
   colorscheme zenburn
 
   highlight Search ctermfg=234 ctermbg=243
-  highlight MatchParen cterm=none ctermfg=234 ctermbg=242
+  highlight MatchParen ctermfg=234 ctermbg=242 cterm=none
   highlight CursorLine ctermbg=238 cterm=none
+  highlight CursorColumn ctermbg=238 cterm=none
 
   "Highlight cursor line in insert mode
   set nocursorline
-  autocmd InsertLeave * set nocursorline
-  autocmd InsertEnter * set cursorline
+  autocmd InsertLeave * setlocal nocursorline nocursorcolumn
+  autocmd InsertEnter * setlocal cursorline cursorcolumn
 
 endif
 
@@ -350,8 +351,8 @@ nnoremap <leader>ss :source $MYVIMRC<CR>
 execute "nnoremap <leader>se :e " . g:MY_VIM_PATH . "/vimrc<CR>"
 
 "Search and replace word under cursor. Note: the vis mapping saves to "h
-nnoremap <leader>sr :%s/<C-r><C-w>//gc<left><left><left>
-vnoremap <leader>sr "hy:%s/<C-r>h//gc<left><left><left>
+nnoremap <leader>sr :%s/<C-r><C-w>/<C-r><C-w>/gc<left><left><left>
+vnoremap <leader>sr "hy:%s/<C-r>h/<C-r>h/gc<left><left><left>
 
 "redraw screen
 nnoremap <leader>sd :redraw!<cr>
