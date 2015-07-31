@@ -53,6 +53,7 @@ Bundle 'editorconfig/editorconfig-vim'
 Bundle 'kien/ctrlp.vim'
 Bundle 'Lokaltog/vim-easymotion'
 Bundle 'bkad/CamelCaseMotion'
+Bundle 'nelstrom/vim-markdown-folding'
 
 "Modified Indexed search. Removed mappings.
 Bundle 'cdelahousse/IndexedSearch.git'
@@ -114,6 +115,8 @@ set shiftwidth=2  " amount of columns for indentation
 set virtualedit=block "Allow cursor to move freely in block visual mode
 
 set iskeyword-=_ "Don't allow underscores in words
+
+set modeline
 
 "-----------------------------
 "/ -------- SEARCHING --------
@@ -187,6 +190,7 @@ set winminheight=0 " windows can be 0 line high
 "EXAMPLE ~/Dropbox/config/vim/vimrc   Line:269/595 [45%] Col:0 Buf:2 [0][0x0]
 set statusline=%F\ %m\ %r\ Line:%l/%L\ [%p%%]\ Col:%c\ Buf:%n\ [%b][0x%B]
 
+set completeopt-=preview "disable scratch window on omnicompletion
 set wildmenu "autocompletion menu when  <tab> is pressed
 "wildmenu completion, list matches, then longest common part, then all.
 set wildmode=list:longest,full
@@ -323,7 +327,7 @@ nnoremap g, g,zz
 nnoremap <leader>b :bd!<CR>
 
 "Make
-nnoremap <leader>sm :w<CR>:make<CR>
+nnoremap <leader>sm :w<CR>:silent make<CR>:redraw!<CR>
 
 ""In insertmode, escape when jj or kk is pressed. It's a common
 ""sequence in normal mode but never in insert more.
@@ -496,6 +500,11 @@ let g:NERDCustomDelimiters = {
     \ 'javascript': { 'left': '//', 'leftAlt': '/**', 'rightAlt': '*/' },
     \ 'mustache': { 'left': '{{!--', 'right' : '--}}'}
     \ }
+
+" netrw tree mode
+let g:netrw_liststyle=3
+" Give netrw better columns
+" let g:netrw_liststyle=1
 
 "---------------------------------------------------
 "/ ------ ENCODINGS AND FILE FORMATS SETTINGS ------
