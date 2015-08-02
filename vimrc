@@ -1,13 +1,10 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse
-" Last updated: 2014-10-17
+" Last updated: 2015-07-31
 "
-" Note: g:MY_VIM_PATH references the folder where this file and other my other
-" vim settings are located This was to be able to contain everything in one
-" directory to ease deploying my vimrc to multiple machines
-
 " TODO:
+" * Make ~/.vim the default plugin folder
 " * Fix search blink
 " * Search and replace highlighting
 " * Learn EasyMotion
@@ -27,7 +24,12 @@
 "--------------------------------------------
 "- Keep these settings at the top of vimrc --
 "--------------------------------------------
+"
+set rtp+=~/.vim/bundle/Vundle.vim
 set nocompatible "For Vundle
+
+call vundle#begin()
+
 Bundle 'gmarik/vundle'
 
 "Colour schemes
@@ -66,6 +68,9 @@ if (g:FINICKY)
   Bundle 'Valloric/YouCompleteMe'
   Bundle 'marijnh/tern_for_vim'
 endif
+
+call vundle#end()            " required
+filetype plugin indent on    " required XXX WHY indent?
 
 "----------------------------------------
 "/------- GENERAL CONFIG SETTINGS -------
@@ -352,7 +357,7 @@ nnoremap <CR> ko<Esc>j
 nnoremap <leader>ss :source $MYVIMRC<CR>
 
 "Edit vimrc
-execute "nnoremap <leader>se :e " . g:MY_VIM_PATH . "/vimrc<CR>"
+execute "nnoremap <leader>se :e " . expand('<sfile>') . "<CR>"
 
 "Search and replace word under cursor. Note: the vis mapping saves to "h
 nnoremap <leader>sr :%s/<C-r><C-w>/<C-r><C-w>/gc<left><left><left>
@@ -670,9 +675,7 @@ function! Qwerty()
   nnoremap <silent> N Nzzzv:call MyBlinkCursorLine()<cr>
   vnoremap N N
   onoremap N N
-
 endfunction
-
 
 "-----------------
 "/ ---- CALLS ----
