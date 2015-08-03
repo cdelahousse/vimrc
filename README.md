@@ -3,15 +3,8 @@
 My .vimrc and all the settings I've accrued since 2010. It is extensive and well
 documented.
 
-## Deploying
-
-Most of my vim settings are kept in Dropbox. Just create a symlink from ~/.vimrc
-to ~/PATH/TO/Dropbox/.vimrc.
-
-## Install Scripts
-
-Some plugins need to be compiled or initialized. Just run `install.sh` to have
-it done for you.
+# Finicky settings
+Some plugins are finicky and can be disabled by setting `g:FINICKY` to 0
 
 ## Clean Install
 
@@ -24,25 +17,19 @@ it done for you.
     $> cd ~/.vim/
 
 
-1. Edit the g:my_vim_path variable within vimrcLOCAL to reflect the directory.
-
-
-    let g:my_vim_path = '~/.vim'
-
-
 1. Copy the vimrcLOCAL text file to your home directory and rename it to .vimrc
 
-    $> mv vimrcLOCAL ~/.vimrc
+    $> cp vimrcLOCAL ~/.vimrc
 
 1. Clone the vundle vim plugin manager into the bundle directory
 
-    $> cd bundle
+    $> mkdir -p ~/.vim/bundle/
 
-    $> git clone git://github.com/gmarik/vundle.git
+    $> git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
 
 1. Open vim to get Vundle to download all the extensions into ~/.vim/bundle
 
-    :BundleInstall!
+    :PluginInstall
 
 1. Install dependencies
 
