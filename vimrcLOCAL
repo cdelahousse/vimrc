@@ -1,6 +1,6 @@
-"Allow finicky settings?
+"Allow finicky and brittle settings?
 let g:FINICKY = 0
 
 "Source my custom vimrc
-execute "source ~/Dropbox/config/vim/vimrc"
+source ~/Dropbox/config/vim/vimrc
 

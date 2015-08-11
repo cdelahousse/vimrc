@@ -1,10 +1,9 @@
 " Christian Delahousse's vimrc
 " http://christian.delahousse.ca
 " http://github.com/cdelahousse
-" Last updated: 2015-07-31
+" Last updated: 2015-08-03
 "
 " TODO:
-" * Make ~/.vim the default plugin folder
 " * Fix search blink
 " * Search and replace highlighting
 " * Learn EasyMotion
@@ -24,11 +23,13 @@
 "--------------------------------------------
 "- Keep these settings at the top of vimrc --
 "--------------------------------------------
-"
-set rtp+=~/.vim/bundle/Vundle.vim
-set nocompatible "For Vundle
 
-call vundle#begin()
+" Required for Vundle
+set nocompatible
+filetype off
+set rtp+=~/.vim/bundle/Vundle.vim
+
+call vundle#begin('~/.vim/bundle/')
 
 Bundle 'gmarik/vundle'
 
@@ -37,8 +38,6 @@ Bundle 'Solarized'
 Bundle 'jnurmine/Zenburn'
 
 "Syntax Highlighting and indenting
-"Bundle 'groenewege/vim-less'
-Bundle 'mustache/vim-mustache-handlebars'
 Bundle 'jelera/vim-javascript-syntax'
 Bundle 'pangloss/vim-javascript'
 
@@ -70,6 +69,7 @@ if (g:FINICKY)
 endif
 
 call vundle#end()            " required
+
 filetype plugin indent on    " required XXX WHY indent?
 
 "----------------------------------------
