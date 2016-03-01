@@ -67,6 +67,9 @@ if (g:FINICKY)
   " The following plugins require compile steps
   Plugin 'Valloric/YouCompleteMe'
   Plugin 'marijnh/tern_for_vim'
+else
+  " Supertab seems much less finicky that youcompleteme
+  Plugin 'ervandew/supertab'
 endif
 
 call vundle#end()
