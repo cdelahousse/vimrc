@@ -31,46 +31,47 @@ set rtp+=~/.vim/bundle/Vundle.vim
 
 call vundle#begin('~/.vim/bundle/')
 
-Bundle 'gmarik/vundle'
+Plugin 'VundleVim/Vundle.vim'
 
 "Colour schemes
-Bundle 'Solarized'
-Bundle 'jnurmine/Zenburn'
+Plugin 'Solarized'
+Plugin 'jnurmine/Zenburn'
 
 "Syntax Highlighting and indenting
-Bundle 'jelera/vim-javascript-syntax'
-Bundle 'pangloss/vim-javascript'
+Plugin 'jelera/vim-javascript-syntax'
+Plugin 'pangloss/vim-javascript'
 
 "Plugins
-Bundle 'scrooloose/nerdcommenter'
-Bundle 'scrooloose/syntastic'
-Bundle 'tpope/vim-surround'
-Bundle 'tpope/vim-ragtag'
-Bundle 'matchit.zip'
-Bundle 'mattn/emmet-vim'
-Bundle 'buftabs'
-Bundle 'gregsexton/MatchTag.git'
-Bundle 'editorconfig/editorconfig-vim'
-Bundle 'kien/ctrlp.vim'
-Bundle 'Lokaltog/vim-easymotion'
-Bundle 'bkad/CamelCaseMotion'
-Bundle 'nelstrom/vim-markdown-folding'
+Plugin 'scrooloose/nerdcommenter'
+Plugin 'scrooloose/syntastic'
+Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-ragtag'
+Plugin 'matchit.zip'
+Plugin 'mattn/emmet-vim'
+Plugin 'buftabs'
+Plugin 'gregsexton/MatchTag.git'
+Plugin 'editorconfig/editorconfig-vim'
+Plugin 'Lokaltog/vim-easymotion'
+Plugin 'bkad/CamelCaseMotion'
+Plugin 'nelstrom/vim-markdown-folding'
+Plugin 'yegappan/mru'
+Plugin 'wincent/command-t'
 
 "Modified Indexed search. Removed mappings.
-Bundle 'cdelahousse/IndexedSearch.git'
+Plugin 'cdelahousse/IndexedSearch.git'
 
 "Disables hjkl because character-wise movements are for pussies
-Bundle 'wikitopian/hardmode.git'
+Plugin 'wikitopian/hardmode.git'
 
 if (g:FINICKY)
   " The following plugins require compile steps
-  Bundle 'Valloric/YouCompleteMe'
-  Bundle 'marijnh/tern_for_vim'
+  Plugin 'Valloric/YouCompleteMe'
+  Plugin 'marijnh/tern_for_vim'
 endif
 
-call vundle#end()            " required
+call vundle#end()
 
-filetype plugin indent on    " required XXX WHY indent?
+filetype plugin indent on    " required for vundle
 
 "----------------------------------------
 "/------- GENERAL CONFIG SETTINGS -------
