@@ -56,6 +56,7 @@ Plugin 'bkad/CamelCaseMotion'
 Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'yegappan/mru'
 Plugin 'wincent/command-t'
+Plugin 'flowtype/vim-flow'
 
 "Modified Indexed search. Removed mappings.
 Plugin 'cdelahousse/IndexedSearch.git'
@@ -515,6 +516,12 @@ let g:netrw_liststyle=3
 " Give netrw better columns
 " let g:netrw_liststyle=1
 
+" Use fast find
+let g:CommandTFileScanner='find'
+
+" Hide tmp commit message files
+let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
+let MRU_Use_Current_Window = 1
 "---------------------------------------------------
 "/ ------ ENCODINGS AND FILE FORMATS SETTINGS ------
 "---------------------------------------------------
