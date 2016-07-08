@@ -367,7 +367,7 @@ execute "nnoremap <leader>se :e " . expand('<sfile>') . "<CR>"
 "Search and replace word under cursor. Start on current line
 " TODO: fix the number of <left>
 nnoremap <leader>sr :,$s/<C-r><C-w>/<C-r><C-w>/gc<bar>1,''-&&<left><left><left><left><left><left><left><left><left><left><left>
-vnoremap <leader>sr :,$s/<C-r>h/<C-r>h/gc<bar>1,''-&&<left><left><left><left><left><left><left><left><left><left><left>
+vnoremap <leader>sr "hy:,$s/<C-r>h/<C-r>h/gc<bar>1,''-&&<left><left><left><left><left><left><left><left><left><left><left>
 
 "redraw screen
 nnoremap <leader>sd :redraw!<cr>
