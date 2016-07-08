@@ -64,6 +64,12 @@ Plugin 'cdelahousse/IndexedSearch.git'
 "Disables hjkl because character-wise movements are for pussies
 Plugin 'wikitopian/hardmode.git'
 
+" PEP8 Python indenting
+Plugin 'vim-scripts/indentpython.vim'
+
+" PEP8 Python syntax checking
+Plugin 'nvie/vim-flake8'
+
 if (g:FINICKY)
   " The following plugins require compile steps
   Plugin 'Valloric/YouCompleteMe'
@@ -554,8 +560,10 @@ autocmd FileType make setlocal tabstop=8 softtabstop=8 shiftwidth=8 noexpandtab
 "http://tbaggery.com/2008/04/19/a-note-about-git-commit-messages.html
 autocmd FileType gitcommit set textwidth=72
 
-"Python
-autocmd BufRead *.py setlocal tabstop=4 expandtab shiftwidth=4 softtabstop=4
+"Python (PEP8)
+autocmd BufNewFile,BufRead *.py setlocal tabstop=4 expandtab shiftwidth=4 softtabstop=4
+" enable all Python syntax highlighting features
+let python_highlight_all = 1
 
 "/ ------ TEXT FILES -----
 
