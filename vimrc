@@ -56,7 +56,9 @@ Plugin 'bkad/CamelCaseMotion'
 Plugin 'nelstrom/vim-markdown-folding'
 Plugin 'yegappan/mru'
 Plugin 'wincent/command-t'
+Plugin 'hhvm/vim-hack'
 Plugin 'flowtype/vim-flow'
+Plugin 'phleet/vim-arcanist'
 
 "Modified Indexed search. Removed mappings.
 Plugin 'cdelahousse/IndexedSearch.git'
@@ -73,7 +75,7 @@ Plugin 'nvie/vim-flake8'
 if (g:FINICKY)
   " The following plugins require compile steps
   Plugin 'Valloric/YouCompleteMe'
-  Plugin 'marijnh/tern_for_vim'
+  " Plugin 'marijnh/tern_for_vim'
 else
   " Supertab seems much less finicky that youcompleteme
   Plugin 'ervandew/supertab'
