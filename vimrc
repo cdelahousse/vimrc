@@ -418,8 +418,9 @@ ca w!! w !sudo tee >/dev/null "%"
 " Change buffer and the clear the command line (for buftab plugin) using <silent>
 " This mapping conflicts with default mapping of moving cursor to top and bottom
 " of the screen... But that's OK...
-nnoremap <silent> <S-H> :bp<CR>
-nnoremap <silent> <S-L> :bn<CR>
+" Also close quickfix window
+nnoremap <silent> <S-H> :cclose<CR>:bp<CR>
+nnoremap <silent> <S-L> :cclose<CR>:bn<CR>
 
 "Auto Close Tags
 "TODO Check out rag tag
