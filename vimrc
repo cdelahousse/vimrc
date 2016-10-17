@@ -45,7 +45,7 @@ Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-ragtag'
 Plugin 'matchit.zip'
-Plugin 'buftabs'
+Plugin 'bling/vim-bufferline'
 "Match tags
 Plugin 'gregsexton/MatchTag.git'
 Plugin 'editorconfig/editorconfig-vim'
@@ -56,7 +56,6 @@ Plugin 'yegappan/mru'
 Plugin 'wincent/command-t'
 Plugin 'hhvm/vim-hack'
 Plugin 'flowtype/vim-flow'
-Plugin 'phleet/vim-arcanist'
 "Time Tracking
 Plugin 'wakatime/vim-wakatime'
 Plugin 'SirVer/ultisnips'
@@ -374,6 +373,9 @@ inoremap (<CR>  (<CR>)<Esc>ko
 nnoremap <S-CR> o<Esc>k
 nnoremap <CR> ko<Esc>j
 
+"show buffer list and ability to choose one
+nnoremap <leader>l :buffers<CR>:buffer<Space>
+
 "Source vimrc
 nnoremap <leader>ss :source $MYVIMRC<CR>
 
@@ -534,12 +536,19 @@ let g:netrw_liststyle=3
 " Give netrw better columns
 " let g:netrw_liststyle=1
 
-" Use fast find
+" Use fast find for command t
 let g:CommandTFileScanner='find'
 
 " Hide tmp commit message files
 let MRU_Exclude_Files = '^/tmp/.*\|^/var/tmp/.*'
 let MRU_Use_Current_Window = 1
+let MRU_Max_Entries = 1000
+
+"Bufferline
+" Hide Buffer Number
+let g:bufferline_show_bufnr = 0
+let g:bufferline_rotate = 1
+
 "---------------------------------------------------
 "/ ------ ENCODINGS AND FILE FORMATS SETTINGS ------
 "---------------------------------------------------
