@@ -59,6 +59,7 @@ Plugin 'wincent/command-t'
 Plugin 'hhvm/vim-hack'
 Plugin 'flowtype/vim-flow'
 Plugin 'phleet/vim-arcanist'
+Plugin 'wakatime/vim-wakatime'
 
 "Modified Indexed search. Removed mappings.
 Plugin 'cdelahousse/IndexedSearch.git'
