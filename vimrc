@@ -7,7 +7,6 @@
 " * Fix search blink
 " * Search and replace highlighting
 " * Learn EasyMotion
-" * Fugitive
 " * Ack.vim or Ag.vim
 " * Look into Hard Mode
 " * Vim Smooth Scroll
@@ -16,7 +15,6 @@
 "   ["FIXME", "TODO", "XXX", "todo", "xxx", "TODO:",  "NOTE:", "note:",
       "note", "NOTE", "NB", "xxx:", "XXX:", "todo:"]
 " * Find remapping for $ and 0. These are hard to reach. Candidates: L
-" Look into Language Tool: https://github.com/vim-scripts/LanguageTool
 
 "--------------------------------------------
 "/ ------------ VUNDLE SETTINGS -------------
@@ -47,19 +45,28 @@ Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-ragtag'
 Plugin 'matchit.zip'
-Plugin 'mattn/emmet-vim'
 Plugin 'buftabs'
+"Match tags
 Plugin 'gregsexton/MatchTag.git'
 Plugin 'editorconfig/editorconfig-vim'
 Plugin 'Lokaltog/vim-easymotion'
 Plugin 'bkad/CamelCaseMotion'
-Plugin 'nelstrom/vim-markdown-folding'
+"Most Recently used
 Plugin 'yegappan/mru'
 Plugin 'wincent/command-t'
 Plugin 'hhvm/vim-hack'
 Plugin 'flowtype/vim-flow'
 Plugin 'phleet/vim-arcanist'
+"Time Tracking
 Plugin 'wakatime/vim-wakatime'
+Plugin 'SirVer/ultisnips'
+" Gutter SCM changes
+Plugin 'mhinz/vim-signify'
+
+" UtilSnips snippeds
+Plugin 'honza/vim-snippets'
+Plugin 'epilande/vim-es2015-snippets'
+Plugin 'epilande/vim-react-snippets'
 
 "Modified Indexed search. Removed mappings.
 Plugin 'cdelahousse/IndexedSearch.git'
