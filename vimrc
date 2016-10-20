@@ -56,8 +56,6 @@ Plugin 'yegappan/mru'
 Plugin 'wincent/command-t'
 Plugin 'hhvm/vim-hack'
 Plugin 'flowtype/vim-flow'
-"Time Tracking
-Plugin 'wakatime/vim-wakatime'
 Plugin 'SirVer/ultisnips'
 " Gutter SCM changes
 Plugin 'mhinz/vim-signify'
