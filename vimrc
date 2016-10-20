@@ -38,6 +38,7 @@ Plugin 'jnurmine/Zenburn'
 "Syntax Highlighting and indenting
 Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
+Plugin 'mxw/vim-jsx'
 
 "Plugins
 Plugin 'scrooloose/nerdcommenter'
@@ -502,7 +503,8 @@ xmap <silent> ib <Plug>CamelCaseMotion_ib
 omap <silent> ie <Plug>CamelCaseMotion_ie
 xmap <silent> ie <Plug>CamelCaseMotion_ie
 
-
+" JSX in non .jsx files
+let g:jsx_ext_required = 0
 
 "---------------------------------------------------
 "/ -------------- PLUGIN SETTINGS ------------------
