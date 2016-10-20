@@ -36,7 +36,6 @@ Plugin 'Solarized'
 Plugin 'jnurmine/Zenburn'
 
 "Syntax Highlighting and indenting
-Plugin 'jelera/vim-javascript-syntax'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 
@@ -550,6 +549,10 @@ let MRU_Max_Entries = 1000
 " Hide Buffer Number
 let g:bufferline_show_bufnr = 0
 let g:bufferline_rotate = 1
+
+"Allow flow for 'pangloss/vim-javascript'
+let g:javascript_plugin_flow = 1
+
 
 "---------------------------------------------------
 "/ ------ ENCODINGS AND FILE FORMATS SETTINGS ------
