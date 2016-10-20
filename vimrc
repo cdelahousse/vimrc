@@ -60,6 +60,8 @@ Plugin 'flowtype/vim-flow'
 Plugin 'SirVer/ultisnips'
 " Gutter SCM changes
 Plugin 'mhinz/vim-signify'
+" Terminal intergration: bracketed paste, autofocus events, mouse, bar cursor
+Plugin 'wincent/terminus'
 
 " UtilSnips snippeds
 Plugin 'honza/vim-snippets'
