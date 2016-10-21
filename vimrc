@@ -530,6 +530,7 @@ let g:NERDCustomDelimiters = {
 
 " netrw tree mode
 let g:netrw_liststyle=3
+let g:netrw_browsex_viewer = has('mac') ? 'open' : 'xdg-open'
 " Give netrw better columns
 " let g:netrw_liststyle=1
 
@@ -575,6 +576,10 @@ autocmd FileType gitcommit set textwidth=72
 autocmd BufNewFile,BufRead *.py setlocal tabstop=4 expandtab shiftwidth=4 softtabstop=4
 " enable all Python syntax highlighting features
 let python_highlight_all = 1
+
+autocmd FileType python autocmd BufWritePost <buffer> call Flake8()
+let g:flake8_show_in_gutter=1
+let g:flake8_show_in_file=1
 
 "/ ------ TEXT FILES -----
 
