@@ -79,13 +79,11 @@ Plugin 'vim-scripts/indentpython.vim'
 " PEP8 Python syntax checking
 Plugin 'nvie/vim-flake8'
 
+" Finicky plugins that cause a lot of grief
 if (g:FINICKY)
-  " The following plugins require compile steps
-  Plugin 'Valloric/YouCompleteMe'
-  " Plugin 'marijnh/tern_for_vim'
+  Plugin 'YouCompleteMe', {'pinned': 1}
 else
-  " Supertab seems much less finicky that youcompleteme
-  Plugin 'ervandew/supertab'
+  " TODO Maybe try neocachecomplete?
 endif
 
 call vundle#end()
@@ -507,15 +505,13 @@ xmap <silent> ie <Plug>CamelCaseMotion_ie
 " JSX in non .jsx files
 let g:jsx_ext_required = 0
 
+" Expand utilsnips
+let g:UltiSnipsExpandTrigger="<C-l>"
+let g:UltiSnipsJumpForwardTrigger = '<tab>'
+
 "---------------------------------------------------
 "/ -------------- PLUGIN SETTINGS ------------------
 "---------------------------------------------------
-
-"Enable neocomplcache
-" let g:neocomplcache_enable_at_startup = 1
-
-" Set minimum syntax keyword length.
-" let g:neocomplcache_min_syntax_length = 3
 
 " Remember the awesomeness of ragtag CX-<Slash>
 let g:ragtag_global_maps = 1
@@ -564,16 +560,6 @@ set encoding=utf-8
 "---------------------------------------------------
 "/ ------ FILETYPE SPECIFIC STUFF -----------------
 "---------------------------------------------------
-"see here for example http://amix.dk/blog/post/19021
-"" Enable omni completion.
-autocmd FileType javascript set omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType css set omnifunc=csscomplete#CompleteCSS
-autocmd FileType php set omnifunc=phpcomplete#CompletePHP
-autocmd FileType css setlocal omnifunc=csscomplete#CompleteCSS
-autocmd FileType html,markdown setlocal omnifunc=htmlcomplete#CompleteTags
-autocmd FileType javascript setlocal omnifunc=javascriptcomplete#CompleteJS
-autocmd FileType python setlocal omnifunc=pythoncomplete#Complete
-autocmd FileType xml setlocal omnifunc=xmlcomplete#CompleteTags
 
 "Prolog
 autocmd BufRead,BufNewFile *.pl set filetype=prolog
