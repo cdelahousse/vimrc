@@ -46,6 +46,7 @@ Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-ragtag'
 Plugin 'matchit.zip'
 Plugin 'bling/vim-bufferline'
+Plugin 'jceb/vim-orgmode'
 "Match tags
 Plugin 'gregsexton/MatchTag.git'
 Plugin 'editorconfig/editorconfig-vim'
