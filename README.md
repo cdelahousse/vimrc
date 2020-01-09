@@ -32,9 +32,3 @@ Some plugins are finicky and can be disabled by setting `g:FINICKY` to 0
     :PluginInstall
 
 1. Install dependencies
-
-    jshint
-    python-dev
-    cmake
-
-1. Build tern and YouCompleteMe
