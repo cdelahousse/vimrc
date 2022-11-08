@@ -21,14 +21,10 @@ Some plugins are finicky and can be disabled by setting `g:FINICKY` to 0
 
     $> cp vimrcLOCAL ~/.vimrc
 
-1. Clone the vundle vim plugin manager into the bundle directory
+1. Install [vim-plug](https://github.com/junegunn/vim-plug) package manager.
 
-    $> mkdir -p ~/.vim/bundle/
+1. Open vim to get vim-plug to download all the extensions into ~/.vim/plugged
 
-    $> git clone https://github.com/gmarik/Vundle.vim.git ~/.vim/bundle/Vundle.vim
-
-1. Open vim to get Vundle to download all the extensions into ~/.vim/bundle
-
-    :PluginInstall
+    :PlugInstall
 
 1. Install dependencies

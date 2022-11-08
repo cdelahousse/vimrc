@@ -2,5 +2,5 @@
 let g:FINICKY = 0
 
 "Source my custom vimrc
-source ~/Dropbox/config/vim/vimrc
+source ~/.vim/vimrc
 

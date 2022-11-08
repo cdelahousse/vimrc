@@ -25,71 +25,68 @@
 " Required for Vundle
 set nocompatible
 filetype off
-set rtp+=~/.vim/bundle/Vundle.vim
 
-call vundle#begin('~/.vim/bundle/')
-
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin('~/.vim/plugged')
 
 "Colour schemes
-Plugin 'Solarized'
-Plugin 'jnurmine/Zenburn'
+Plug 'altercation/vim-colors-solarized'
+Plug 'jnurmine/Zenburn'
 
 "Syntax Highlighting and indenting
-Plugin 'pangloss/vim-javascript'
-Plugin 'mxw/vim-jsx'
+Plug 'pangloss/vim-javascript'
+Plug 'mxw/vim-jsx'
 
 "Plugins
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/syntastic'
-Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-ragtag'
-Plugin 'matchit.zip'
-Plugin 'bling/vim-bufferline'
-Plugin 'jceb/vim-orgmode'
+Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/syntastic'
+Plug 'tpope/vim-surround'
+Plug 'tpope/vim-ragtag'
+Plug 'adelarsq/vim-matchit'
+Plug 'bling/vim-bufferline'
+Plug 'jceb/vim-orgmode'
 "Match tags
-Plugin 'gregsexton/MatchTag.git'
-Plugin 'editorconfig/editorconfig-vim'
-Plugin 'Lokaltog/vim-easymotion'
-Plugin 'bkad/CamelCaseMotion'
+Plug 'gregsexton/MatchTag'
+Plug 'editorconfig/editorconfig-vim'
+Plug 'Lokaltog/vim-easymotion'
+Plug 'bkad/CamelCaseMotion'
 "Most Recently used
-Plugin 'yegappan/mru'
-Plugin 'wincent/command-t'
-Plugin 'hhvm/vim-hack'
-Plugin 'flowtype/vim-flow'
-Plugin 'SirVer/ultisnips'
+Plug 'yegappan/mru'
+Plug 'wincent/command-t'
+Plug 'hhvm/vim-hack'
+Plug 'flowtype/vim-flow'
+Plug 'SirVer/ultisnips'
 " Gutter SCM changes
-Plugin 'mhinz/vim-signify'
+Plug 'mhinz/vim-signify'
 " Terminal intergration: bracketed paste, autofocus events, mouse, bar cursor
-Plugin 'wincent/terminus'
+Plug 'wincent/terminus'
 
 " UtilSnips snippeds
-Plugin 'honza/vim-snippets'
-Plugin 'epilande/vim-es2015-snippets'
-Plugin 'epilande/vim-react-snippets'
+Plug 'honza/vim-snippets'
+Plug 'epilande/vim-es2015-snippets'
+Plug 'epilande/vim-react-snippets'
 
 "Modified Indexed search. Removed mappings.
-Plugin 'cdelahousse/IndexedSearch.git'
+Plug 'cdelahousse/IndexedSearch'
 
 "Disables hjkl because character-wise movements are for pussies
-Plugin 'wikitopian/hardmode.git'
+" Plug 'wikitopian/hardmode.git'
 
 " PEP8 Python indenting
-Plugin 'vim-scripts/indentpython.vim'
+Plug 'vim-scripts/indentpython.vim'
 
 " PEP8 Python syntax checking
-Plugin 'nvie/vim-flake8'
+Plug 'nvie/vim-flake8'
 
 " Finicky plugins that cause a lot of grief
 if (g:FINICKY)
-  Plugin 'YouCompleteMe', {'pinned': 1}
+  Plug 'YouCompleteMe', {'pinned': 1}
 else
   " TODO Maybe try neocachecomplete?
 endif
 
-call vundle#end()
+call plug#end()
 
-filetype plugin indent on    " required for vundle
+filetype plugin indent on    " required for vim-plug
 
 "----------------------------------------
 "/------- GENERAL CONFIG SETTINGS -------
@@ -169,13 +166,6 @@ set backupdir=$TEMP//
 set directory=$TEMP//
 set undodir=$TEMP//
 
-"-------------------------------------------------
-" ------ UNIX and LINUX Specific settings --------
-"-------------------------------------------------
-if has('unix')
-  "Make :! (ie. the bash command) work in interactiv mode
-  set shellcmdflag=-ic
-endif
 
 "-------------------------------------------------
 " ------------- M$ Windows settings --------------
