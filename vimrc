@@ -52,18 +52,10 @@ Plug 'bkad/CamelCaseMotion'
 "Most Recently used
 Plug 'yegappan/mru'
 Plug 'wincent/command-t'
-Plug 'hhvm/vim-hack'
-Plug 'flowtype/vim-flow'
-Plug 'SirVer/ultisnips'
 " Gutter SCM changes
 Plug 'mhinz/vim-signify'
 " Terminal intergration: bracketed paste, autofocus events, mouse, bar cursor
 Plug 'wincent/terminus'
-
-" UtilSnips snippeds
-Plug 'honza/vim-snippets'
-Plug 'epilande/vim-es2015-snippets'
-Plug 'epilande/vim-react-snippets'
 
 "Modified Indexed search. Removed mappings.
 Plug 'cdelahousse/IndexedSearch'
@@ -76,13 +68,6 @@ Plug 'vim-scripts/indentpython.vim'
 
 " PEP8 Python syntax checking
 Plug 'nvie/vim-flake8'
-
-" Finicky plugins that cause a lot of grief
-if (g:FINICKY)
-  Plug 'YouCompleteMe', {'pinned': 1}
-else
-  " TODO Maybe try neocachecomplete?
-endif
 
 call plug#end()
 

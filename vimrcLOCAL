@@ -1,6 +1,0 @@
-"Allow finicky and brittle settings?
-let g:FINICKY = 0
-
-"Source my custom vimrc
-source ~/.vim/vimrc
-
